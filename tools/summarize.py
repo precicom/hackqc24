@@ -5,7 +5,6 @@ from langchain_text_splitters  import TokenTextSplitter
 from openai import OpenAI
 # To get the tokeniser corresponding to a specific model in the OpenAI API:
 # # Set your API key
-# api_key = "AIzaSyCu7ct12FiIyjCr6mo2dHBvGrUHRCVld4w"
 
 # # Define the YouTube API service
 # youtube = build('youtube', 'v3', developerKey=api_key)
@@ -36,7 +35,7 @@ if __name__ == "__main__":
         print(len(texts))
         client = OpenAI(
             # This is the default and can be omitted
-            api_key="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",
+            api_key="xxx",
         )
 
         chat_completion = client.chat.completions.create(
