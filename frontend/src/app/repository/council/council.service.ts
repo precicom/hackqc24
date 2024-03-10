@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { Council } from './classes';
 import { Observable, delay, of } from 'rxjs';
-import { MOCK_CONCILS } from './mock-data';
+import { MOCK_COUNCILS } from './mock-data';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +17,18 @@ export class CouncilsDataService {
     // return this.http.get<Concil[]>(`${this.authService.apiUrl}/council`);
 
     // mock data
-    return of(MOCK_CONCILS).pipe(delay(500))
+    return of(MOCK_COUNCILS).pipe(delay(500))
+  }
+
+  getById(CouncilId: number): Observable<Council> {
+    // return this.http.get<Council>(`${this.authService.apiUrl}/council/${CouncilId}`);
+
+    return of(MOCK_COUNCILS[0]).pipe(delay(500))
   }
 
   getLatestCouncilThemes(): Observable<Council[]>{
     // return this.http.get<Concil[]>(`${this.authService.apiUrl}/council`);
 
-    return of(MOCK_CONCILS.slice(0, 3)).pipe(delay(500))
+    return of(MOCK_COUNCILS.slice(0, 3)).pipe(delay(500))
   }
 }

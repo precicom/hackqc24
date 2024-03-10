@@ -6,8 +6,14 @@
 
 <br>
 
-<div>Titre du conseil + date + heure</div>
+@if(council$ | async; as council){
+  <div>Titre du conseil + date + heure</div>
 
-<br>
+  <br>
+  
+  <p>Afficher les informations du conseil. Grouper les info par thème et ensuite par catégorie (ou inverse?)</p>
+}@else{
+  loading...
+}
 
-<p>Afficher les informations du conseil. Grouper les info par thème et ensuite par catégorie (ou inverse?)</p>
+
