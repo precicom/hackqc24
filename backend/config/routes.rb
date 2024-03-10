@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :councils
   resources :discussion_points
   resources :posts
   resources :themes
