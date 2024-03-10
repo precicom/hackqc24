@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_10_134306) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_10_190658) do
+  create_table "discussion_points", force: :cascade do |t|
+    t.integer "theme_id"
+    t.text "generated_summary"
+    t.integer "council_id"
+    t.text "minute_link_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["theme_id"], name: "index_discussion_points_on_theme_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.integer "user_id"
     t.integer "theme_id"

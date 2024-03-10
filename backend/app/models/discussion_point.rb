@@ -1,0 +1,2 @@
+class DiscussionPoint < ApplicationRecord
+end
