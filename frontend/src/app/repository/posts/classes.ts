@@ -1,3 +1,5 @@
+import { UserVote } from "../user-votes/classes"
+
 export interface Post {
   id: number
   user_id: number
@@ -6,6 +8,7 @@ export interface Post {
   status: PostStatuses
   rejection_reason: string
   created_at: string
+  votes: UserVote[]
 }
 
 export type PostStatuses = 'en_attente_triage' | 'trié' | 'rejeté'
