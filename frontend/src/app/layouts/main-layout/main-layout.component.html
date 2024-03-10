@@ -1,10 +1,18 @@
-<div class="flex flex-col artboard phone-2 bg-neutral-200 rounded-md p-2">
+<div class="flex flex-col h-full">
+
+  <!-- top header -->
   <div class="flex flex-row items-center">
     <div>app</div>
-    <div class="ml-auto" (click)="logout()">logout</div>
+    <div class="ml-auto link" (click)="logout()">logout</div>
   </div>
+
+  <br>
   
-  <div class="grow w-100">
+  <!-- page content -->
+  <div class="grow w-full">
     <router-outlet></router-outlet>
   </div>
+
+  <!-- app footer -->
+  <div class="link" (click)="back()">back</div>
 </div>
