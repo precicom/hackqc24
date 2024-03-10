@@ -1,12 +1,18 @@
 <h3>home page</h3>
 <br>
 
-<div class="link" [routerLink]="['/councils']">Liste des conseils</div>
+<div class="flex flex-row">
+  <div class="ml-auto link" [routerLink]="['/councils']">Tous les conseils</div>
+</div>
+
 <app-council-latest-information></app-council-latest-information>
 
 <br>
 
-<div class="link" [routerLink]="['/themes']">Liste des thèmes</div>
+<div class="flex flex-row">
+  <div class="ml-auto link" [routerLink]="['/themes']">Tous les des thèmes</div>
+</div>
+
 <app-most-popular-themes></app-most-popular-themes>
 
 

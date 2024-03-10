@@ -1,6 +1,6 @@
-import { Concil } from "./classes";
+import { Council } from "./classes";
 
-export const MOCK_CONCILS: Concil[] = [
+export const MOCK_CONCILS: Council[] = [
   {
     id: 1,
     title: 'Conseil 1',  

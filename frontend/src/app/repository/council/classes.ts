@@ -1,4 +1,4 @@
-export interface Concil {
+export interface Council {
   id: number,
   title: string,
   date: string,
