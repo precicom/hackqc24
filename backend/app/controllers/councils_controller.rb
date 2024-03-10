@@ -44,6 +44,6 @@ class CouncilsController < ApplicationController
 
   private
   def permitted_params
-     params.permit(:generated_summary, :minute_link_url)
+     params.permit(:title, :date, :youtube_link, :generated_summary)
   end
 end
