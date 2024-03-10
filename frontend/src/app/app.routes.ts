@@ -22,19 +22,23 @@ export const routes: Routes = [
         children: [
           {
             path: 'home',
-            component: HomeComponent,          
+            component: HomeComponent,  
+            data: { title: 'Home' },        
           },
           {
             path: 'councils',
-            component: CouncilListComponent,           
+            component: CouncilListComponent,       
+            data: { title: 'Councils' },        
           },
           {
             path: 'councils/:councilId',
             component: CouncilFicheComponent,
+            data: { title: 'Council Details' },     
           },
           {
             path: 'themes',
-            component: ThemeListComponent
+            component: ThemeListComponent,
+            data: { title: 'Themes' },     
           },
           {
             path: '**',

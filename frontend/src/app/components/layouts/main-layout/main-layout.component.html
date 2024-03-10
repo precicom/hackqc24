@@ -1,9 +1,10 @@
 <div class="flex flex-col h-full">
 
   <!-- top header -->
-  <div class="flex flex-row items-center">
-    <div>app</div>
-    <div class="ml-auto link" (click)="logout()">logout</div>
+  <div class="flex flex-row items-center justify-between">
+    <div>Kizos</div>
+    <div>{{ pageInfoService.title$ | async }}</div>
+    <div class=" link" (click)="logout()">logout</div>
   </div>
 
   <br>

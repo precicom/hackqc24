@@ -1,21 +1,21 @@
 import { Component, inject } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ROUTES } from '../../../helpers/constants';
-import { Location } from '@angular/common'
+import { CommonModule, Location } from '@angular/common'
 import { AuthService } from '../../../auth/auth.service';
+import { PageInformation } from '../../../services/page-information';
 
 @Component({
   selector: 'app-main-layout',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, CommonModule],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.scss'
 })
-export class MainLayoutComponent { 
+export class MainLayoutComponent {
   authService = inject(AuthService)
   router = inject(Router)
-  location = inject(Location)
-
+  pageInfoService = inject(PageInformation)
 
   logout(){
     this.authService.logout()
