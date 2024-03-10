@@ -2,7 +2,7 @@ class ThemesController < ApplicationController
     skip_before_action :verify_authenticity_token, only: [:index, :show]
 
     def index
-        themes = Theme.all.order(name: :asc)
+        themes = Theme.all
         render json: themes, status: :ok
     end
 

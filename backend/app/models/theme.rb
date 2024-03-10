@@ -15,6 +15,4 @@ class Theme < ApplicationRecord
         loisirs_et_culture: 12,
         legislation: 13,
     }
-
-    
-end
+end                             

@@ -2,7 +2,7 @@ class PostsController < ApplicationController
     skip_before_action :verify_authenticity_token, only: [:index, :show]
 
     def index
-        posts = Post.all.order(name: :asc)
+        posts = Post.all
         render json: posts, status: :ok
     end
 
