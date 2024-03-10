@@ -23,7 +23,7 @@ export class MainLayoutComponent {
     this.router.navigate([ROUTES.login])
   }
 
-  back(){
-    this.location.back()
+  home(){
+    this.router.navigate([ROUTES.home])
   }
 }
