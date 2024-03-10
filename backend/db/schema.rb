@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_10_195341) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_10_195552) do
   create_table "councils", force: :cascade do |t|
     t.string "title"
     t.datetime "datetime"
@@ -18,6 +18,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_10_195341) do
     t.text "generated_summary"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "discussion_points", force: :cascade do |t|
+    t.integer "theme_id"
+    t.integer "council_id"
+    t.text "generated_summary"
+    t.string "minute_link_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["council_id"], name: "index_discussion_points_on_council_id"
+    t.index ["theme_id"], name: "index_discussion_points_on_theme_id"
   end
 
   create_table "posts", force: :cascade do |t|
