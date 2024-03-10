@@ -1,8 +1,8 @@
-class CreatePosts < ActiveRecord::Migration[7.1]
+class CreateComments < ActiveRecord::Migration[7.1]
   def change
-    create_table :posts do |t|
+    create_table :comments do |t|
       t.references :user, null: false
-      t.references :theme, null: false
+      t.references :post, null: false
       t.text :content_text
       t.integer :status
       t.text :rejection_reason
