@@ -1,8 +1,8 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { Navigation, Router, RouterModule } from '@angular/router';
-import { AuthService } from '../../auth/auth.service';
-import { ROUTES } from '../../constants';
+import { Component, inject } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { ROUTES } from '../../../helpers/constants';
 import { Location } from '@angular/common'
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-main-layout',

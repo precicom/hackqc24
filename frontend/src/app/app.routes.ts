@@ -1,13 +1,13 @@
 import { Routes } from '@angular/router';
-import { SignInComponent } from './sign-in/sign-in.component'; // Adjust the path as necessary
-import { HomeComponent } from './home/home.component'; // Adjust the path as necessary
+import { HomeComponent } from './components/home/home.component'; // Adjust the path as necessary
 import { inject } from '@angular/core';
 import { AuthGuard } from './auth/auth.guard';
-import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
-import { MobileFrameComponent } from './layouts/mobile-frame/mobile-frame.component';
-import { ConseilListComponent } from './conseil/conseil-list/conseil-list.component';
-import { ThemeListComponent } from './theme/theme-list/theme-list.component';
-import { ConseilFicheComponent } from './conseil/conseil-fiche/conseil-fiche.component';
+import { ConseilListComponent } from './components/conseil/conseil-list/conseil-list.component';
+import { ThemeListComponent } from './components/theme/theme-list/theme-list.component';
+import { ConseilFicheComponent } from './components/conseil/conseil-fiche/conseil-fiche.component';
+import { MobileFrameComponent } from './components/layouts/mobile-frame/mobile-frame.component';
+import { MainLayoutComponent } from './components/layouts/main-layout/main-layout.component';
+import { SignInComponent } from './components/sign-in/sign-in.component';
 
 export const routes: Routes = [
   {
