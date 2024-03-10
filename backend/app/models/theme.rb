@@ -1,4 +1,7 @@
 class Theme < ApplicationRecord
+    has_many :posts
+    has_many :discussion_points
+    
     enum :category, { 
         territoire: 0,
         soumissions: 1,
