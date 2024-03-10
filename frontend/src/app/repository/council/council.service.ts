@@ -8,13 +8,13 @@ import { MOCK_CONCILS } from './mock-data';
 @Injectable({
   providedIn: 'root'
 })
-export class ConseilsDataService {
+export class CouncilsDataService {
   http = inject(HttpClient);
   authService = inject(AuthService);
 
 
   getAll(): Observable<Concil[]>{ 
-    // return this.http.get<Concil[]>(`${this.authService.apiUrl}/conseil`);
+    // return this.http.get<Concil[]>(`${this.authService.apiUrl}/council`);
 
     // mock data
     return of(MOCK_CONCILS)

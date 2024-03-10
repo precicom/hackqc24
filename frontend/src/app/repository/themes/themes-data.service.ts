@@ -18,4 +18,9 @@ export class ThemesDataService {
     // mock data
     return of(THEMES)
   }
+
+  /** Top X themes as measured by activity (comments and upvotes) */
+  popularThemes(): Observable<Theme[]>{
+    return of(THEMES.slice(0, 5))
+  }
 }
