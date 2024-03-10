@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :user_votes
   resources :comments
   resources :councils
   resources :discussion_points
