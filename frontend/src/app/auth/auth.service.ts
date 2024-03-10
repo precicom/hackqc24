@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 })
 export class AuthService {
   private isAuthenticated = new BehaviorSubject<boolean>(false);
+  readonly apiUrl = 'http://localhost:3000';
 
   constructor() {  
     // Check the authentication status from local storage on service initialization

@@ -1,0 +1,22 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { AuthService } from '../../auth/auth.service';
+import { Concil } from './classes';
+import { Observable, of } from 'rxjs';
+import { MOCK_CONCILS } from './mock-data';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ConseilsDataService {
+  http = inject(HttpClient);
+  authService = inject(AuthService);
+
+
+  getAll(): Observable<Concil[]>{ 
+    // return this.http.get<Concil[]>(`${this.authService.apiUrl}/conseil`);
+
+    // mock data
+    return of(MOCK_CONCILS)
+  }
+}
