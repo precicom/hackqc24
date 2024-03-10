@@ -10,7 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_10_133350) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_10_134306) do
+  create_table "posts", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "theme_id"
+    t.text "content_text"
+    t.integer "status"
+    t.text "rejection_reason"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["theme_id"], name: "index_posts_on_theme_id"
+    t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "themes", force: :cascade do |t|
+    t.string "name"
+    t.text "generated_summary"
+    t.integer "category"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email"
     t.datetime "created_at", null: false
