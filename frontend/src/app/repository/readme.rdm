@@ -1,0 +1,5 @@
+The repository serves as the data hub for the entire app.
+It should include:
+-API calls
+-class definitions
+-mock data
