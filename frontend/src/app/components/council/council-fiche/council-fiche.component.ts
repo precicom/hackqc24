@@ -20,9 +20,13 @@ export class CouncilFicheComponent implements OnInit {
 
   ngOnInit(): void {
     if(typeof this.councilId === 'number'){
-      this.dataServices.councils.getById(this.councilId).subscribe(council => {
-        this.council$.next(council)
-      })
+      this.fetchCouncil(this.councilId)
     }
+  }
+
+  fetchCouncil(councilId: number){
+    this.dataServices.councils.getById(councilId).subscribe(council => {
+      this.council$.next(council)
+    })
   }
 }
