@@ -1,10 +1,23 @@
 <div class="sign-in-container">
-  <h2>Connexion</h2>
-  <form [formGroup]="signInForm" (ngSubmit)="onSignIn()">
-    <div>
-      <label for="email">Email</label>
-      <input type="email" id="email" formControlName="email">
+  <div class="flex flex-col h-full">
+    <div class="grow">
+      <form [formGroup]="signInForm" (ngSubmit)="onSignIn()">
+        <div class="flex flex-col p-6">
+          <h2 class="mb-4">Connexion</h2>
+    
+          <div class="flex flex-col">   
+            <label for="email">Email</label>
+            <input type="email" id="email" formControlName="email">
+          </div>  
+        </div>
+    
+        <div class="flex flex-row justify-center">
+          <button class="btn btn-neutral" type="submit" [disabled]="!signInForm.valid">Se connecter</button>
+        </div>
+      </form>
+  
     </div>
-    <button type="submit" [disabled]="!signInForm.valid">Se connecter</button>
-  </form>
+
+    <div class="link ml-auto" [routerLink]="['/sign-up']">Sign up</div>
+  </div>
 </div>

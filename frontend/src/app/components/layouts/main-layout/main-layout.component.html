@@ -2,8 +2,8 @@
 
   <!-- top header -->
   <div class="flex flex-row items-center justify-between">
-    <div class="link" (click)="home()">Kizos</div>
-    <div>{{ pageInfoService.title$ | async }}</div>
+    <div [class.invisible]="title === 'Home'" class="link" (click)="home()">< Home</div>
+    <div>{{ title }}</div>
     <div class=" link" (click)="logout()">logout</div>
   </div>
 

@@ -1,9 +1,9 @@
 
 <div class="flex flex-col h-full">
-  <div class="bg-cyan-700 w-full">
-    <button class="w-5/12" [routerLink]="['my-posts']">My Posts</button>
-    <button class="w-5/12" [routerLink]="['all-posts']">All Posts</button>
-    <button class="w-2/12" [routerLink]="['create']">Create</button>
+  <div class="bg-neutral-300 w-full">
+    <button class="w-5/12" [routerLink]="['my-posts']" routerLinkActive="bg-neutral-500">My Posts</button>
+    <button class="w-5/12" [routerLink]="['all-posts']" routerLinkActive="bg-neutral-500">All Posts</button>
+    <button class="w-2/12" [routerLink]="['create']" routerLinkActive="bg-neutral-500">Create</button>
   </div>
 
   <br>
@@ -11,8 +11,4 @@
   <div class="grow">
     <router-outlet></router-outlet>
   </div>
-  
-  <ul class="menu menu-horizontal bg-base-200">
-    <li class="w-50" [routerLink]="['/home']"><a>< home</a></li>   
-  </ul>
 </div>

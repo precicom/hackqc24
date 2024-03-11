@@ -1,0 +1,23 @@
+<div class="flex flex-col p-2">
+    <p [routerLink]="['/..']">Retour</p>
+
+    <div class="p-6 mt-4">
+      <form [formGroup]="signUpForm">
+        <div class="flex flex-col gap-2">
+          <div class="flex flex-col">
+            <label for="name">Name: </label>
+            <input id="name" type="text" formControlName="name">
+          </div>
+        
+          <div class="flex flex-col">
+            <label for="email">Email: </label>
+            <input id="email" type="text" formControlName="email">     
+          </div>     
+        </div>
+     
+        <div class="flex flex-row justify-center">
+          <button class="btn btn-neutral mt-3" type="submit" [disabled]="!signUpForm.valid">S'inscrire</button>
+        </div>     
+      </form>
+    </div>
+</div>

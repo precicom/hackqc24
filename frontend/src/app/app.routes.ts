@@ -12,6 +12,7 @@ import { PostListComponent } from './components/post/post-list/post-list.compone
 import { PostsHomeComponent } from './components/post/posts-home/posts-home.component';
 import { MyPostsComponent } from './components/post/my-posts/my-posts.component';
 import { CreatePostComponent } from './components/post/create-post/create-post.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
 
 export const routes: Routes = [
   {
@@ -19,6 +20,7 @@ export const routes: Routes = [
     // component: MobileFrameComponent, // remove this line to remove mobile frame layout
     children: [
       { path: 'sign-in', component: SignInComponent },
+      { path: 'sign-up', component: SignUpComponent },
       {
         path: '',
         canActivate: [() => inject(AuthGuard).canActivate()],
