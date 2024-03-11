@@ -1,14 +1,27 @@
-<div class="flex flex-row overflow-x-auto gap-x-3 pb-2">
+<div class="bg-primary rounded-box carousel carousel-center w-full h-56 p-4">
   @if( discussionPoints$ | async; as points) {
     @for(point of points; track point.id; let index = $index, first = $first, last = $last, count = $count ) {
-      <div class="bg-slate-500 rounded-md p-2">
-        <div>{{ point.theme.name }} </div>
-        <div>{{ point.generated_summary }}</div>
+      <div class="carousel-item w-full  md:w-1/2 lg:w-1/3 xl:w-1/4 px-4">
+        <div class="card w-full bg-secondary-content text-neutral-content">
+          <div class="card-body items-center text-center">
+            <h2 class="card-title">{{ point.theme.name }}</h2>
+            <p>{{ point.generated_summary }}</p>
+          </div>
+        </div>
       </div>
     }@empty {
-      <div class="text-center">No data available</div>
+      <div class="carousel-item">
+        <div class="card w-full bg-secondary-content">
+          <div class="text-center">No data available</div>
+        </div>
+      </div>
+
     }
   }@else {
+    <div class="carousel-item">
+      <div class="card w-full bg-secondary-content">
     loading...
+  </div>
+</div>
   }  
 </div>

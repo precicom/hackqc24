@@ -1,20 +1,23 @@
-<div class="flex flex-row justify-between">
-  <div>filtrer</div>
 
-  <div>rechercher</div>
-</div>
+<div class="px-4">
+  <div class="flex flex-row justify-between">
+    <div>filtrer</div>
 
-<div class="flex flex-col overflow-y-auto gap-y-3">
-  @if( themes$ | async; as themes) {
-    @for(theme of themes; track theme.id) {
-      <div class="bg-slate-500 rounded-md p-2">
-        <div>{{ theme.name }}</div>   
-        <div>{{ theme.category }}</div>     
-      </div>
-    }@empty {
-      <div class="text-center">No data available</div>
-    }
-  }@else {
-    loading...
-  }  
+    <div>rechercher</div>
+  </div>
+
+  <div class="flex flex-col overflow-y-auto space-y-3">
+    @if( themes$ | async; as themes) {
+      @for(theme of themes; track theme.id) {
+        <div class="bg-slate-500 rounded-md p-2">
+          <div>{{ theme.name }}</div>   
+          <div>{{ theme.category }}</div>     
+        </div>
+      }@empty {
+        <div class="text-center">No data available</div>
+      }
+    }@else {
+      loading...
+    }  
+  </div>
 </div>

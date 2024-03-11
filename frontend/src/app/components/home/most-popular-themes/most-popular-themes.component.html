@@ -1,4 +1,4 @@
-<div class="flex flex-col overflow-y-auto gap-y-3">
+<div class="flex flex-col overflow-y-auto space-y-3 px-4">
   @if( themes$ | async; as themes) {
     @for(theme of themes; track theme.id) {
       <div class="bg-slate-500 rounded-md p-2">

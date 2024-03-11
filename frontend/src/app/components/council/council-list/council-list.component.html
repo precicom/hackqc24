@@ -1,20 +1,22 @@
-<div class="flex flex-row justify-between">
-  <div>filtrer</div>
+<div class="px-4">
+  <div class="flex flex-row justify-between">
+    <div>filtrer</div>
 
-  <div>rechercher</div>
-</div>
+    <div>rechercher</div>
+  </div>
 
-<div class="flex flex-col overflow-y-auto gap-y-3">
-  @if( councils$ | async; as councils) {
-    @for(council of councils; track council.id) {
-      <div class="bg-slate-500 rounded-md p-2" [routerLink]="[council.id]">
-        <div>{{ council.title }}</div>   
-        <div>{{ council.date }}</div>     
-      </div>
-    }@empty {
-      <div class="text-center">No data available</div>
-    }
-  }@else {
-    loading...
-  }  
+  <div class="flex flex-col overflow-y-auto space-y-4">
+    @if( councils$ | async; as councils) {
+      @for(council of councils; track council.id) {
+        <div class="bg-slate-500 rounded-md p-2" [routerLink]="[council.id]">
+          <div>{{ council.title }}</div>   
+          <div>{{ council.date }}</div>     
+        </div>
+      }@empty {
+        <div class="text-center">No data available</div>
+      }
+    }@else {
+      loading...
+    }  
+  </div>
 </div>
