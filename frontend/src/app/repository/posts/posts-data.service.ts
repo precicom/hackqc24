@@ -14,7 +14,7 @@ export class PostsDataService {
   authService = inject(AuthService);
 
   create(post: Partial<Post>) {
-    this.http.post(`${environment.apiUrl}/posts`, { post }).subscribe();
+    return this.http.post<Post>(`${environment.apiUrl}/posts`, { post })
   }
 
   getMyPosts(){

@@ -1,19 +1,35 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { DataServices } from '../../../repository/dataServices';
 import { Observable } from 'rxjs';
 import { Post } from '../../../repository/posts/classes';
 import { RouterModule } from '@angular/router';
+import { CreatePostComponent } from '../create-post/create-post.component';
 
 @Component({
   selector: 'app-my-posts',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, CreatePostComponent],
   templateUrl: './my-posts.component.html',
   styleUrl: './my-posts.component.scss'
 })
-export class MyPostsComponent {
+export class MyPostsComponent implements OnInit {
   dataServices = inject(DataServices)
+  posts?: Post[]
 
   posts$: Observable<Post[]> = this.dataServices.posts.getMyPosts() 
+
+  ngOnInit(): void {
+    this.refreshList()
+  }
+
+  postCreated(){
+    this.refreshList()
+  }
+
+  refreshList(){
+    this.dataServices.posts.getMyPosts().subscribe(posts => {
+      this.posts = posts
+    })
+  }
 }

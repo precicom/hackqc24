@@ -7,7 +7,7 @@ class PostsController < ApplicationController
   end
 
   def my_posts
-    posts = Post.includes(:comments, :user_votes).all.where(user_id: current_user.id)
+    posts = Post.includes(:comments, :user_votes).all.where(user_id: current_user.id).order('created_at DESC')
     render json: posts, status: :ok
   end
 
