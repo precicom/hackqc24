@@ -4,7 +4,6 @@ class ApplicationController < ActionController::API
   attr_reader :current_user
 
   def verify_authenticity_token
-    debugger
     authorization_header = request.headers['Authorization'] || ''
     token = authorization_header.split(' ')[1]
 
