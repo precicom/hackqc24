@@ -1,26 +1,34 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, tap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { BehaviorSubject, Observable, map } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private isAuthenticated = new BehaviorSubject<boolean>(false);
-  readonly apiUrl = 'http://localhost:3000';
+  http = inject(HttpClient);
 
-  constructor() {  
-    // Check the authentication status from local storage on service initialization
-    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    this.isAuthenticated.next(isLoggedIn);
+  authToken: string  = ''
+
+  private isAuthenticated = new BehaviorSubject<boolean>(false);
+
+  constructor() {
+    const token = this.getToken() ?? ''
+    const isLoggedIn = Boolean(token)
+
+    this.authToken = token
+    this.isAuthenticated.next(isLoggedIn)
   }
 
   login(email: string): Observable<boolean> {
-    return of(true).pipe(
-      tap(() => {
+    return this.http.post<any>(`${environment.apiUrl}/login`, {email: email}).pipe(     
+      map(response => {
+        this.setToken(response.token)       
+
         this.isAuthenticated.next(true);
 
-        // Save authentication status to local storage
-        localStorage.setItem('isLoggedIn', 'true');
+        return true;
       })
     );
   }
@@ -28,11 +36,24 @@ export class AuthService {
   logout(): void {
     this.isAuthenticated.next(false);
 
-    // Remove authentication status from local storage
-    localStorage.removeItem('isLoggedIn');
+    this.clearToken();
   }
 
   isLoggedIn(): boolean {
     return this.isAuthenticated.value;
-  }  
+  }
+
+  getToken() {
+    return localStorage.getItem('loginToken');
+  }
+
+  setToken(token: string): void {
+    localStorage.setItem('loginToken', token)
+
+    this.authToken = token
+  }
+
+  clearToken() {
+    localStorage.removeItem('loginToken');
+  }
 }

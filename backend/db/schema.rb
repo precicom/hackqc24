@@ -45,7 +45,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_10_224247) do
 
   create_table "posts", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.integer "theme_id", null: false
+    t.integer "theme_id"
     t.text "content_text"
     t.integer "status"
     t.text "rejection_reason"
@@ -65,11 +65,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_10_224247) do
 
   create_table "user_votes", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.integer "post_id", null: false
+    t.string "reference_type", null: false
+    t.integer "reference_id", null: false
     t.boolean "is_downvote"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["post_id"], name: "index_user_votes_on_post_id"
+    t.index ["reference_type", "reference_id"], name: "index_user_votes_on_reference"
     t.index ["user_id"], name: "index_user_votes_on_user_id"
   end
 

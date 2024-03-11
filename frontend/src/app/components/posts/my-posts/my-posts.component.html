@@ -1,0 +1,26 @@
+<div class="flex flex-col overflow-y-auto gap-y-3">
+  <button #closeButton class="btn" onclick="my_modal_1.showModal()">Write a post</button>
+  <dialog #dialog id="my_modal_1" class="modal">
+    <div class="modal-box">
+      <form method="dialog">
+        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+      </form>
+      <app-create-post (postCreated)="postCreated();dialog.close()"></app-create-post>
+    </div>
+  </dialog>
+
+
+  @if(posts; as posts) {
+    @for(post of posts; track post.id) {
+      <div class="flex flex-row bg-slate-500 rounded-md p-2">   
+        <div>{{ post.content_text }}</div>
+        <div class="ml-auto">23 Comments</div>
+        <div>56 Upvotes</div>
+      </div>
+    }@empty {
+      <div class="text-center">No posts has been written yet!</div>
+    }
+  }@else {
+    loading...
+  }  
+</div>

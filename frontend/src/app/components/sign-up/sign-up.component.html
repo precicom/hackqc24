@@ -2,13 +2,13 @@
     <p [routerLink]="['/..']">Retour</p>
 
     <div class="p-6 mt-4">
-      <form [formGroup]="signUpForm">
+      <form [formGroup]="signUpForm" (ngSubmit)="submit()">
         <div class="flex flex-col gap-2">
-          <div class="flex flex-col">
+          <!-- <div class="flex flex-col">
             <label for="name">Name: </label>
             <input id="name" type="text" formControlName="name">
           </div>
-        
+         -->
           <div class="flex flex-col">
             <label for="email">Email: </label>
             <input id="email" type="text" formControlName="email">     

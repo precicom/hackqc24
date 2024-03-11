@@ -14,20 +14,20 @@ export class CouncilsDataService {
 
 
   getAll(): Observable<Council[]>{ 
-    // return this.http.get<Concil[]>(`${this.authService.apiUrl}/council`);
+    // return this.http.get<Concil[]>(`${environment.apiUrl}/council`);
 
     // mock data
     return of(MOCK_COUNCILS).pipe(delay(500))
   }
 
   getById(CouncilId: number): Observable<Council> {
-    // return this.http.get<Council>(`${this.authService.apiUrl}/council/${CouncilId}`);
+    // return this.http.get<Council>(`${environment.apiUrl}/council/${CouncilId}`);
 
     return of(MOCK_COUNCILS[0]).pipe(delay(500))
   }
 
   getLatestCouncilThemes(): Observable<Council[]>{
-    // return this.http.get<Concil[]>(`${this.authService.apiUrl}/council`);
+    // return this.http.get<Concil[]>(`${environment.apiUrl}/council`);
 
     return of(MOCK_COUNCILS.slice(0, 3)).pipe(delay(500))
   }

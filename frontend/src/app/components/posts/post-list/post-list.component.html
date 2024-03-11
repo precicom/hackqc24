@@ -1,8 +1,18 @@
+<div class="flex flex-row justify-between">
+  <div>filtrer</div>
+
+  <div>rechercher</div>
+</div>
+
+<br>
+
 <div class="flex flex-col overflow-y-auto gap-y-3">
   @if(  posts$ | async; as posts) {
     @for(post of posts; track post.id) {
-      <div class="bg-slate-500 rounded-md p-2">   
+      <div class="flex flex-row bg-slate-500 rounded-md p-2">
         <div>{{ post.content_text }}</div>
+        <div class="ml-auto">23 Comments</div>
+        <div>56 Upvotes</div>
       </div>
     }@empty {
       <div class="text-center">No data available</div>

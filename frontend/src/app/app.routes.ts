@@ -8,10 +8,10 @@ import { MobileFrameComponent } from './components/layouts/mobile-frame/mobile-f
 import { MainLayoutComponent } from './components/layouts/main-layout/main-layout.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { CouncilListComponent } from './components/council/council-list/council-list.component';
-import { PostListComponent } from './components/post/post-list/post-list.component';
-import { PostsHomeComponent } from './components/post/posts-home/posts-home.component';
-import { MyPostsComponent } from './components/post/my-posts/my-posts.component';
-import { CreatePostComponent } from './components/post/create-post/create-post.component';
+import { PostListComponent } from './components/posts/post-list/post-list.component';
+import { PostsHomeComponent } from './components/posts/posts-home/posts-home.component';
+import { MyPostsComponent } from './components/posts/my-posts/my-posts.component';
+import { CreatePostComponent } from './components/posts/create-post/create-post.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 
 export const routes: Routes = [

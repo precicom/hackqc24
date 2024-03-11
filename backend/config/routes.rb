@@ -3,7 +3,13 @@ Rails.application.routes.draw do
   resources :comments
   resources :councils
   resources :discussion_points
-  resources :posts
+
+  resources :posts do
+    collection do
+      get :my_posts
+    end
+  end
+
   resources :themes
   resources :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -12,5 +18,5 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  post 'auth/token', to: 'auth#create'
+  post 'login', to: 'auth#create'
 end
