@@ -1,16 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{html,js,ts}"],
-  daisyui: {
-    themes: [
-      {
-        cupcake: {
-          ...require("daisyui/src/theming/themes")["cupcake"]     
-          // customize the cupcake theme here   
-        }
-      }         
-    ],
-  },
+  content: ["./src/**/*.{html,js,ts}"],  
   plugins: [require("@tailwindcss/typography"), require("daisyui")],
   daisyui: {
     themes: ["light", "dark", "cupcake"],
