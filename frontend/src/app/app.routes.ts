@@ -12,7 +12,7 @@ import { CouncilListComponent } from './components/council/council-list/council-
 export const routes: Routes = [
   {
     path: '',
-    component: MobileFrameComponent, // remove this line to remove mobile frame layout
+    // component: MobileFrameComponent, // remove this line to remove mobile frame layout
     children: [
       { path: 'sign-in', component: SignInComponent },
       {
