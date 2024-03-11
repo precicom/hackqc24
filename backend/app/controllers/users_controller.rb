@@ -10,7 +10,7 @@ class UsersController < ApplicationController
         exp: 12.hours.from_now.to_i # Set expiration to 12 hours
       }
       token = JWT.encode(payload, Rails.application.secrets.secret_key_base, 'HS256')
-      render json: { token: token }, status: :created
+      render json: { token: "Bearer #{token}" }, status: :created
     else
       render json: { error: 'Failed to create user' },
              status: :not_acceptable

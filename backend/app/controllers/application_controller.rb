@@ -3,8 +3,9 @@ class ApplicationController < ActionController::API
 
   def verify_authenticity_token
     authorization_header = request.headers['Authorization'] || ''
+    token = authorization_header.split(' ')[1]
 
-    jwt = Auth::AccessToken.new(authorization_header)
+    jwt = Auth::AccessToken.new(token)
 
     if payload = jwt.verify
       user_id = payload[:user_id]
