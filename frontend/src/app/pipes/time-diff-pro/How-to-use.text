@@ -1,0 +1,58 @@
+Developper: Jacques Hache, Precicom (04-28-2021)
+
+How to use the timeDiffPro Pipe:
+
+USE #1 (default usage)
+{{ entity.created_at | timeDiffPro}}
+
+-This will apply the default configuration which uses:
+  -default timeCategories: ['years', 'months', 'weeks', 'days', 'hours', 'now']
+  -defaultDefinitions for each timeCategories (see configurations.ts)
+
+
+USE #2 (with custom configurations)
+{{ entity.created_at | timeDiffPro:customConfiguration}}
+
+CONFIGURATION EXAMPLE #1:
+
+customConfiguration: TimeDiffParameters = {
+    configuration: {
+      days: { useSingularCustomText: true },
+      years: { useSingularCustomText: true },
+      now: { singularTranslation: translate => translate.instant('shared.time.a_custom_translation')}
+      weeks: { usePluralCustomText: true}
+      months: { pluralTranslation: (translate, qty) => translate.instant('shared.time.custom_translation', { months: qty })}
+    }
+}
+
+the following changes will therefore be applied:
+  -instead of rendering '1 day ago', will render 'yesterday'
+  -instead of rendering '1 year ago', will render 'last year'
+  -Overrides the singularTranslation for timeCategory 'now'. Instead of rendering 'right now', it will render your own custom translation
+  -Instead of rendering '5 weeks ago', will render 'many weeks ago'.
+  -Instead of using the default pluralTranslation, will render according to your own pluralTranslation
+
+
+
+CONFIGURATION EXAMPLE #2:
+
+customConfiguration: TimeDiffParameters = {
+    timeCategories: {['weeks', 'hours', 'now],}
+    configuration: {
+       now: { singularTranslation: translate => translate.instant('shared.time.this_hour')}
+    }
+}
+
+the following changes will be applied:
+ -Pipe will only render time differentials in weeks and hours only: 43 weeks ago, 10 weeks ago, 1 week ago, 75 hours ago, 30 hours ago, 1 hour ago, right now...
+ -If time diff is less than an hours, will render 'This hour' instead of the default 'right now'
+
+
+CONFIGURATION EXAMPLE #3:
+
+customConfiguration: TimeDiffParameters = {
+    to: new Date(04-08-2020)
+}
+
+the following changes will be applied:
+  -will render time differentials relative to the given date

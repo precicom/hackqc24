@@ -13,6 +13,7 @@ import { PostsHomeComponent } from './components/posts/posts-home/posts-home.com
 import { MyPostsComponent } from './components/posts/my-posts/my-posts.component';
 import { CreatePostComponent } from './components/posts/create-post/create-post.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { PostShowComponent } from './components/posts/post-show/post-show.component';
 
 export const routes: Routes = [
   {
@@ -60,8 +61,8 @@ export const routes: Routes = [
               {
                 path: 'my-posts',
                 component: MyPostsComponent,
-                data: { title: 'My posts' },     
-              },
+                data: { title: 'My posts' },                   
+              },            
               {
                 path: 'all-posts',
                 component: PostListComponent,
@@ -73,6 +74,11 @@ export const routes: Routes = [
                 data: { title: 'Create a Post' },     
               }
             ]
+          },
+          {
+            path: 'posts/my-posts/:postId',
+            component: PostShowComponent,
+            data: { title: 'Post details' },
           },
           {
             path: '**',

@@ -105,6 +105,12 @@
             "scripts": []
           }
         }
+      },
+      "i18n": {
+        "sourceLocale": {
+          "code": "fr-CA",
+          "baseHref": ""
+        }     
       }
     }
   },

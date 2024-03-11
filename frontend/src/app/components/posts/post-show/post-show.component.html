@@ -1,0 +1,34 @@
+@if(post; as post){
+  <div class="flex flex-col gap-y-3 w-full p-4">
+    <div class="flex flex-col">
+      <p class="text-lg">John doe</p>
+      <p class="text-xs">{{ post.created_at | timeDiffPro }}</p>
+    </div>   
+
+    <p>{{ post.content_text }}</p>
+
+    <div class="flex flex-row">
+      <div class="flex flex-row items-center mr-auto">
+        <i class="fa-regular fa-heart fa-lg"></i>
+        <p class="ml-1">{{ post | postUpVoteCount }}</p>
+      </div> 
+      
+      <div class="flex flex-row items-center ml-auto">   
+        <p class="ml-1">{{ post | postCommentCount }} commentaires</p>
+      </div>
+    </div>
+
+    <div class="w-full border border-x-transparent border-y-gray-950 py-1">
+      <button class="w-6/12 h-10 hover:bg-neutral-300">
+        <i class="fa-regular fa-heart fa-lg"></i>
+        J'aime
+      </button>
+      <button class="w-6/12 h-10 hover:bg-neutral-300">
+        <i class="fa-regular fa-comment fa-lg"></i>
+        Commenter
+      </button>
+    </div>
+  </div>
+}@else {
+  loading...
+}

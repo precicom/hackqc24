@@ -5,11 +5,13 @@ import { Observable } from 'rxjs';
 import { Post } from '../../../repository/posts/classes';
 import { RouterModule } from '@angular/router';
 import { CreatePostComponent } from '../create-post/create-post.component';
+import { PostUpVoteCountPipe } from '../pipes/post-up-vote-count.pipe';
+import { PostCommentCountPipe } from '../pipes/post-comment-count.pipe';
 
 @Component({
   selector: 'app-my-posts',
   standalone: true,
-  imports: [CommonModule, RouterModule, CreatePostComponent],
+  imports: [CommonModule, RouterModule, CreatePostComponent, PostUpVoteCountPipe, PostCommentCountPipe],
   templateUrl: './my-posts.component.html',
   styleUrl: './my-posts.component.scss'
 })

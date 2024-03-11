@@ -17,6 +17,10 @@ export class PostsDataService {
     return this.http.post<Post>(`${environment.apiUrl}/posts`, { post })
   }
 
+  getById(postId: number): Observable<Post> {
+    return this.http.get<Post>(`${environment.apiUrl}/posts/${postId}`)
+  }
+
   getMyPosts(){
      return this.http.get<Post[]>(`${environment.apiUrl}/posts/my_posts`);
 
@@ -27,5 +31,5 @@ export class PostsDataService {
     return this.http.get<Post[]>(`${environment.apiUrl}/posts`);
 
     // return of(MOCK_POSTS).pipe(delay(500))
-  }
+  } 
 }

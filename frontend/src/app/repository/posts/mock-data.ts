@@ -9,7 +9,7 @@ export const MOCK_POSTS: Post[] = [
     status: "en_attente_triage",
     rejection_reason: "This is a rejection reason",
     created_at: "2021-06-01T00:00:00Z",
-    votes: []
+    user_votes: []
   },
   {
     id: 2,
@@ -19,7 +19,7 @@ export const MOCK_POSTS: Post[] = [
     status: "trié",
     rejection_reason: "This is a rejection reason",
     created_at: "2021-06-01T00:00:00Z",
-    votes: []
+    user_votes: []
   },
   {
     id: 3,
@@ -29,7 +29,7 @@ export const MOCK_POSTS: Post[] = [
     status: "rejeté",
     rejection_reason: "This is a rejection reason",
     created_at: "2021-06-01T00:00:00Z",
-    votes: []
+    user_votes: []
   },
   {
     id: 4,
@@ -39,7 +39,7 @@ export const MOCK_POSTS: Post[] = [
     status: "en_attente_triage",
     rejection_reason: "This is a rejection reason",
     created_at: "2021-06-01T00:00:00Z",
-    votes: []
+    user_votes: []
   },
   {
     id: 5,
@@ -49,7 +49,7 @@ export const MOCK_POSTS: Post[] = [
     status: "trié",
     rejection_reason: "This is a rejection reason",
     created_at: "2021-06-01T00:00:00Z",
-    votes: []
+    user_votes: []
   },
   {
     id: 6,
@@ -59,7 +59,7 @@ export const MOCK_POSTS: Post[] = [
     status: "rejeté",
     rejection_reason: "This is a rejection reason",
     created_at: "2021-06-01T00:00:00Z",
-    votes: []
+    user_votes: []
   },
   {
     id: 7,
@@ -69,7 +69,7 @@ export const MOCK_POSTS: Post[] = [
     status: "en_attente_triage",
     rejection_reason: "This is a rejection reason",
     created_at: "2021-06-01T00:00:00Z",
-    votes: []
+    user_votes: []
   },
   {
     id: 8,
@@ -79,7 +79,7 @@ export const MOCK_POSTS: Post[] = [
     status: "trié",
     rejection_reason: "This is a rejection reason",
     created_at: "2021-06-01T00:00:00Z",
-    votes: []
+    user_votes: []
   },
   {
     id: 9,
@@ -89,6 +89,6 @@ export const MOCK_POSTS: Post[] = [
     status: "rejeté",
     rejection_reason: "This is a rejection reason",
     created_at: "2021-06-01T00:00:00Z",
-    votes: []
+    user_votes: []
   },
 ]
