@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, delay, of } from 'rxjs';
 import { Post } from './classes';
 import { MOCK_POSTS } from './mock-data';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,10 @@ import { MOCK_POSTS } from './mock-data';
 export class PostsDataService {
   http = inject(HttpClient);
   authService = inject(AuthService);
+
+  create(post: Partial<Post>) {
+    this.http.post(`${environment.apiUrl}/posts`, { post }).subscribe();
+  }
 
   getMyPosts(){
      // return this.http.get<Post[]>(`${environment.apiUrl}/posts`);

@@ -9,19 +9,22 @@ import { environment } from '../../environments/environment';
 export class AuthService {
   http = inject(HttpClient);
 
-  authToken: string = '';
+  authToken: string  = ''
 
   private isAuthenticated = new BehaviorSubject<boolean>(false);
 
   constructor() {
-    const isLoggedIn = Boolean(this.getToken());
-    this.isAuthenticated.next(isLoggedIn);
+    const token = this.getToken() ?? ''
+    const isLoggedIn = Boolean(token)
+
+    this.authToken = token
+    this.isAuthenticated.next(isLoggedIn)
   }
 
   login(email: string): Observable<boolean> {
-    return this.http.post(`${environment.apiUrl}/login`, { email: email }).pipe(
-      map((token) => {
-        this.setToken(token);
+    return this.http.post<any>(`${environment.apiUrl}/auth/token`, {email: email}).pipe(     
+      map(response => {
+        this.setToken(response.token)       
 
         this.isAuthenticated.next(true);
 
@@ -44,11 +47,10 @@ export class AuthService {
     return localStorage.getItem('loginToken');
   }
 
-  setToken(token: Object): void {
-    const tokenString = JSON.stringify(token);
-    localStorage.setItem('loginToken', tokenString);
+  setToken(token: string): void {
+    localStorage.setItem('loginToken', token)
 
-    this.authToken = tokenString;
+    this.authToken = token
   }
 
   clearToken() {

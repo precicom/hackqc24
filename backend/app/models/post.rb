@@ -1,10 +1,6 @@
 class Post < ApplicationRecord
   belongs_to :user
-  belongs_to :theme
+  belongs_to :theme, optional: true
 
-  enum :status, {
-    in_process: 0,
-    accepted: 1,
-    rejected: 2,
-  }
+  enum :status, { in_process: 0, accepted: 1, rejected: 2 }
 end

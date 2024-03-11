@@ -1,13 +1,15 @@
 class ApplicationController < ActionController::API
   before_action :verify_authenticity_token
 
+  attr_reader :current_user
+
   def verify_authenticity_token
     authorization_header = request.headers['Authorization'] || ''
     token = authorization_header.split(' ')[1]
 
     jwt = Auth::AccessToken.new(token)
 
-    if payload = jwt.verify
+    if payload = decoded_token&.first&.deep_symbolize_keys
       user_id = payload[:user_id]
       exp = payload[:exp]
 
