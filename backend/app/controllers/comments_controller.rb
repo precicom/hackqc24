@@ -11,8 +11,7 @@ class CommentsController < ApplicationController
     if comment.save
       render json: comment, status: :created
     else
-      render json: { error: 'Failed to create a comment' },
-             status: :not_acceptable
+      render json: { error: 'Failed to create a comment' }, status: :not_acceptable
     end
   end
 
@@ -26,8 +25,7 @@ class CommentsController < ApplicationController
     if comment.update(permitted_params)
       render json: comment, status: :ok
     else
-      render json: { error: 'Failed to update a comment' },
-             status: :not_acceptable
+      render json: { error: 'Failed to update a comment' }, status: :not_acceptable
     end
   end
 
@@ -36,8 +34,7 @@ class CommentsController < ApplicationController
     if comment.destroy
       render json: { message: 'Comment has been desroyed' }, status: :ok
     else
-      render json: { error: 'Failed to destroy comment' },
-             status: :not_acceptable
+      render json: { error: 'Failed to destroy comment' }, status: :not_acceptable
     end
   end
 

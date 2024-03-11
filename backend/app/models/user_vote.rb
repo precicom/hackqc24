@@ -1,5 +1,4 @@
 class UserVote < ApplicationRecord
+  belongs_to :reference, polymorphic: true, optional: false
   belongs_to :user
-  belongs_to :posts
-  belongs_to :comment
 end
