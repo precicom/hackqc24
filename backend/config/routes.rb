@@ -3,7 +3,13 @@ Rails.application.routes.draw do
   resources :comments
   resources :councils
   resources :discussion_points
-  resources :posts
+
+  resources :posts do
+    collection do
+      get :my_posts
+    end
+  end
+
   resources :themes
   resources :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

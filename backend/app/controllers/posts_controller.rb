@@ -6,6 +6,11 @@ class PostsController < ApplicationController
     render json: posts, status: :ok
   end
 
+  def my_posts
+    posts = Post.includes(:comments, :user_votes).all.where(user_id: current_user.id)
+    render json: posts, status: :ok
+  end
+
   def create
     post = Post.new(permitted_params)
     post.user_id = current_user.id
