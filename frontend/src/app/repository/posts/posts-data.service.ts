@@ -13,13 +13,13 @@ export class PostsDataService {
   authService = inject(AuthService);
 
   getMyPosts(){
-     // return this.http.get<Post[]>(`${this.authService.apiUrl}/posts`);
+     // return this.http.get<Post[]>(`${environment.apiUrl}/posts`);
 
      return of(MOCK_POSTS.slice(0, 3)).pipe(delay(500))
   }
 
   getAll(): Observable<Post[]>{
-    // return this.http.get<Post[]>(`${this.authService.apiUrl}/posts`);
+    // return this.http.get<Post[]>(`${environment.apiUrl}/posts`);
 
     return of(MOCK_POSTS).pipe(delay(500))
   }

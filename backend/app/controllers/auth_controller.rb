@@ -13,7 +13,7 @@ class AuthController < ApplicationController
       }
 
       token = JWT.encode(payload, Rails.application.secrets.secret_key_base, 'HS256')
-      
+
       render json: { token: token }, status: :ok
     else
       # User not found

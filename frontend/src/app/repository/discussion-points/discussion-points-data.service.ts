@@ -13,14 +13,14 @@ export class DiscussionPointsDataService {
   authService = inject(AuthService);
 
   getAll(): Observable<DiscussionPoint[]>{
-    // return this.http.get<DiscussionPoint[]>(`${this.authService.apiUrl}/discussion-point`);
+    // return this.http.get<DiscussionPoint[]>(`${environment.apiUrl}/discussion-point`);
 
     // mock data
     return of(DISCUSSION_POINTS)
   }
 
   getLatestDiscussionPoints(): Observable<DiscussionPoint[]>{
-    // return this.http.get<Concil[]>(`${this.authService.apiUrl}/council`);
+    // return this.http.get<Concil[]>(`${environment.apiUrl}/council`);
 
     return of(DISCUSSION_POINTS).pipe(delay(500))
   }

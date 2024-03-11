@@ -13,7 +13,7 @@ export class ThemesDataService {
   authService = inject(AuthService);
 
   getAll(): Observable<Theme[]>{
-    // return this.http.get<DiscussionPoint[]>(`${this.authService.apiUrl}/discussion-point`);
+    // return this.http.get<DiscussionPoint[]>(`${environment.apiUrl}/discussion-point`);
 
     // mock data
     return of(THEMES).pipe(delay(500))
