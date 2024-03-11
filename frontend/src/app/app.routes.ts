@@ -8,6 +8,10 @@ import { MobileFrameComponent } from './components/layouts/mobile-frame/mobile-f
 import { MainLayoutComponent } from './components/layouts/main-layout/main-layout.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { CouncilListComponent } from './components/council/council-list/council-list.component';
+import { PostListComponent } from './components/post/post-list/post-list.component';
+import { PostsHomeComponent } from './components/post/posts-home/posts-home.component';
+import { MyPostsComponent } from './components/post/my-posts/my-posts.component';
+import { CreatePostComponent } from './components/post/create-post/create-post.component';
 
 export const routes: Routes = [
   {
@@ -39,6 +43,34 @@ export const routes: Routes = [
             path: 'themes',
             component: ThemeListComponent,
             data: { title: 'Themes' },     
+          },
+          {
+            path: 'posts',
+            redirectTo: 'posts/my-posts',
+            pathMatch: 'full'
+          },
+          {
+            path: 'posts',
+            component: PostsHomeComponent,
+        
+            data: { title: 'Posts' },   
+            children: [
+              {
+                path: 'my-posts',
+                component: MyPostsComponent,
+                data: { title: 'My posts' },     
+              },
+              {
+                path: 'all-posts',
+                component: PostListComponent,
+                data: { title: 'All posts' },     
+              },
+              {
+                path:'create',
+                component: CreatePostComponent,
+                data: { title: 'Create a Post' },     
+              }
+            ]
           },
           {
             path: '**',

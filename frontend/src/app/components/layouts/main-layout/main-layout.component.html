@@ -2,7 +2,7 @@
 
   <!-- top header -->
   <div class="flex flex-row items-center justify-between">
-    <div>Kizos</div>
+    <div class="link" (click)="home()">Kizos</div>
     <div>{{ pageInfoService.title$ | async }}</div>
     <div class=" link" (click)="logout()">logout</div>
   </div>
@@ -12,8 +12,5 @@
   <!-- page content -->
   <div class="grow w-full">
     <router-outlet></router-outlet>
-  </div>
-
-  <!-- app footer -->
-  <div class="link" (click)="home()">Home</div>
+  </div> 
 </div>

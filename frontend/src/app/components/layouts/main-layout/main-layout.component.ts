@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ROUTES } from '../../../helpers/constants';
-import { CommonModule, Location } from '@angular/common'
+import { CommonModule } from '@angular/common'
 import { AuthService } from '../../../auth/auth.service';
 import { PageInformation } from '../../../services/page-information';
 

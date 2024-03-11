@@ -1,4 +1,4 @@
-<div class="flex flex-row overflow-x-auto gap-x-3">
+<div class="flex flex-row overflow-x-auto gap-x-3 pb-2">
   @if( discussionPoints$ | async; as points) {
     @for(point of points; track point.id; let index = $index, first = $first, last = $last, count = $count ) {
       <div class="bg-slate-500 rounded-md p-2">
