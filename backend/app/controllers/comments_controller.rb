@@ -44,6 +44,6 @@ class CommentsController < ApplicationController
   private
 
   def permitted_params
-    params.permit(:content_text, :rejection_reason)
+    params.permit(:post_id, :content_text, :rejection_reason)
   end
 end

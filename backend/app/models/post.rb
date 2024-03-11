@@ -6,7 +6,4 @@ class Post < ApplicationRecord
 
   has_many :comments
   has_many :user_votes
-  
-  accepts_nested_attributes_for :comments
-  accepts_nested_attributes_for :user_votes
 end
