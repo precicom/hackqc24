@@ -45,7 +45,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_10_224247) do
 
   create_table "posts", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.integer "theme_id", null: false
+    t.integer "theme_id"
     t.text "content_text"
     t.integer "status"
     t.text "rejection_reason"

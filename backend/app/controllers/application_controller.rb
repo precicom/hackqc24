@@ -4,12 +4,13 @@ class ApplicationController < ActionController::API
   attr_reader :current_user
 
   def verify_authenticity_token
+    debugger
     authorization_header = request.headers['Authorization'] || ''
     token = authorization_header.split(' ')[1]
 
-    jwt = Auth::AccessToken.new(token)
+    decoded_token = JWT.decode(token, Rails.application.secrets.secret_key_base, true, { algorithm: 'HS256' })
 
-    if payload = decoded_token&.first&.deep_symbolize_keys
+    if (payload = decoded_token&.first&.deep_symbolize_keys)
       user_id = payload[:user_id]
       exp = payload[:exp]
 

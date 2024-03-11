@@ -22,7 +22,7 @@ export class AuthService {
   }
 
   login(email: string): Observable<boolean> {
-    return this.http.post<any>(`${environment.apiUrl}/auth/token`, {email: email}).pipe(     
+    return this.http.post<any>(`${environment.apiUrl}/login`, {email: email}).pipe(     
       map(response => {
         this.setToken(response.token)       
 
