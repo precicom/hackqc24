@@ -7,25 +7,25 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class AuthService {
-  http = inject(HttpClient)
+  http = inject(HttpClient);
 
-  authToken: string = ''
+  authToken: string = '';
 
-  private isAuthenticated = new BehaviorSubject<boolean>(false)
+  private isAuthenticated = new BehaviorSubject<boolean>(false);
 
   constructor() {
-    const isLoggedIn = Boolean(this.getToken())
-    this.isAuthenticated.next(isLoggedIn)
+    const isLoggedIn = Boolean(this.getToken());
+    this.isAuthenticated.next(isLoggedIn);
   }
 
   login(email: string): Observable<boolean> {
-    return this.http.post(`${environment.apiUrl}/auth/token`, {email: email}).pipe(     
-      map(token => {
-        this.setToken(token)       
+    return this.http.post(`${environment.apiUrl}/login`, { email: email }).pipe(
+      map((token) => {
+        this.setToken(token);
 
-        this.isAuthenticated.next(true)
+        this.isAuthenticated.next(true);
 
-        return true
+        return true;
       })
     );
   }
@@ -33,25 +33,25 @@ export class AuthService {
   logout(): void {
     this.isAuthenticated.next(false);
 
-    this.clearToken()
+    this.clearToken();
   }
 
   isLoggedIn(): boolean {
     return this.isAuthenticated.value;
-  }  
+  }
 
-  getToken(){
-    return localStorage.getItem('loginToken')
+  getToken() {
+    return localStorage.getItem('loginToken');
   }
 
   setToken(token: Object): void {
-    const tokenString =  JSON.stringify(token)
-    localStorage.setItem('loginToken', tokenString)
+    const tokenString = JSON.stringify(token);
+    localStorage.setItem('loginToken', tokenString);
 
-    this.authToken = tokenString
+    this.authToken = tokenString;
   }
 
-  clearToken(){
-    localStorage.removeItem('loginToken')
+  clearToken() {
+    localStorage.removeItem('loginToken');
   }
 }
