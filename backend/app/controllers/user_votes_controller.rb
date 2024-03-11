@@ -44,6 +44,6 @@ class UserVotesController < ApplicationController
 
   private
   def permitted_params
-     params.permit(:post_id, :is_downvote, :reference_type, :reference_id)
+     params.permit(:is_downvote, :reference_type, :reference_id)
   end
 end
