@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router'
 import { CreatePostComponent } from '../create-post/create-post.component'
 import { PostUpVoteCountPipe, PostDownVoteCountPipe } from '../pipes/post-up-vote-count.pipe'
 import { PostCommentCountPipe } from '../pipes/post-comment-count.pipe'
+import { PostCardComponent } from '../post-card/post-card.component'
 
 @Component({
   selector: 'app-my-posts',
@@ -21,6 +22,7 @@ import { PostCommentCountPipe } from '../pipes/post-comment-count.pipe'
     PostCommentCountPipe,
     PostDownVoteCountPipe,
     NgOptimizedImage,
+    PostCardComponent,
   ],
 })
 export class MyPostsComponent implements OnInit {
