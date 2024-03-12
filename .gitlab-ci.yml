@@ -1,0 +1,12 @@
+stages:
+  - deploy
+
+deploy_frontend:
+  image: node:latest
+  stage: deploy
+  only:
+    - master
+  before_script:
+    - npm install -g vercel
+  script:
+    - vercel --token $VERCEL_TOKEN --prod --name hackqc24
