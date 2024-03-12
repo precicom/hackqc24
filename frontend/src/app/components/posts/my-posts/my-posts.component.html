@@ -1,42 +1,55 @@
-<div class="flex flex-col items-center justify-stretch overflow-y-auto gap-y-3 w-12/12 sm:w-11/12 md:w-8/12 ml-auto mr-auto px-4">
-  
-  <button #closeButton class="btn w-full" onclick="my_modal_1.showModal()">Write a post</button>
+<div
+  class="flex flex-col items-center justify-stretch overflow-y-auto gap-y-3 w-12/12 sm:w-11/12 md:w-8/12 ml-auto mr-auto px-4"
+>
+  <button #closeButton class="btn w-full" onclick="my_modal_1.showModal()">
+    Write a post
+  </button>
 
   <dialog #dialog id="my_modal_1" class="modal">
     <div class="modal-box">
       <form method="dialog">
-        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+          ✕
+        </button>
       </form>
-      <app-create-post (postCreated)="postCreated();dialog.close()"></app-create-post>
+      <app-create-post
+        (postCreated)="postCreated(); dialog.close()"
+      ></app-create-post>
     </div>
   </dialog>
 
   @if(posts; as posts) {
-    <div class="flex flex-col gap-y-3 w-full">
-      @for(post of posts; track post.id) {
-        <div class="flex flex-row bg-slate-300 hover:bg-slate-400 rounded-md p-2 cursor-pointer" [routerLink]="[post.id]">   
-          <div class="line-clamp-2">{{ post.content_text }}</div>
-         
-          <div class="flex flex-row items-center ml-auto">
-            <i class="fa-regular fa-comment fa-lg"></i>
-            <p class="ml-1">{{ post | postCommentCount }}</p>
-          </div>
+  <div class="flex flex-col gap-y-6 w-full mt-4">
+    @for(post of posts; track post.id) {
+    <div
+      class="flex flex-row bg-slate-300 hover:bg-slate-400 rounded-md p-2 cursor-pointer relative"
+      [routerLink]="[post.id]"
+    >
+      <span
+        *ngIf="post.rejection_reason"
+        class="absolute top-0 left-0-0 -mt-4 -ml-6 indicator-item badge badge-warning"
+        >Rejected</span
+      >
+      <div class="line-clamp-2">{{ post.content_text }}</div>
 
-          <div class="flex flex-row items-center ml-4">
-            <i class="fa-regular fa-heart fa-lg"></i>
-            <p class="ml-1">{{ post | postUpVoteCount }}</p>
-          </div>    
-          
-          <!-- <div class="flex flex-row items-center ml-4">
+      <div class="flex flex-row items-center ml-auto">
+        <i class="fa-regular fa-comment fa-lg"></i>
+        <p class="ml-1">{{ post | postCommentCount }}</p>
+      </div>
+
+      <div class="flex flex-row items-center ml-4">
+        <i class="fa-regular fa-heart fa-lg"></i>
+        <p class="ml-1">{{ post | postUpVoteCount }}</p>
+      </div>
+
+      <!-- <div class="flex flex-row items-center ml-4">
             <i class="fa-regular fa-heart fa-lg"></i>
             <p class="ml-1">{{ post.created_at | date }}</p>
           </div>   -->
-        </div>
-      }@empty {
-        <div class="text-center">No posts has been written yet!</div>
-      }
-    </div>  
-  }@else {
-    loading...
-  }  
+    </div>
+    }@empty {
+    <div class="text-center">No posts has been written yet!</div>
+    }
+  </div>
+  }@else { loading... }
 </div>
