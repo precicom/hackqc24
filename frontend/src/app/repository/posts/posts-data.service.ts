@@ -1,25 +1,37 @@
 import { Injectable, inject } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { HttpClient } from '@angular/common/http';
-import { Observable, delay, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Post } from './classes';
-import { MOCK_POSTS } from './mock-data';
 import { environment } from '../../../environments/environment';
+import { Comment } from '../comments/classes';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostsDataService {
   http = inject(HttpClient);
-  authService = inject(AuthService);
 
-  create(post: Partial<Post>) {
-    return this.http.post<Post>(`${environment.apiUrl}/posts`, { post })
+  create(post: FormData) {
+    return this.http.post<Post>(`${environment.apiUrl}/posts`, post )
   }
 
   getById(postId: number): Observable<Post> {
     return this.http.get<Post>(`${environment.apiUrl}/posts/${postId}`)
   }
+
+  comments(postId: number) {
+    return this.http.get<Comment[]>(`${environment.apiUrl}/posts/${postId}/comments`)
+  }
+
+  upVote(postId: number) {
+    return this.http.post(`${environment.apiUrl}/posts/${postId}/up_vote`, {})
+  }
+
+  downVote(postId: number) {
+    return this.http.post(`${environment.apiUrl}/posts/${postId}/down_vote`, {})
+  }
+
 
   getMyPosts(){
      return this.http.get<Post[]>(`${environment.apiUrl}/posts/my_posts`);

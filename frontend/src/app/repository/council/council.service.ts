@@ -10,7 +10,6 @@ import { MOCK_COUNCILS } from './mock-data';
 })
 export class CouncilsDataService {
   http = inject(HttpClient);
-  authService = inject(AuthService);
 
 
   getAll(): Observable<Council[]>{ 

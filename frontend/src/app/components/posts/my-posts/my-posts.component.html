@@ -1,42 +1,42 @@
 <div class="flex flex-col items-center justify-stretch overflow-y-auto gap-y-3 w-12/12 sm:w-11/12 md:w-8/12 ml-auto mr-auto px-4">
-  
-  <button #closeButton class="btn w-full" onclick="my_modal_1.showModal()">Write a post</button>
+  <div [class.hidden]="!posting" class="p-2 border border-transparent py-3 border-b-gray-950 w-full">
+    <div class="flex flex-row items-center h-full w-full">
+      <label class="block">
+        @if (file) {
+          <img #imagePreview src="" class="h-12 cursor-pointer" />
+        } @else {
+          <i class="fa-light fa-image fa-2x p-2 rounded-lg hover:bg-neutral-300 cursor-pointer"></i>
+        }
 
-  <dialog #dialog id="my_modal_1" class="modal">
-    <div class="modal-box">
-      <form method="dialog">
-        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-      </form>
-      <app-create-post (postCreated)="postCreated();dialog.close()"></app-create-post>
+        <input #fileInput type="file" class="absolute invisible w-0 h-0" />
+      </label>
+
+      <textarea
+        #textArea
+        class="textarea ml-2 grow pt-9"
+        placeholder="Votre message..."
+        (keydown.control.enter)="submit(fileInput, textArea)"
+      ></textarea>
+
+      <i
+        *ngIf="!creatingPost"
+        (click)="submit(fileInput, textArea)"
+        class="fa-solid fa-paper-plane-top p-3 rounded-lg hover:bg-neutral-300 cursor-pointer ml-2"
+      ></i>
+
+      <i *ngIf="creatingPost" class="fa-solid fa-spinner fa-spin-pulse p-3 rounded-lg ml-2"></i>
     </div>
-  </dialog>
+  </div>
 
-  @if(posts; as posts) {
-    <div class="flex flex-col gap-y-3 w-full">
-      @for(post of posts; track post.id) {
-        <div class="flex flex-row bg-slate-300 hover:bg-slate-400 rounded-md p-2 cursor-pointer" [routerLink]="[post.id]">   
-          <div class="line-clamp-2">{{ post.content_text }}</div>
-         
-          <div class="flex flex-row items-center ml-auto">
-            <i class="fa-regular fa-comment fa-lg"></i>
-            <p class="ml-1">{{ post | postCommentCount }}</p>
-          </div>
-
-          <div class="flex flex-row items-center ml-4">
-            <i class="fa-regular fa-heart fa-lg"></i>
-            <p class="ml-1">{{ post | postUpVoteCount }}</p>
-          </div>    
-          
-          <!-- <div class="flex flex-row items-center ml-4">
-            <i class="fa-regular fa-heart fa-lg"></i>
-            <p class="ml-1">{{ post.created_at | date }}</p>
-          </div>   -->
-        </div>
-      }@empty {
+  @if (posts; as posts) {
+    <div class="flex flex-col gap-y-6 w-full mt-4">
+      @for (post of posts; track post.id) {
+        <app-post-card [post]="post" [routerLink]="[post.id]"></app-post-card>
+      } @empty {
         <div class="text-center">No posts has been written yet!</div>
       }
-    </div>  
-  }@else {
+    </div>
+  } @else {
     loading...
-  }  
+  }
 </div>

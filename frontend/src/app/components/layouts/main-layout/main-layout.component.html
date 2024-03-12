@@ -1,9 +1,12 @@
 <div class="flex flex-col h-full">
   <!-- top header -->
   <div class="bg-base-300">
-    <div class="navbar">
+    <div class="navbar justify-between">
       <div class="flex-1">
-        <a class="btn btn-ghost text-xl" (click)="home()">Kizos {{ title }}</a>
+        <a class="btn btn-ghost text-xl" (click)="home()">Kizos </a>
+      </div>
+      <div class="flex-1">
+        {{ title }}
       </div>
       <div class="flex-none">
         <ul class="menu menu-horizontal px-1">
@@ -22,42 +25,46 @@
   </div>
 
   <!-- page content -->
-  <div class="grow w-full overflow-y-auto mb-16">
+  <div class="grow w-full">
     <router-outlet></router-outlet>
   </div>
 
   <!-- app footer -->
-  <div class="btm-nav">
-    <button class="bg-pink-200 text-pink-600" (click)="home()">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-5 w-5"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-        />
-      </svg>
-      <span class="btm-nav-label">Home</span>
-    </button>
-    <!--
-      <button class="active bg-blue-200 text-blue-600 border-blue-600">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-        <span class="btm-nav-label">Warnings</span>
-      </button>
-      <button class="bg-teal-200 text-teal-600">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
-        <span class="btm-nav-label">Statics</span>
-      </button>
-      -->
-  </div>
 </div>
 
+<footer>
 
 
+  <div class="fixed z-50 w-auto -translate-x-1/2 bg-white border border-gray-200 rounded-full bottom-4 left-1/2 dark:bg-gray-700 dark:border-gray-600 p-2">
+    <div class="flex h-full max-w-lg justify-between mx-auto">
+        <button data-tooltip-target="tooltip-self" type="button" class="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 dark:hover:bg-gray-800 group"  [routerLink]="['/posts/my-posts']">
+          <!--i class="fa-solid fa-message"></i-->
+            <span>Mes commentaires</span>
+        </button>
+        <div id="tooltip-self" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+          Mes commentaires et suggestions
+            <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
+        <div class="flex items-center justify-center">
+            <button data-tooltip-target="tooltip-new" type="button" class="inline-flex items-center justify-center w-10 h-10 font-medium bg-blue-600 rounded-full hover:bg-blue-700 group focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800"  [routerLink]="['/posts']">
+                <i class="fa-solid fa-message-plus text-white"></i>
+                <span class="sr-only">Ajouter</span>
+            </button>
+        </div>
+        <div id="tooltip-new" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+          Nouveau message
+            <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
+        <button data-tooltip-target="tooltip-all" type="button" class="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 dark:hover:bg-gray-800 group"  [routerLink]="['/posts/all-posts']">
+          <!--i class="fa-solid fa-messages"></i-->
+          <span>Tous les messages</span>
+      </button>
+      <div id="tooltip-all" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+        Tous les commentaires et suggestions
+          <div class="tooltip-arrow" data-popper-arrow></div>
+      </div>
 
+    </div>
+</div>
+
+</footer>

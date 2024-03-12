@@ -14,8 +14,8 @@ export class CreatePostComponent {
   dataServices = inject(DataServices)
 
   submit(text: string){
-    this.dataServices.posts.create({ content_text: text }).subscribe(post => {
-      this.postCreated.emit(post)
-    })
+    // this.dataServices.posts.create({ content_text: text }).subscribe(post => {
+    //   this.postCreated.emit(post)
+    // })
   }
 }

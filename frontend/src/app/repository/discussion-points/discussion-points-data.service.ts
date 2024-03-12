@@ -10,7 +10,6 @@ import { DISCUSSION_POINTS } from './mock-data';
 })
 export class DiscussionPointsDataService {
   http = inject(HttpClient);
-  authService = inject(AuthService);
 
   getAll(): Observable<DiscussionPoint[]>{
     // return this.http.get<DiscussionPoint[]>(`${environment.apiUrl}/discussion-point`);

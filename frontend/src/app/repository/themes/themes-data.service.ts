@@ -10,7 +10,6 @@ import { THEMES } from './mock-data';
 })
 export class ThemesDataService {
   http = inject(HttpClient);
-  authService = inject(AuthService);
 
   getAll(): Observable<Theme[]>{
     // return this.http.get<DiscussionPoint[]>(`${environment.apiUrl}/discussion-point`);

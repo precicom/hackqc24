@@ -4,6 +4,7 @@ import { CouncilsDataService } from "./council/council.service";
 import { PostsDataService } from "./posts/posts-data.service";
 import { ThemesDataService } from "./themes/themes-data.service";
 import { UsersDataService } from "./users/users-data.service";
+import { CommentsDataService } from "./comments/comments-data.service";
 
 @Injectable({providedIn: 'root'})
 export class DataServices {
@@ -13,5 +14,6 @@ export class DataServices {
     public posts: PostsDataService,
     public themes: ThemesDataService,
     public users: UsersDataService,
+    public comments: CommentsDataService
   ) {}
 }

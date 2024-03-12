@@ -8,11 +8,30 @@ class CommentsController < ApplicationController
 
   def create
     comment = Comment.new(permitted_params)
+
+    comment.assign_attributes(user_id: current_user.id)
+
     if comment.save
       render json: comment, status: :created
     else
-      render json: { error: 'Failed to create a comment' }, status: :not_acceptable
+      render json: { errors: comment.errors }, status: :not_acceptable
     end
+  end
+
+  def up_vote
+    comment = Comment.find(params[:id])
+
+    user_vote = comment.user_votes.find_or_initialize_by(user_id: current_user.id)
+    user_vote.is_downvote = false
+    user_vote.save
+  end
+
+  def down_vote
+    comment = Comment.find(params[:id])
+
+    user_vote = comment.user_votes.find_or_initialize_by(user_id: current_user.id)
+    user_vote.is_downvote = true
+    user_vote.save
   end
 
   def show
@@ -41,6 +60,6 @@ class CommentsController < ApplicationController
   private
 
   def permitted_params
-    params.permit(:post_id, :content_text, :rejection_reason, :image)
+    params.require(:comment).permit(:post_id, :content_text, :rejection_reason, :image)
   end
 end

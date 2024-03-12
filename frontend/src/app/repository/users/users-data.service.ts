@@ -10,7 +10,10 @@ import { environment } from '../../../environments/environment';
 })
 export class UsersDataService {
   http = inject(HttpClient);
-  authService = inject(AuthService);
+
+  me(){
+    return this.http.get<User>(`${environment.apiUrl}/users/me`);  
+  }
 
   create(user: User): Observable<User>{
     return this.http.post<User>(`${environment.apiUrl}/users`, user);

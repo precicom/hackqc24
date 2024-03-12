@@ -1,6 +1,14 @@
 class UsersController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:create]
 
+  def me
+    if current_user
+      render json: current_user, status: :created
+    else
+      render json: { error: 'Invalid email or user does not exist' }, status: :unauthorized
+    end
+  end
+
   def create
     user = User.new(user_params)
 

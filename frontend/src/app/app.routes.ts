@@ -81,6 +81,11 @@ export const routes: Routes = [
             data: { title: 'Post details' },
           },
           {
+            path: 'posts/all-posts/:postId',
+            component: PostShowComponent,
+            data: { title: 'Post details' },
+          },
+          {
             path: '**',
             redirectTo: '/home',
             pathMatch: 'full',

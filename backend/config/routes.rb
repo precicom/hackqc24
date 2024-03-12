@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   resources :user_votes
-  resources :comments
+  resources :comments do
+    member do
+      post :up_vote
+      post :down_vote
+    end
+  end
   resources :councils
   resources :discussion_points
 
@@ -8,10 +13,20 @@ Rails.application.routes.draw do
     collection do
       get :my_posts
     end
+
+    member do
+      get :comments
+      post :up_vote
+      post :down_vote
+    end
   end
 
   resources :themes
-  resources :users
+  resources :users do
+    collection do
+      get :me
+    end
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
