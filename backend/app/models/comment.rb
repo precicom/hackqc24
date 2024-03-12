@@ -11,6 +11,8 @@ class Comment < ApplicationRecord
   belongs_to :post
   has_many :user_votes, as: :reference, dependent: :destroy
 
+  has_one_attached :image
+
   def moderatable_content
     content_text
   end
