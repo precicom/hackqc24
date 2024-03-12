@@ -11,7 +11,6 @@ import { Comment } from '../comments/classes';
 })
 export class PostsDataService {
   http = inject(HttpClient);
-  authService = inject(AuthService);
 
   create(post: Partial<Post>) {
     return this.http.post<Post>(`${environment.apiUrl}/posts`, { post })

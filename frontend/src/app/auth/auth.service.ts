@@ -1,15 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map, switchMap } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { User } from '../repository/users/classes';
+import { DataServices } from '../repository/dataServices';
+import jwt_decode from 'jwt-decode'
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   http = inject(HttpClient);
+  dataServices = inject(DataServices)
 
   authToken: string  = ''
+  currentUser: User
+  currentUserId: number
 
   private isAuthenticated = new BehaviorSubject<boolean>(false);
 
@@ -17,19 +23,29 @@ export class AuthService {
     const token = this.getToken() ?? ''
     const isLoggedIn = Boolean(token)
 
+    const decoded = jwt_decode(token)
+    this.currentUserId = decoded['user_id']    
+
     this.authToken = token
     this.isAuthenticated.next(isLoggedIn)
   }
 
   login(email: string): Observable<boolean> {
     return this.http.post<any>(`${environment.apiUrl}/login`, {email: email}).pipe(     
-      map(response => {
-        this.setToken(response.token)       
+      switchMap(response => {
+        this.setToken(response.token) 
 
-        this.isAuthenticated.next(true);
+        return this.dataServices.users.me().pipe(
+          map(user => {
+            this.currentUser = user; 
+            this.currentUserId = user.id
 
-        return true;
-      })
+            this.isAuthenticated.next(true);
+
+            return true;
+          })
+        )
+      }),
     );
   }
 

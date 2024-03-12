@@ -9,7 +9,6 @@ import { Comment } from './classes';
 })
 export class CommentsDataService {
   http = inject(HttpClient);
-  authService = inject(AuthService);
 
   getById(commentId: number) {
     return this.http.get<Comment>(`${environment.apiUrl}/comments/${commentId}`)

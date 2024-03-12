@@ -3,7 +3,7 @@ import { DataServices } from '../../../repository/dataServices'
 import { Post } from '../../../repository/posts/classes'
 import { TimeDiffProPipe } from '../../../pipes/time-diff-pro/time-diff-pro.pipe'
 import { PostCommentCountPipe } from '../pipes/post-comment-count.pipe'
-import { PostDownVoteCountPipe, PostUpVoteCountPipe } from '../pipes/post-up-vote-count.pipe'
+import { CurrentUserUpVotedPipe, PostDownVoteCountPipe, PostUpVoteCountPipe } from '../pipes/post-up-vote-count.pipe'
 import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
 import { Comment } from '../../../repository/comments/classes'
@@ -24,6 +24,7 @@ import { CommentShowComponent } from '../../comments/comment-show/comment-show.c
     SortByPipe,
     CommentShowComponent,
     PostDownVoteCountPipe,
+    CurrentUserUpVotedPipe,
   ],
 })
 export class PostShowComponent implements AfterViewInit {
