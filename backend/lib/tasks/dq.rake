@@ -7,8 +7,7 @@ namespace :dq do
     id = args[:id]
     base_uri = URI("https://pab.donneesquebec.ca/api/3/action/datastore_search")
     query_params = { resource_id: id }
-    uri = base_uri.merge(query_params.to_query)
-
+    uri = URI::HTTPS.build(host: base_uri.host, path: base_uri.path, query: query_params.to_query)
     response = Net::HTTP.get(uri)
 
     puts response
