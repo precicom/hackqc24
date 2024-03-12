@@ -32,7 +32,13 @@ deploy_frontend:
   script:
     - cd frontend
     - npm install
-    - vercel --token $VERCEL_TOKEN --prod --yes --name hackqc24
+    - vercel --token $VERCEL_TOKEN --prod --yes --name hackqc24 > deployment-url.txt
+    - code=$?
+    - |
+      if [ $code -eq 0 ]; then
+        deploymentUrl=`cat deployment-url.txt`
+        vercel alias $deploymentUrl hackqc24.vercel.app
+      fi
 
 deploy_backend:
   extends: .restart_app_service
