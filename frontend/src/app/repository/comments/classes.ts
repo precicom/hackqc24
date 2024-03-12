@@ -1,3 +1,5 @@
+import { UserVote } from "../user-votes/classes"
+
 export interface Comment {
   id: number
   user_id: number
@@ -6,6 +8,7 @@ export interface Comment {
   image: File
   rejection_reason: string
   created_at: string
+  user_votes: UserVote[]
 }
 
 export interface File {

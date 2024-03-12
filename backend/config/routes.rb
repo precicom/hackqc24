@@ -1,12 +1,17 @@
 Rails.application.routes.draw do
   resources :user_votes
-  resources :comments
+  resources :comments do
+    member do
+      post :up_vote
+      post :down_vote
+    end
+  end
   resources :councils
   resources :discussion_points
 
   resources :posts do
     collection do
-      get :my_posts    
+      get :my_posts
     end
 
     member do

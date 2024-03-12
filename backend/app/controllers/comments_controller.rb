@@ -18,6 +18,18 @@ class CommentsController < ApplicationController
     end
   end
 
+  def up_vote
+    comment = Comment.find(params[:id])
+
+    comment.user_votes.create(user_id: current_user.id, is_downvote: false)
+  end
+
+  def down_vote
+    comment = Comment.find(params[:id])
+
+    comment.user_votes.create(user_id: current_user.id, is_downvote: true)
+  end
+
   def show
     comment = Comment.find(params[:id])
     render json: comment, status: :ok

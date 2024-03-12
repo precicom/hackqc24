@@ -11,7 +11,19 @@ export class CommentsDataService {
   http = inject(HttpClient);
   authService = inject(AuthService);
 
+  getById(commentId: number) {
+    return this.http.get<Comment>(`${environment.apiUrl}/comments/${commentId}`)
+  }
+
   create(comment: Partial<Comment> | FormData) {
     return this.http.post<Comment>(`${environment.apiUrl}/comments`, comment)
+  }
+
+  upVote(commentId: number) {
+    return this.http.post<Comment>(`${environment.apiUrl}/comments/${commentId}/up_vote`, {})
+  }
+
+  downVote(commentId: number) {
+    return this.http.post<Comment>(`${environment.apiUrl}/comments/${commentId}/down_vote`, {})
   }
 }
