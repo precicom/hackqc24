@@ -61,8 +61,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_11_235955) do
   end
 
   create_table "discussion_points", force: :cascade do |t|
-    t.integer "theme_id", null: false
-    t.integer "council_id", null: false
+    t.integer "theme_id"
+    t.integer "council_id"
     t.text "generated_summary"
     t.string "minute_link_url"
     t.datetime "created_at", null: false
@@ -72,7 +72,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_11_235955) do
   end
 
   create_table "posts", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.integer "user_id"
     t.integer "theme_id"
     t.text "content_text"
     t.integer "status"
