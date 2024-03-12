@@ -11,7 +11,7 @@
           {{ post.content_text }}
         </p>
 
-        <img *ngIf="post.image" #imagePreview [ngSrc]="post.image" height="300" width="200"/>
+        <img *ngIf="post.image" [ngSrc]="post.image" height="300" width="200"/>
 
         @if (post.rejection_reason) {
           <div class="w-full border border-x-transparent border-b-transparent border-t-gray-950 py-1">
@@ -57,11 +57,8 @@
     <div [class.hidden]="!commenting" class="p-2 border border-transparent py-3 border-b-gray-950">
       <div class="flex flex-row items-center h-full w-full">
         <label class="block">
-          @if (file) {
-            <img #imagePreview src="" class="h-12 cursor-pointer" />
-          } @else {
-            <i class="fa-light fa-image fa-2x p-2 rounded-lg hover:bg-neutral-300 cursor-pointer"></i>
-          }
+          <img [class.hidden]="!file" #imagePreview src="" class="h-12 cursor-pointer" />
+          <i [class.hidden]="file" class="fa-light fa-image fa-2x p-2 rounded-lg hover:bg-neutral-300 cursor-pointer"></i>
 
           <input #fileInput type="file" class="absolute invisible w-0 h-0" />
         </label>
