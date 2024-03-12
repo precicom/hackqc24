@@ -1,10 +1,10 @@
 import { Injectable, inject } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { HttpClient } from '@angular/common/http';
-import { Observable, delay, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Post } from './classes';
-import { MOCK_POSTS } from './mock-data';
 import { environment } from '../../../environments/environment';
+import { Comment } from '../comments/classes';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +19,10 @@ export class PostsDataService {
 
   getById(postId: number): Observable<Post> {
     return this.http.get<Post>(`${environment.apiUrl}/posts/${postId}`)
+  }
+
+  comments(postId: number) {
+    return this.http.get<Comment[]>(`${environment.apiUrl}/posts/${postId}/comments`)
   }
 
   getMyPosts(){

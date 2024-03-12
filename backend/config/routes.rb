@@ -6,7 +6,11 @@ Rails.application.routes.draw do
 
   resources :posts do
     collection do
-      get :my_posts
+      get :my_posts    
+    end
+
+    member do
+      get :comments
     end
   end
 

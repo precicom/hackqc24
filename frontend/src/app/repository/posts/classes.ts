@@ -1,3 +1,4 @@
+import { Comment } from "../comments/classes"
 import { UserVote } from "../user-votes/classes"
 import { User } from "../users/classes"
 
@@ -11,7 +12,7 @@ export interface Post {
   rejection_reason: string
   created_at: string
   user_votes?: Partial<UserVote>[]
-  comments?: Partial<Comment>[]
+  comments?: Comment[]
   user?: User
 }
 

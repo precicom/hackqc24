@@ -1,0 +1,13 @@
+
+<div class="inline-flex flex-col">
+  <div class="inline-flex flex-col rounded-2xl bg-slate-200 min-h-12 p-3">
+    <div>Anonyme</div>
+    <div>{{comment.content_text}}</div>
+    <img *ngIf="comment.image" #imagePreview [ngSrc]="comment.image" height="300" width="200"/>    
+  </div>
+
+  <div class="inline-flex flex-row pl-4">
+    <div class="text-xs">{{ comment.created_at | timeDiffPro }}</div>
+    <div class="ml-4 text-xs cursor-pointer" (click)="like()">J'aime</div>
+  </div>
+</div>

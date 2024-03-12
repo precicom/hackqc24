@@ -24,6 +24,12 @@ class PostsController < ApplicationController
     end
   end
 
+  def comments
+    post = Post.find(params[:id])
+    comments = post.comments
+    render json: comments, status: :ok
+  end
+
   def show
     post = Post.find(params[:id])
     render json: post, status: :ok

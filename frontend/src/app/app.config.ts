@@ -5,6 +5,8 @@ import { routes } from './app.routes';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { TranslateModule } from '@ngx-translate/core';
+import { IMAGE_LOADER, ImageLoaderConfig } from '@angular/common';
+import { environment } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,6 +19,12 @@ export const appConfig: ApplicationConfig = {
       multi: true,
     }, 
     { provide: LOCALE_ID, useValue: 'fr-CA' },
+    {
+      provide: IMAGE_LOADER,
+      useValue: (config: ImageLoaderConfig) => {
+        return `${environment.apiUrl}${config.src}`;
+      },
+    },
     
   ]
 };
