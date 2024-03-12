@@ -7,11 +7,13 @@ import { AuthInterceptor } from './auth/auth-interceptor';
 import { TranslateModule } from '@ngx-translate/core';
 import { IMAGE_LOADER, ImageLoaderConfig } from '@angular/common';
 import { environment } from '../environments/environment';
+import { provideAnimations } from '@angular/platform-browser/animations'
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(withInterceptorsFromDi()),
+    provideAnimations(),
     importProvidersFrom(TranslateModule.forRoot({ useDefaultLang: false })),
     {
       provide: HTTP_INTERCEPTORS,

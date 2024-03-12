@@ -16,7 +16,13 @@ import { CommentDownVoteCountPipe } from '../pipes/comments-down-vote-count.pipe
 export class CommentShowComponent {
   @Input() comment: Comment
 
+  clampText: boolean = true
+
   dataServices = inject(DataServices)
+
+  unClampText() {
+    this.clampText = false
+  }
 
   upVote(){
     this.dataServices.comments.upVote(this.comment.id).subscribe(response => {

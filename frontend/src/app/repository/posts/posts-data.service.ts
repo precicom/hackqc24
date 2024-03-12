@@ -25,6 +25,15 @@ export class PostsDataService {
     return this.http.get<Comment[]>(`${environment.apiUrl}/posts/${postId}/comments`)
   }
 
+  upVote(postId: number) {
+    return this.http.post(`${environment.apiUrl}/posts/${postId}/up_vote`, {})
+  }
+
+  downVote(postId: number) {
+    return this.http.post(`${environment.apiUrl}/posts/${postId}/down_vote`, {})
+  }
+
+
   getMyPosts(){
      return this.http.get<Post[]>(`${environment.apiUrl}/posts/my_posts`);
 

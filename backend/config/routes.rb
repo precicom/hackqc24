@@ -16,6 +16,8 @@ Rails.application.routes.draw do
 
     member do
       get :comments
+      post :up_vote
+      post :down_vote
     end
   end
 

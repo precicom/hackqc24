@@ -2,7 +2,7 @@
 <div class="inline-flex flex-col">
   <div class="inline-flex flex-col rounded-2xl bg-slate-200 min-h-12 p-3">
     <div>Anonyme</div>
-    <div>{{comment.content_text}}</div>
+    <div [class.line-clamp-2]="clampText" (click)="unClampText()">{{comment.content_text}}</div>
     <img *ngIf="comment.image" #imagePreview [ngSrc]="comment.image" height="300" width="200"/>    
   </div>
 
@@ -10,12 +10,12 @@
     <div class="text-xs">{{ comment.created_at | timeDiffPro }}</div>
 
     <div class="flex flex-row items-center ml-6">
-      <i class="fa-regular fa-thumbs-up" (click)="upVote()"></i>
+      <i class="fa-regular fa-thumbs-up cursor-pointer" (click)="upVote()"></i>
       <p class="ml-1">{{ comment | commentUpVoteCount }}</p>
     </div>
 
     <div class="flex flex-row items-center ml-6">
-      <i class="fa-regular fa-thumbs-down" (click)="downVote()"></i>
+      <i class="fa-regular fa-thumbs-down cursor-pointer" (click)="downVote()"></i>
       <p class="ml-1">{{ comment | commentDownVoteCount }}</p>
     </div>
   </div>

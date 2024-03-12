@@ -22,22 +22,29 @@
         }
 
         <div class="flex flex-row">
-          <div class="flex flex-row items-center mr-auto">
-            <i class="fa-regular fa-heart fa-lg"></i>
-            <p class="ml-1">{{ post | postUpVoteCount }}</p>
+          <div class="inline-flex flex-row items-center">        
+            <div class="flex flex-row items-center">
+              <i class="fa-regular fa-thumbs-up cursor-pointer" (click)="upVote()"></i>
+              <p class="ml-1">{{ post | postUpVoteCount }}</p>
+            </div>
+        
+            <div class="flex flex-row items-center ml-6">
+              <i class="fa-regular fa-thumbs-down cursor-pointer" (click)="downVote()"></i>
+              <p class="ml-1">{{ post | postDownVoteCount }}</p>
+            </div>
           </div>
 
           <div class="flex flex-row items-center ml-auto">
-            <p class="ml-1">{{ post | postCommentCount }} commentaires</p>
+            <p class="ml-1">{{ comments?.length ?? 0 }} commentaires</p>
           </div>
         </div>
 
         <div class="w-full border border-x-transparent border-y-gray-950 py-1">
-          <button class="w-6/12 h-10 hover:bg-neutral-300">
+          <button class="w-6/12 h-10 hover:bg-neutral-300" (click)="upVote()">
             <i class="fa-regular fa-heart fa-lg"></i>
             J'aime
           </button>
-          <button class="w-6/12 h-10 hover:bg-neutral-300">
+          <button class="w-6/12 h-10 hover:bg-neutral-300" (click)="toggleCommentBox()">
             <i class="fa-regular fa-comment fa-lg"></i>
             Commenter
           </button>
@@ -57,7 +64,7 @@
       loading comments...
     }
 
-    <div class="absolute left-0 right-0 bottom-0 p-2 border border-transparent border-t-gray-950 bg-white">
+    <div [class.hidden]="!commenting" class="absolute left-0 right-0 bottom-0 p-2 border border-transparent border-t-gray-950 bg-white">
       <div class="flex flex-row items-center h-full w-full">
         <label class="block">
           @if (file) {
@@ -69,11 +76,14 @@
           <input #fileInput type="file" class="absolute invisible w-0 h-0" />
         </label>
 
-        <textarea #textArea class="textarea ml-2 grow" placeholder="Bio"></textarea>
-        <i
+        <textarea #textArea class="textarea ml-2 grow" placeholder="Votre message..." (keydown.control.enter)="submit(fileInput, textArea)"></textarea>
+
+        <i *ngIf="!creatingComment"
           (click)="submit(fileInput, textArea)"
           class="fa-solid fa-paper-plane-top p-3 rounded-lg hover:bg-neutral-300 cursor-pointer ml-2"
         ></i>
+
+        <i *ngIf="creatingComment" class="fa-solid fa-spinner fa-spin-pulse p-3 rounded-lg ml-2"></i>
       </div>
     </div>
   </div>
