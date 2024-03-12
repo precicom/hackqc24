@@ -12,8 +12,8 @@ import { Comment } from '../comments/classes';
 export class PostsDataService {
   http = inject(HttpClient);
 
-  create(post: Partial<Post>) {
-    return this.http.post<Post>(`${environment.apiUrl}/posts`, { post })
+  create(post: FormData) {
+    return this.http.post<Post>(`${environment.apiUrl}/posts`, post )
   }
 
   getById(postId: number): Observable<Post> {

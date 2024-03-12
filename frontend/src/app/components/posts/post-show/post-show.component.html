@@ -11,6 +11,8 @@
           {{ post.content_text }}
         </p>
 
+        <img *ngIf="post.image" #imagePreview [ngSrc]="post.image" height="300" width="200"/>
+
         @if (post.rejection_reason) {
           <div class="w-full border border-x-transparent border-b-transparent border-t-gray-950 py-1">
             <p>
@@ -38,11 +40,11 @@
         </div>
 
         <div class="w-full border border-x-transparent border-y-gray-950 py-1">
-          <button class="w-6/12 h-10 hover:bg-neutral-300" (click)="upVote()">
+          <button class="w-6/12 h-10" (click)="upVote()">
             <i [class.fa-regular]="!(post | currentUserUpVoted)" [class.fa-solid]="(post | currentUserUpVoted)" class="fa-heart fa-lg"></i>
             J'aime
           </button>
-          <button class="w-6/12 h-10 hover:bg-neutral-300" (click)="toggleCommentBox()">
+          <button class="w-6/12 h-10" (click)="toggleCommentBox()">
             <i class="fa-regular fa-comment fa-lg"></i>
             Commenter
           </button>

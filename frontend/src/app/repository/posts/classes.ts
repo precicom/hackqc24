@@ -4,8 +4,7 @@ import { User } from "../users/classes"
 
 export interface Post {
   id: number
-  user_id: number
- 
+  user_id: number 
   content_text: string
   theme_id: number
   status: PostStatuses
@@ -14,6 +13,7 @@ export interface Post {
   user_votes?: Partial<UserVote>[]
   comments?: Comment[]
   user?: User
+  image?: string
 }
 
 export type PostStatuses = 'en_attente_triage' | 'trié' | 'rejeté'

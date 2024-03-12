@@ -5,7 +5,7 @@ export interface Comment {
   user_id: number
   post_id: number
   content_text: string
-  image: File
+  image: string
   rejection_reason: string
   created_at: string
   user_votes: UserVote[]
