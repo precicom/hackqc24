@@ -23,7 +23,7 @@ module Moderatable
     client = OpenAI::Client.new
     response = client.chat(
     parameters: {
-      model: "gpt-4-turbo-preview",
+      model: "gpt-3.5-turbo",
       messages: [{ role: "user", content: "Un message a été évalué par notre bot de modération et a été identifié comme contenant du harcèlement,
        nécessitant une réponse ferme et directe sans excuses. Voici les détails de l'évaluation :
         \n\n#{response}\n\n
