@@ -21,13 +21,17 @@ class CommentsController < ApplicationController
   def up_vote
     comment = Comment.find(params[:id])
 
-    comment.user_votes.create(user_id: current_user.id, is_downvote: false)
+    user_vote = comment.user_votes.find_or_initialize_by(user_id: current_user.id)
+    user_vote.is_downvote = false
+    user_vote.save
   end
 
   def down_vote
     comment = Comment.find(params[:id])
 
-    comment.user_votes.create(user_id: current_user.id, is_downvote: true)
+    user_vote = comment.user_votes.find_or_initialize_by(user_id: current_user.id)
+    user_vote.is_downvote = true
+    user_vote.save
   end
 
   def show
