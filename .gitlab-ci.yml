@@ -9,4 +9,4 @@ deploy_frontend:
   before_script:
     - npm install -g vercel
   script:
-    - vercel --token $VERCEL_TOKEN --prod --name hackqc24
+    - vercel --token $VERCEL_TOKEN --prod --yes --name hackqc24
