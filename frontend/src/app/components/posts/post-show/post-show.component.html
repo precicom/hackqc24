@@ -2,44 +2,55 @@
   <p [routerLink]="['/..']">retour</p>
 
   @if(post; as post){
-    <div class="relative overflow-y-auto mt-4 grow">
-      <div class="flex flex-col gap-y-3">
-        <div class="flex flex-col">
-          <p class="text-lg">John doe</p>
-          <p class="text-xs">{{ post.created_at | timeDiffPro }}</p>
-        </div>   
-    
-        <p [class.line-clamp-2]="clampText" (click)="unClampText()">{{ post.content_text }}</p>
-    
-        <div class="flex flex-row">
-          <div class="flex flex-row items-center mr-auto">
-            <i class="fa-regular fa-heart fa-lg"></i>
-            <p class="ml-1">{{ post | postUpVoteCount }}</p>
-          </div> 
-          
-          <div class="flex flex-row items-center ml-auto">   
-            <p class="ml-1">{{ post | postCommentCount }} commentaires</p>
-          </div>
+  <div class="relative overflow-y-auto mt-4 grow">
+    <div class="flex flex-col gap-y-3">
+      <div class="flex flex-col">
+        <p class="text-lg">John doe</p>
+        <p class="text-xs">{{ post.created_at | timeDiffPro }}</p>
+      </div>
+
+      <p [class.line-clamp-2]="clampText" (click)="unClampText()">
+        {{ post.content_text }}
+      </p>
+
+      @if (post.rejection_reason) {
+      <div
+        class="w-full border border-x-transparent border-b-transparent border-t-gray-950 py-1"
+      >
+        <p>
+          {{ post.rejection_reason }}
+        </p>
+      </div>
+      }
+
+      <div class="flex flex-row">
+        <div class="flex flex-row items-center mr-auto">
+          <i class="fa-regular fa-heart fa-lg"></i>
+          <p class="ml-1">{{ post | postUpVoteCount }}</p>
         </div>
-    
-        <div class="w-full border border-x-transparent border-y-gray-950 py-1">
-          <button class="w-6/12 h-10 hover:bg-neutral-300">
-            <i class="fa-regular fa-heart fa-lg"></i>
-            J'aime
-          </button>
-          <button class="w-6/12 h-10 hover:bg-neutral-300">
-            <i class="fa-regular fa-comment fa-lg"></i>
-            Commenter
-          </button>
+
+        <div class="flex flex-row items-center ml-auto">
+          <p class="ml-1">{{ post | postCommentCount }} commentaires</p>
         </div>
       </div>
 
-      <div class="absolute left-0 right-0 bottom-0 p-2 border border-transparent border-t-gray-950">
-        <textarea class="textarea" placeholder="Bio"></textarea>
+      <div class="w-full border border-x-transparent border-y-gray-950 py-1">
+        <button class="w-6/12 h-10 hover:bg-neutral-300">
+          <i class="fa-regular fa-heart fa-lg"></i>
+          J'aime
+        </button>
+        <button class="w-6/12 h-10 hover:bg-neutral-300">
+          <i class="fa-regular fa-comment fa-lg"></i>
+          Commenter
+        </button>
       </div>
-    </div>    
-  }@else {
-    loading...
-  }
+    </div>
+
+    <div
+      class="absolute left-0 right-0 bottom-0 p-2 border border-transparent border-t-gray-950"
+    >
+      <textarea class="textarea" placeholder="Bio"></textarea>
+    </div>
+  </div>
+  }@else { loading... }
 </div>
-

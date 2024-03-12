@@ -14,7 +14,8 @@ class PostsController < ApplicationController
   def create
     post = Post.new(permitted_params)
     post.user_id = current_user.id
-
+    #jsute for the moment to be able to create post 
+    post.theme_id = 1
     if post.save
       render json: post, status: :created
     else
