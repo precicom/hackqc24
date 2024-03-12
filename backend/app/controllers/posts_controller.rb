@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: %i[index show]
 
   def index
-    posts = Post.all
+    posts = Post.all.where(status: 'accepted')
     render json: posts, status: :ok
   end
 
