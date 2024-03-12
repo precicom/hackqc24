@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { DataServices } from '../../../repository/dataServices';
 import { Observable } from 'rxjs';
 import { Post } from '../../../repository/posts/classes';
@@ -16,8 +16,15 @@ import { PostCommentCountPipe } from '../pipes/post-comment-count.pipe';
     imports: [CommonModule, RouterModule, CreatePostComponent, PostUpVoteCountPipe, PostCommentCountPipe, PostDownVoteCountPipe]
 })
 export class MyPostsComponent implements OnInit {
+  @ViewChild('textArea', { static: false }) textAreaRef: ElementRef<HTMLTextAreaElement>
+  @ViewChild('fileInput', { static: false }) fileInputRef: ElementRef<HTMLInputElement>
+  @ViewChild('imagePreview', { static: false }) imagePreviewRef: ElementRef<HTMLImageElement>
+  
   dataServices = inject(DataServices)
   posts?: Post[]
+  creatingPost: boolean = false
+  posting: boolean = true
+  file: File
 
   posts$: Observable<Post[]> = this.dataServices.posts.getMyPosts() 
 
@@ -33,5 +40,9 @@ export class MyPostsComponent implements OnInit {
     this.dataServices.posts.getMyPosts().subscribe(posts => {
       this.posts = posts
     })
+  }
+
+  submit(fileInput, textArea){
+
   }
 }
