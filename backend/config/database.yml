@@ -22,4 +22,9 @@ test:
 
 production:
   <<: *default
-  database: storage/production.sqlite3
+  adapter: mysql2
+  ssl_mode: :required
+  database: hackqc24_precicom
+  host: <%= ENV['DB_SERV'] || ENV['DB_HOST'] %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASS'] %>

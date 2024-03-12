@@ -1,5 +1,24 @@
+include:
+  - project: $CI_COMMON_PROJECT
+    file: docker/build_image.yml
+  - project: $CI_COMMON_PROJECT
+    file: azure/restart_app_service.yml
+
 stages:
+  - build
   - deploy
+
+build_push_image:
+  extends: .build_image
+  stage: build
+  only:
+    - master
+  script:
+    # Add additional tags
+    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+    # Push all tags to the registry
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
 
 deploy_frontend:
   image: node:latest
@@ -12,3 +31,14 @@ deploy_frontend:
     - cd frontend
     - npm install
     - vercel --token $VERCEL_TOKEN --prod --yes --name hackqc24
+
+deploy_backend:
+  extends: .restart_app_service
+  stage: deploy
+  only:
+    - master
+  variables:
+    CLIENT_ID: "$AZURE_CLIENT_ID"
+    TENANT_ID: "$AZURE_TENANT_ID"
+    RESOURCE_GROUP: "maibec-cnp-staging"
+    APP_SERVICE: "maibec-cnp-soumissionneur-staging-backend"
