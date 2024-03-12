@@ -40,5 +40,5 @@ deploy_backend:
   variables:
     CLIENT_ID: "$AZURE_CLIENT_ID"
     TENANT_ID: "$AZURE_TENANT_ID"
-    RESOURCE_GROUP: "maibec-cnp-staging"
-    APP_SERVICE: "maibec-cnp-soumissionneur-staging-backend"
+    RESOURCE_GROUP: "HackQC24"
+    APP_SERVICE: "hackqc24-precicom-backend"
