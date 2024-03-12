@@ -61,29 +61,29 @@ export const routes: Routes = [
               {
                 path: 'my-posts',
                 component: MyPostsComponent,
-                data: { title: 'My posts' },                   
+                data: { title: 'Mes soumissions' },                   
               },            
               {
                 path: 'all-posts',
                 component: PostListComponent,
-                data: { title: 'All posts' },     
+                data: { title: 'Ma communauté' },     
               },
               {
                 path:'create',
                 component: CreatePostComponent,
-                data: { title: 'Create a Post' },     
+                data: { title: 'Créer une soumission' },     
               }
             ]
           },
           {
             path: 'posts/my-posts/:postId',
             component: PostShowComponent,
-            data: { title: 'Post details' },
+            data: { title: 'Détails de la soumission' },
           },
           {
             path: 'posts/all-posts/:postId',
             component: PostShowComponent,
-            data: { title: 'Post details' },
+            data: { title: 'Détails de la soumission' },
           },
           {
             path: '**',

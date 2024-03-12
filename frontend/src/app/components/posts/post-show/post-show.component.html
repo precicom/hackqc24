@@ -21,6 +21,16 @@
           </div>
         }
 
+        <div class="flex flex-row-reverse gap-x-2">
+          <div class="badge badge-primary">Thème XYZ</div>
+          <div class="badge badge-primary">Catégorie XYZ</div>
+        </div>
+
+        <div class="flex flex-row-reverse gap-x-2">
+          <div class="badge badge-secondary">Conseil X</div>
+          <div class="badge badge-secondary">Conseil Y</div>
+        </div>
+
         <div class="flex flex-row">
           <div class="inline-flex flex-row items-center">        
             <div class="flex flex-row items-center">
@@ -34,12 +44,14 @@
             </div>
           </div>
 
-          <div class="flex flex-row items-center ml-auto">
+          <div class="flex flex-row items-center ml-auto cursor-pointer" (click)="toggleComments()">
             <p class="ml-1">{{ comments?.length ?? 0 }} commentaires</p>
           </div>
         </div>
 
-        <div class="w-full border border-x-transparent border-y-gray-950 py-1">
+        <div class="w-full border border-transparent border-t-gray-950 py-1"></div>
+
+        <!-- <div class="w-full border border-x-transparent border-y-gray-950 py-1">
           <button class="w-6/12 h-10" (click)="upVote()">
             <i [class.fa-regular]="!(post | currentUserUpVoted)" [class.fa-solid]="(post | currentUserUpVoted)" class="fa-heart fa-lg"></i>
             J'aime
@@ -48,40 +60,49 @@
             <i class="fa-regular fa-comment fa-lg"></i>
             Commenter
           </button>
-        </div>        
+        </div>         -->
       </div>
     } @else {
       loading...
-    }
+    } 
 
-    <div [class.hidden]="!commenting" class="p-2 border border-transparent py-3 border-b-gray-950">
-      <div class="flex flex-row items-center h-full w-full">
-        <label class="block">
-          <img [class.hidden]="!file" #imagePreview src="" class="h-12 cursor-pointer" />
-          <i [class.hidden]="file" class="fa-light fa-image fa-2x p-2 rounded-lg hover:bg-neutral-300 cursor-pointer"></i>
+    @if(showComments) {    
+      @if(!commenting) {
+        <div class="flex flex-row items-center">
+          <button class="btn ml-auto mr-auto" (click)="toggleCommentBox()">Ajouter un commentaire</button>   
+        </div>     
+      }  
 
-          <input #fileInput type="file" class="absolute invisible w-0 h-0" />
-        </label>
+      <div [class.hidden]="!commenting" class="p-2 border border-transparent py-3 border-b-gray-950">
+        <div class="flex flex-row items-center h-full w-full">
+          <label class="block">
+            <img [class.hidden]="!file" #imagePreview src="" class="h-12 cursor-pointer" />
+            <i [class.hidden]="file" class="fa-light fa-image fa-2x p-2 rounded-lg hover:bg-neutral-300 cursor-pointer"></i>
+  
+            <input [imagePreview]="imagePreview" (imagePreviewFile)="setFile($event)" #fileInput type="file" class="absolute invisible w-0 h-0" />
+          </label>
+  
+          <textarea #textArea class="textarea ml-2 grow h-10" placeholder="Votre message..." (keydown.control.enter)="submit(fileInput, textArea)"></textarea>
+  
+          <i *ngIf="!creatingComment"
+            (click)="submit(fileInput, textArea)"
+            class="fa-solid fa-paper-plane-top p-3 rounded-lg hover:bg-neutral-300 cursor-pointer ml-2"
+          ></i>
+  
+          <i *ngIf="creatingComment" class="fa-solid fa-spinner fa-spin-pulse p-3 rounded-lg ml-2"></i>
+        </div>
+      </div>   
 
-        <textarea #textArea class="textarea ml-2 grow" placeholder="Votre message..." (keydown.control.enter)="submit(fileInput, textArea)"></textarea>
 
-        <i *ngIf="!creatingComment"
-          (click)="submit(fileInput, textArea)"
-          class="fa-solid fa-paper-plane-top p-3 rounded-lg hover:bg-neutral-300 cursor-pointer ml-2"
-        ></i>
-
-        <i *ngIf="creatingComment" class="fa-solid fa-spinner fa-spin-pulse p-3 rounded-lg ml-2"></i>
-      </div>
-    </div>
-
-    @if (comments; as comments) {
-      <div class="flex flex-col gap-y-3 mt-3">
-        @for (comment of comments | sortBy: 'created_at' : 'reverse'; track comment.id) {
-          <app-comment-show [comment]="comment"></app-comment-show>
-        }
-      </div>
-    } @else {
-      loading comments...
-    }   
+      @if (comments; as comments) {
+        <div class="flex flex-col gap-y-3 mt-3">
+          @for (comment of comments | sortBy: 'created_at' : 'reverse'; track comment.id) {
+            <app-comment-show [comment]="comment"></app-comment-show>
+          }
+        </div>
+      } @else {
+        loading comments...
+      } 
+    }     
   </div>
 </div>

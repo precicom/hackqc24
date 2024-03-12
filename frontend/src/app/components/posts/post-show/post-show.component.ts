@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, ViewChild, inject, numberAttribute } from '@angular/core'
+import { Component, ElementRef, Input, ViewChild, inject, numberAttribute } from '@angular/core'
 import { DataServices } from '../../../repository/dataServices'
 import { Post } from '../../../repository/posts/classes'
 import { TimeDiffProPipe } from '../../../pipes/time-diff-pro/time-diff-pro.pipe'
@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router'
 import { Comment } from '../../../repository/comments/classes'
 import { SortByPipe } from '../../../pipes/sort-by/sort-by.pipe'
 import { CommentShowComponent } from '../../comments/comment-show/comment-show.component'
+import { ImagePreviewDirective } from '../../directives/image-preview.directive'
 
 @Component({
   selector: 'app-post-show',
@@ -26,9 +27,10 @@ import { CommentShowComponent } from '../../comments/comment-show/comment-show.c
     PostDownVoteCountPipe,
     CurrentUserUpVotedPipe,
     NgOptimizedImage,
+    ImagePreviewDirective
   ],
 })
-export class PostShowComponent implements AfterViewInit {
+export class PostShowComponent {
   @ViewChild('textArea', { static: false }) textAreaRef: ElementRef<HTMLTextAreaElement>
   @ViewChild('fileInput', { static: false }) fileInputRef: ElementRef<HTMLInputElement>
   @ViewChild('imagePreview', { static: false }) imagePreviewRef: ElementRef<HTMLImageElement>
@@ -44,32 +46,23 @@ export class PostShowComponent implements AfterViewInit {
   file: File
   commenting: boolean = false
   creatingComment: boolean = false
+  showComments: boolean = false
 
   post?: Post
   comments: Comment[] = []
   dataServices = inject(DataServices)
 
-  ngAfterViewInit(): void {
-    this.fileInputRef.nativeElement.addEventListener('change', () => {
-      const reader = new FileReader()
-
-      this.file = this.fileInputRef.nativeElement.files.item(0)
-
-      reader.onloadend = () => {
-        this.imagePreviewRef.nativeElement.src = reader.result as string
-      }
-
-      if (this.file) {
-        reader.readAsDataURL(this.file)
-      }
-    })
-  }
-
   unClampText() {
     this.clampText = false
   }
 
-  toggleCommentBox() {
+  toggleComments() {
+    this.showComments = true
+
+    this.fetchComments()
+  }
+
+  toggleCommentBox() { 
     this.commenting = !this.commenting
 
     if(this.commenting){
@@ -77,6 +70,12 @@ export class PostShowComponent implements AfterViewInit {
         this.textAreaRef.nativeElement.focus()
       }, 0)
     }
+  }
+
+  fetchComments(){    
+    this.dataServices.posts.comments(this.post.id).subscribe(comments => {
+      this.comments = comments     
+    })
   }
 
   upVote(){
@@ -89,6 +88,10 @@ export class PostShowComponent implements AfterViewInit {
     this.dataServices.posts.downVote(this.post.id).subscribe(() => {
       this.refreshPost()
     })
+  }
+
+  setFile(file: File){
+    this.file = file
   }
 
   refreshPost(){
@@ -124,6 +127,5 @@ export class PostShowComponent implements AfterViewInit {
         this.creatingComment = false
       })
     })
-  }
-  
+  }  
 }
