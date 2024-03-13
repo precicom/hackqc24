@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, QueryList, ViewChildren, inject, numberAttribute } from '@angular/core';
 import { DataServices } from '../../../repository/dataServices';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
 import { Post } from '../../../repository/posts/classes';
 import { PostCardComponent } from "../post-card/post-card.component";
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 import {CdkAccordionModule, CDK_ACCORDION} from '@angular/cdk/accordion';
 import { SearchInputComponent } from "../../form-fields/search-input/search-input.component";
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Theme } from '../../../repository/themes/classes';
 
 interface CategoryVM
   {
@@ -21,6 +23,7 @@ interface ViewModel {
   categories: CategoryVM[]
 }
 
+@UntilDestroy()
 @Component({
     selector: 'app-post-list',
     standalone: true,
@@ -28,13 +31,36 @@ interface ViewModel {
     styleUrl: './post-list.component.scss',
     imports: [CommonModule, PostCardComponent, RouterModule, MatExpansionModule, CdkAccordionModule, SearchInputComponent]
 })
-export class PostListComponent implements OnInit{
+export class PostListComponent implements OnInit {
   @ViewChildren('accordion', { read: CDK_ACCORDION }) accordions: QueryList<MatAccordion>
+  @Input({ transform: numberAttribute}) set themeId(themeId: number){
+    this.activeThemeId$.next(themeId)
+  }
+
+  activatedRoute = inject(ActivatedRoute)
+  router = inject(Router)
   dataServices = inject(DataServices)
+  activeThemeId$ = new BehaviorSubject<number>(null)
 
   posts$: Observable<Post[]>
+  activeTheme: Theme
 
   vm: ViewModel
+  themes: Theme[]
+
+  firstRender = true
+
+  onThemeSelect(theme: Theme){
+    this.activeThemeId$.next(theme.id)
+    this.activeTheme = theme
+  }
+
+  removeActiveTheme(){
+    this.activeThemeId$.next(null)
+    this.activeTheme = null
+
+    this.router.navigate(['.'], {queryParams: {themeId: null}, replaceUrl: false, relativeTo: this.activatedRoute})
+  }
 
   expandAll(){
     this.accordions.forEach(accordion => {
@@ -50,9 +76,31 @@ export class PostListComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.dataServices.posts.getAll().subscribe(posts => {
-      this.vm = this.buildViewModel(posts)
-    })
+    combineLatest([
+      this.dataServices.themes.getAll(),
+      this.dataServices.posts.getAll(),
+      this.activeThemeId$
+    ]).pipe(
+      untilDestroyed(this)
+    ).subscribe(([themes, posts, activeThemeId]) => {   
+      let filteredPost = posts
+
+      this.themes = themes
+
+      if(activeThemeId){
+        filteredPost = posts.filter(post => post.theme.id === activeThemeId)
+        this.activeTheme = themes.find(theme => theme.id === activeThemeId)
+      }
+   
+      this.vm = this.buildViewModel(filteredPost)
+
+      if(this.firstRender){
+        this.firstRender = false
+        setTimeout(() => {
+          this.expandAll()
+        }, 200)
+      }
+    })      
   }
 
   // groups posts by categories and theme name (aka groupBy on two fields at the same time)

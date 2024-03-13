@@ -1,9 +1,7 @@
 import { Injectable, inject } from '@angular/core'
-import { AuthService } from '../../auth/auth.service'
 import { HttpClient } from '@angular/common/http'
-import { Observable, delay, of } from 'rxjs'
+import { Observable } from 'rxjs'
 import { Theme } from './classes'
-import { THEMES } from './mock-data'
 import { environment } from '../../../environments/environment'
 
 @Injectable({

@@ -1,3 +1,28 @@
+
+
+
+
+<div class="flex flex-row items-center gap-x-2 mt-5">
+  <div class="dropdown">
+    <div tabindex="0" role="button" class="btn m-1">Filtrer par:</div>
+    <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100/90 rounded-box w-52">
+      @for(theme of themes; track theme.id){
+        <li (click)="onThemeSelect(theme)" class="rounded-box" [class.bg-purple-200]="theme.id === activeTheme?.id"><a class="hover:bg-primary-100">{{ theme.name }}</a></li>
+      }
+    </ul>
+  </div>
+
+  @if(activeTheme){
+    <button class="btn bg-purple-200 h-12">
+      <div class="flex flex-row flex-nowrap items-stretch gap-y-0" (click)="removeActiveTheme()">
+        <div class="">{{activeTheme.name}}</div>
+        <i class="fa-solid fa-xmark ml-4"></i>
+      </div> 
+    </button>
+  } 
+</div>
+
+
 <div class="flex flex-row items-center gap-x-2 mt-5">
   <button class="btn" (click)="expandAll()">Tout voir</button>
   <button class="btn" (click)="collapseAll()">Tout fermer</button>

@@ -93,6 +93,8 @@ export class MyPostsComponent implements OnInit {
         this.posts = posts
         this.creatingPost = false
       })
+    }, error => {
+      this.creatingPost = false
     })
   }
 }

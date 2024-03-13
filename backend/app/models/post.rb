@@ -27,4 +27,12 @@ class Post < ApplicationRecord
       classify!
     end
   end
+
+  def up_votes
+    user_votes.where(is_downvote: false).count
+  end
+
+  def comments_count
+    comments.count
+  end
 end

@@ -34,6 +34,7 @@ module Themable
           temperature: 0.5,
       })
       theme_data = response.dig("choices", 0, "message", "content").split(' | ')
+
       return if theme_data.size != 3
 
       theme_info = theme_data.last.split(':')

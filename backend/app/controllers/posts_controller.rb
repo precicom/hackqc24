@@ -48,7 +48,7 @@ class PostsController < ApplicationController
 
   def show
     post = Post.find(params[:id])
-    render json: post, include: ['user_votes', 'comments', 'comments.user_votes'], status: :ok
+    render json: post, include: ['user_votes', 'comments', 'comments.user_votes', 'theme'], status: :ok
   end
 
   def update
