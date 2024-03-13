@@ -40,7 +40,7 @@
 </div>
 
 @if (vm; as vm) {
-  <cdk-accordion class="flex flex-col gap-y-8 mt-8 mb-24" #accordion [multi]="true">
+  <cdk-accordion class="flex flex-col gap-y-8 mt-8" #accordion [multi]="true">
     @for (category of vm.categories; track category.key) {
       <cdk-accordion-item #accordionItem="cdkAccordionItem">
       
