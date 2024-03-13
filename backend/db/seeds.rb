@@ -46,7 +46,7 @@ Post.create({
 theme3 = Theme.create({
                         name: 'alimentation saine',
                         generated_summary: 'Recettes pour des repas équilibrés',
-                        category: 'greffe'
+                        category: 'loisirs_et_culture'
                       })
 
 Post.create({

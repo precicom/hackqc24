@@ -33,7 +33,7 @@
       @for (post of posts; track post.id) {
         <app-post-card [post]="post" [showStatistics]="true" [routerLink]="[post.id]"></app-post-card>
       } @empty {
-        <div class="text-center">No posts has been written yet!</div>
+        <div class="text-center">Aucun message n'a encore été écrit!</div>
       }
     </div>
   } @else {
