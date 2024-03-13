@@ -21,7 +21,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :themes
+  resources :themes do
+    collection do
+      get :popular
+    end
+  end
   resources :users do
     collection do
       get :me
