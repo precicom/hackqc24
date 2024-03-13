@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, Input, OnInit, QueryList, ViewChildren, inject, numberAttribute } from '@angular/core';
+import { Component, Input, OnInit, QueryList, ViewChildren, inject, numberAttribute } from '@angular/core';
 import { DataServices } from '../../../repository/dataServices';
-import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { Post } from '../../../repository/posts/classes';
 import { PostCardComponent } from "../post-card/post-card.component";
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -69,8 +69,7 @@ export class PostListComponent implements OnInit {
 
   expandAll(){
     this.accordions.forEach(accordion => {
-      accordion.openAll()
-    
+      accordion.openAll()    
     }) 
   }
 

@@ -37,8 +37,14 @@
 
 @if(showTagsBellow){
   <div class="flex flex-row-reverse gap-x-2 mt-1">
-    <div class="badge badge-primary">{{ post.theme.name }}</div>
-    <div class="badge badge-secondary">{{ post.theme.category }}</div>
+    <div class="badge badge-primary truncate">
+      <div class="truncate">{{ post.theme.name }}</div>     
+    </div>
+    <div class="badge badge-secondary truncate">
+      <div class="truncate">
+        {{ post.theme.category }}
+      </div> 
+    </div>
   </div>
 }
 

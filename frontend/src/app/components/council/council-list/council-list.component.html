@@ -1,22 +1,56 @@
 <div class="px-4">
-  <div class="flex flex-row justify-between">
-    <div>filtrer</div>
-
-    <div>rechercher</div>
+  <div class="flex flex-row justify-between my-3">
+    <label class="ml-auto flex items-center items-stretch rounded-lg border border-slate-200 focus:border-slate-200 h-8">
+      <input class="bg-transparent p-2  focus:outline-none focus:border-0" placeholder="Rechercher" type="text" class="grow">
+      <div class="flex flex-row items-center justify-center cursor-pointer w-8">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+    </label>
   </div>
 
-  <div class="flex flex-col overflow-y-auto space-y-4">
-    @if (councils$ | async; as councils) {
+  <div class="flex flex-row flex-wrap items-center gap-2 mt-5">
+    <div class="drawer w-fit">
+      <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+      <div class="drawer-content">    
+        <label for="my-drawer" class="btn btn-sm drawer-button">Filtrer par:</label>
+      </div> 
+  
+      <div class="drawer-side z-50">
+        <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+        <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+          @for(theme of themes$ | async; track theme.id){
+            <li (click)="toggleTheme(theme)" class="rounded-box" [class.bg-gray-400]="selectedThemeIds.includes(theme.id)"><a class="hover:bg-primary-100">{{ theme.name }}</a></li>
+          }        
+        </ul>
+      </div>
+    </div>
+
+    @for(theme of selectedThemes; track theme.id){
+      <button class="btn btn-sm bg-purple-200">
+        <div class="flex flex-row flex-nowrap items-stretch gap-y-0" (click)="toggleTheme(theme)">
+          <div class="">{{theme.name}}</div>
+          <i class="fa-solid fa-xmark ml-4"></i>
+        </div> 
+      </button>
+    }
+  </div>
+
+
+  <div class="flex flex-col overflow-y-auto space-y-4 my-4">
+    @if (councilsList$ | async; as councils) {
       @for (council of councils; track council.id) {
-        <div class="bg-slate-500 rounded-md p-2" [routerLink]="[council.id]">
-          <div>{{ council.title }}</div>
-          <div>{{ council.date }}</div>
+        <div class="flex flex-col gap-y-2 bg-slate-300 rounded-xl p-2" [routerLink]="[council.id]">
+          <div class="font-semibold">{{ council.title }}</div>
+          <div class="line-clamp-2">{{ council.generated_summary }}</div>
+          <div>{{ council.date | date }}</div>
         </div>
       } @empty {
         <div class="text-center">Aucune données disponibles</div>
       }
     } @else {
-      <span class="loading loading-dots loading-lg"></span>
+      <div class="flex flex-grow items-center justify-center">
+        <span class="loading loading-dots loading-lg"></span>
+      </div>
     }
   </div>
 </div>

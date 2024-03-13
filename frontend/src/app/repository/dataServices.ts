@@ -6,6 +6,7 @@ import { ThemesDataService } from "./themes/themes-data.service";
 import { UsersDataService } from "./users/users-data.service";
 import { CommentsDataService } from "./comments/comments-data.service";
 
+/** This service groups all data services in one place */
 @Injectable({providedIn: 'root'})
 export class DataServices {
   constructor(
