@@ -11,11 +11,11 @@
 <div class="flex flex-col overflow-y-auto gap-y-3">
   @if (posts$ | async; as posts) {
     @for (post of posts; track post.id) {
-      <app-post-card [post]="post" [routerLink]="[post.id]"></app-post-card>     
+      <app-post-card [post]="post" [routerLink]="[post.id]"></app-post-card>
     } @empty {
       <div class="text-center">No data available</div>
     }
   } @else {
-    loading...
+    <span className="loading loading-dots loading-lg"></span>
   }
 </div>

@@ -6,17 +6,17 @@
   </div>
 
   <div class="flex flex-col overflow-y-auto space-y-4">
-    @if( councils$ | async; as councils) {
-      @for(council of councils; track council.id) {
+    @if (councils$ | async; as councils) {
+      @for (council of councils; track council.id) {
         <div class="bg-slate-500 rounded-md p-2" [routerLink]="[council.id]">
-          <div>{{ council.title }}</div>   
-          <div>{{ council.date }}</div>     
+          <div>{{ council.title }}</div>
+          <div>{{ council.date }}</div>
         </div>
-      }@empty {
+      } @empty {
         <div class="text-center">No data available</div>
       }
-    }@else {
-      loading...
-    }  
+    } @else {
+      <span className="loading loading-dots loading-lg"></span>
+    }
   </div>
 </div>

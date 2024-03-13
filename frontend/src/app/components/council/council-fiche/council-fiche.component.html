@@ -1,20 +1,19 @@
 <div class="px-4">
-<div class="flex flex-row justify-between">
-  <div>filtrer</div>
+  <div class="flex flex-row justify-between">
+    <div>filtrer</div>
 
-  <div>rechercher</div>
-</div>
+    <div>rechercher</div>
+  </div>
 
-<br>
+  <br />
 
-@if(council$ | async; as council){
-  <div>Titre du conseil + date + heure</div>
+  @if (council$ | async; as council) {
+    <div>Titre du conseil + date + heure</div>
 
-  <br>
-  
-  <p>Afficher les informations du conseil. Grouper les info par thème et ensuite par catégorie (ou inverse?)</p>
-}@else{
-  loading...
-}
+    <br />
 
+    <p>Afficher les informations du conseil. Grouper les info par thème et ensuite par catégorie (ou inverse?)</p>
+  } @else {
+    <span className="loading loading-dots loading-lg"></span>
+  }
 </div>
