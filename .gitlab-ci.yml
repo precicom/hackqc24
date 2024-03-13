@@ -37,7 +37,7 @@ deploy_frontend:
     - |
       if [ $code -eq 0 ]; then
         deploymentUrl=`cat deployment-url.txt`
-        vercel alias $deploymentUrl hackqc24.vercel.app
+        vercel alias $deploymentUrl hackqc24.vercel.app --token $VERCEL_TOKEN
       fi
 
 deploy_backend:
