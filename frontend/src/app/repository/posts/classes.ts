@@ -1,4 +1,5 @@
 import { Comment } from "../comments/classes"
+import { Theme } from "../themes/classes"
 import { UserVote } from "../user-votes/classes"
 import { User } from "../users/classes"
 
@@ -14,6 +15,7 @@ export interface Post {
   comments?: Comment[]
   user?: User
   image?: string
+  theme?: Theme
 }
 
 export type PostStatuses = 'en_attente_triage' | 'trié' | 'rejeté'
