@@ -9,16 +9,13 @@ import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 import {CdkAccordionModule, CDK_ACCORDION} from '@angular/cdk/accordion';
 import { SearchInputComponent } from "../../form-fields/search-input/search-input.component";
 
-interface ThemeVM {
-  postCount: number
-  name: string
-  posts: Post[]
-}
 interface CategoryVM
   {
-    name: string
+    key: string
+    categoryName: string
+    themeName: string    
     postCount: number
-    themes: ThemeVM[]
+    posts: Post[]
   }
 interface ViewModel {
   categories: CategoryVM[]
@@ -58,28 +55,30 @@ export class PostListComponent implements OnInit{
     })
   }
 
-  // groups posts by categories and then by theme name
+  // groups posts by categories and theme name (aka groupBy on two fields at the same time)
   buildViewModel(posts: Post[]): ViewModel{
-    const categories: CategoryVM[] = posts.reduce((acc, post) => {
-      const category: CategoryVM = acc.find(c => c.name === post.theme.category)
+    const categories = posts.reduce((acc, post) => {
+      let category = acc.find(c => c.categoryName === post.theme.category && c.themeName === post.theme.name)
 
-      if (category) {
-        const theme: ThemeVM = category.themes.find(t => t.name === post.theme.name)
-        if (theme) {
-          category.postCount ++
-          theme.postCount ++
-
-          theme.posts.push(post)
-        } else {
-          category.themes.push({ name: post.theme.name, postCount: 1, posts: [post] })
+      if(!category){
+        category = {
+          key: `${post.theme.category}-${post.theme.name}`,
+          categoryName: post.theme.category,
+          themeName: post.theme.name,
+          postCount: 0,
+          posts: []
         }
-      } else {
-        acc.push({ name: post.theme.category, postCount: 1, themes: [{ name: post.theme.name, postCount: 1 ,posts: [post] }] })
+        acc.push(category)
       }
-      return acc
-    }, [])
-  
 
-    return { categories }
+      category.postCount++
+      category.posts.push(post)
+
+      return acc
+    }, [] as CategoryVM[])
+
+    return {
+      categories: categories
+    }
   }
 }

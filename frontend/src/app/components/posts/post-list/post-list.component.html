@@ -6,38 +6,24 @@
 </div>
 
 @if (vm; as vm) {
-  <cdk-accordion class="flex flex-col gap-y-8 mt-8" #accordion [multi]="true">
-    @for (category of vm.categories; track category.name) {
+  <cdk-accordion class="flex flex-col gap-y-8 mt-8 mb-24" #accordion [multi]="true">
+    @for (category of vm.categories; track category.key) {
       <cdk-accordion-item #accordionItem="cdkAccordionItem">
-
-        <div class="cursor-pointer" (click)="accordionItem.toggle()">
-          <span class="badge badge-lg badge-primary">
-            {{ category.name }}
-            <div class="badge badge-sm badge-ghost ml-2">{{ category.postCount }}</div>
-          </span>        
-        </div>
+      
+        <button class="btn flex flex-row bg-purple-300 h-16" (click)="accordionItem.toggle()">
+          <div class="flex flex-col flex-nowrap items-start gap-y-0 ">
+            <div class="text-xs text-stone-600">{{ category.categoryName | titlecase }} ></div>
+            <div class="text-xl ml-4">{{ category.themeName | titlecase }}</div>
+          </div>        
+          <div class="badge badge-sm badge-ghost ml-2">{{ category.postCount }}</div>
+        </button>    
 
         <div class="ml-8 mt-2" [style.display]="accordionItem.expanded ? '' : 'none'">
-          <cdk-accordion class="flex flex-col gap-y-2" #accordion [multi]="true">
-            @for (theme of category.themes; track theme.name) {
-              <cdk-accordion-item #accordionItem="cdkAccordionItem">
-                
-                <div class="cursor-pointer" (click)="accordionItem.toggle()">
-                  <span class="badge badge-lg badge-secondary">
-                    {{ theme.name }}   
-                    <div class="badge badge-sm badge-ghost ml-2">{{ theme.postCount }}</div>
-                  </span>                  
-                </div>
-
-                <div class="ml-8 mt-2" [style.display]="accordionItem.expanded ? '' : 'none'">
-                  @for (post of theme.posts; track post.id) {
-                    <app-post-card [post]="post" [showStatistics]="true" [showTags]="false" [routerLink]="[post.id]"></app-post-card>
-                  }
-                </div>
-
-              </cdk-accordion-item>
+          <div class="flex flex-col gap-y-2 ml-8 mt-2" [style.display]="accordionItem.expanded ? '' : 'none'">
+            @for (post of category.posts; track post.id) {
+              <app-post-card [post]="post" [showStatistics]="true" [showTags]="false" [routerLink]="[post.id]"></app-post-card>
             }
-          </cdk-accordion>
+          </div>
         </div>
       </cdk-accordion-item>
     } @empty {
