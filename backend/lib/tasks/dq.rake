@@ -1,8 +1,10 @@
+require 'net/http'
+require 'uri'
+
 namespace :dq do
+  # example usage: rake dq:get_ressource["170464b4-e31e-4666-9629-a3c82fea0ae1"]
   desc "gets a data ressourcre form dq api and displays it. parameter is the id of the resource"
   task :get_ressource, [:ressource_id] => :environment do |t, args|
-    require 'net/http'
-    require 'uri'
 
     id = args[:ressource_id]
     base_uri = URI("https://pab.donneesquebec.ca/api/3/action/datastore_search")
@@ -13,10 +15,10 @@ namespace :dq do
     puts response
   end
 
+  # example usage: rake dq:create_package
   desc "creates a package with dq api with default parameters"
   task :create_package => :environment do |t|
-    require 'net/http'
-    require 'uri'
+
     jeton_PAB = ENV.fetch("DQ_API_KEY")
 
     post_data = {
@@ -51,10 +53,10 @@ namespace :dq do
 
   end
 
+  # example usage: rake dq:create_ressource['brice-test-creation']
   desc "creates a ressource inside a specific package with dq api with default parameters"
   task :create_ressource, [:package_id] => :environment do |t, args|
-    require 'net/http'
-    require 'uri'
+
     jeton_PAB = ENV.fetch("DQ_API_KEY")
 
     post_data = {
@@ -93,5 +95,39 @@ namespace :dq do
     puts response.body
 
   end
+end
 
+namespace :youtube do
+  # example usage: rake youtube:get_most_recent_video_url["https://www.youtube.com/playlist?list=PLA29-Xv4NCfaBcRljPD74I5CWyNYrvx1i"]
+  # example usage: rake youtube:get_most_recent_video_url["https://www.youtube.com/playlist?list=PLA29-Xv4NCfaBcRljPD74I5CWyNYrvx1i", 20]
+  desc "gets the most recents video url from youtube playlist, the parameters are the playlist url and the number of videos to fetch"
+  task :get_most_recent_video_url, [:playlist_url, :number_of_videos] => :environment do |t, args|
+
+    require 'google/apis/youtube_v3'
+
+    api_key = ENV.fetch("YT_API_KEY")
+
+    playlist_url = args[:playlist_url]
+    number_of_videos = args[:number_of_videos] || 10
+    youtube = Google::Apis::YoutubeV3::YouTubeService.new
+    youtube.key = api_key
+
+    #https://www.youtube.com/watch?v=sc437zd7Km4&list=PLA29-Xv4NCfaBcRljPD74I5CWyNYrvx1i
+    playlist_id = extract_playlist_id(playlist_url)
+    puts playlist_id
+    result = youtube.list_playlist_items('snippet', playlist_id: playlist_id, max_results: number_of_videos)
+
+    result.items.each do |item|
+      video_id = item.snippet.resource_id.video_id
+      video_url = "https://www.youtube.com/watch?v=#{video_id}"
+      puts video_url
+    end
+  end
+
+  def extract_playlist_id(playlist_url)
+    uri = URI.parse(playlist_url)
+    query = URI.decode_www_form(uri.query || "")
+    params = Hash[query]
+    params['list']
+  end
 end
