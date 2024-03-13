@@ -21,9 +21,9 @@
           </div>
         }
 
-        <div class="flex flex-row-reverse gap-x-2">
-          <div class="badge badge-primary">{{ post.theme.name }}</div>
+        <div class="flex flex-row gap-x-2">
           <div class="badge badge-secondary">{{ post.theme.category }}</div>
+          <div class="badge badge-primary">{{ post.theme.name }}</div>
         </div>
 
         <div class="flex flex-row">
@@ -44,18 +44,7 @@
           </div>
         </div>
 
-        <div class="w-full border border-transparent border-t-gray-950 py-1"></div>
-
-        <!-- <div class="w-full border border-x-transparent border-y-gray-950 py-1">
-          <button class="w-6/12 h-10" (click)="upVote()">
-            <i [class.fa-regular]="!(post | currentUserUpVoted)" [class.fa-solid]="(post | currentUserUpVoted)" class="fa-heart fa-lg"></i>
-            J'aime
-          </button>
-          <button class="w-6/12 h-10" (click)="toggleCommentBox()">
-            <i class="fa-regular fa-comment fa-lg"></i>
-            Commenter
-          </button>
-        </div>         -->
+        <div class="w-full border border-transparent border-t-gray-950 py-1"></div>     
       </div>
     } @else {
       <span class="loading loading-dots loading-lg"></span>

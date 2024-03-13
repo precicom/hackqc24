@@ -4,26 +4,26 @@
   <span *ngIf="post.rejection_reason" class="absolute top-0 left-0-0 -mt-4 -ml-6 indicator-item badge badge-warning">Rejeté</span>
   <div class="line-clamp-2 mr-4">{{ post.content_text }}</div>
 
-  @if(showStatistics){
+  @if (showStatistics) {
     <div class="inline-flex flex-row items-center ml-auto">
       <div class="flex flex-row items-center">
         <i class="fa-regular fa-thumbs-up cursor-pointer"></i>
         <p class="ml-1 w-4">{{ post | postUpVoteCount }}</p>
       </div>
-  
+
       <div class="flex flex-row items-center ml-4">
         <i class="fa-regular fa-thumbs-down cursor-pointer"></i>
         <p class="ml-1 w-4">{{ post | postDownVoteCount }}</p>
       </div>
     </div>
-  
+
     <div class="flex flex-row items-center ml-4">
       <i class="fa-regular fa-comment fa-lg"></i>
       <p class="ml-1 w-4">{{ post | postCommentCount }}</p>
     </div>
   }
 
-  @if(showTags){
+  @if (showTags) {
     <div class="inline-flex flex-row items-center ml-auto gap-2 overflow-hidden">
       <div class="badge badge-primary overflow-hidden">
         <div class="truncate">{{ post.theme.category }}</div>
@@ -31,6 +31,14 @@
       <div class="badge badge-secondary overflow-hidden">
         <div class="truncate">{{ post.theme.name }}</div>
       </div>
-    </div>   
-  } 
+    </div>
+  }
 </div>
+
+@if(showTagsBellow){
+  <div class="flex flex-row-reverse gap-x-2 mt-1">
+    <div class="badge badge-primary">{{ post.theme.name }}</div>
+    <div class="badge badge-secondary">{{ post.theme.category }}</div>
+  </div>
+}
+

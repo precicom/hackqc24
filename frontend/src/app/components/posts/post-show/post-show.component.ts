@@ -83,7 +83,7 @@ export class PostShowComponent implements OnInit {
     if (this.commenting) {
       setTimeout(() => {
         this.textAreaRef.nativeElement.focus()
-      }, 0)
+      }, 50)
     }
   }
 

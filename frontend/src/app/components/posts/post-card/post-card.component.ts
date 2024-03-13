@@ -15,5 +15,6 @@ export class PostCardComponent {
   @Input() post: Post;
   @Input() showStatistics = false
   @Input() showTags = false
+  @Input() showTagsBellow = false
 
 }

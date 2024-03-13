@@ -29,9 +29,9 @@
   </div>
 
   @if (posts; as posts) {
-    <div class="flex flex-col gap-y-6 w-full mt-4">
+    <div class="flex flex-col gap-y-8 w-full mt-4">
       @for (post of posts; track post.id) {
-        <app-post-card [post]="post" [showStatistics]="true" [routerLink]="[post.id]"></app-post-card>
+        <app-post-card [post]="post" [showStatistics]="true" [showTagsBellow]="true" [routerLink]="[post.id]"></app-post-card>
       } @empty {
         <div class="text-center">Aucun message n'a encore été écrit!</div>
       }

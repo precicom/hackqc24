@@ -112,7 +112,7 @@ export class PostListComponent implements OnInit {
         this.firstRender = false
         setTimeout(() => {
           this.expandAll()
-        }, 200)
+        }, 250)
       }
     })      
   }
