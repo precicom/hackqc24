@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-search-input',
@@ -8,9 +8,10 @@ import { Component } from '@angular/core';
   styleUrl: './search-input.component.scss'
 })
 export class SearchInputComponent {
+  @Output() valueChange = new EventEmitter<string>();
 
 
   onChange(value){
-    console.log(value)
+    this.valueChange.emit(value)
   }
 }

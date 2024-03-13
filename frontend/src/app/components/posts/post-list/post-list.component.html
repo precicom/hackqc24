@@ -36,7 +36,7 @@
   <button class="btn" (click)="expandAll()">Tout voir</button>
   <button class="btn" (click)="collapseAll()">Tout fermer</button>
 
-  <app-search-input class="ml-auto"></app-search-input>
+  <app-search-input (valueChange)="search($event)" class="ml-auto"></app-search-input>
 </div>
 
 @if (vm; as vm) {

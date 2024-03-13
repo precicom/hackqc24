@@ -41,6 +41,7 @@ export class PostListComponent implements OnInit {
   router = inject(Router)
   dataServices = inject(DataServices)
   activeThemeId$ = new BehaviorSubject<number>(null)
+  searchValue$ = new BehaviorSubject<string>('')
 
   posts$: Observable<Post[]>
   activeTheme: Theme
@@ -62,6 +63,10 @@ export class PostListComponent implements OnInit {
     this.router.navigate(['.'], {queryParams: {themeId: null}, replaceUrl: false, relativeTo: this.activatedRoute})
   }
 
+  search(value: string){
+    this.searchValue$.next(value)
+  }
+
   expandAll(){
     this.accordions.forEach(accordion => {
       accordion.openAll()
@@ -79,10 +84,11 @@ export class PostListComponent implements OnInit {
     combineLatest([
       this.dataServices.themes.getAll(),
       this.dataServices.posts.getAll(),
+      this.searchValue$,
       this.activeThemeId$
     ]).pipe(
       untilDestroyed(this)
-    ).subscribe(([themes, posts, activeThemeId]) => {   
+    ).subscribe(([themes, posts, searchValue, activeThemeId]) => {   
       let filteredPost = posts
 
       this.themes = themes
@@ -90,6 +96,14 @@ export class PostListComponent implements OnInit {
       if(activeThemeId){
         filteredPost = posts.filter(post => post.theme.id === activeThemeId)
         this.activeTheme = themes.find(theme => theme.id === activeThemeId)
+      }
+
+      if(searchValue){
+        filteredPost = filteredPost.filter(post => {
+          return post.content_text.toLowerCase().includes(searchValue.toLowerCase()) || 
+            post.theme.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+            post.theme.category.toLowerCase().includes(searchValue.toLowerCase())
+        })
       }
    
       this.vm = this.buildViewModel(filteredPost)
