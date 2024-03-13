@@ -8,22 +8,16 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-user1 = User.create({
-                      email: 'jacques_m16@hotmail.com'
-                    })
 
-user2 = User.create({
-                      email: 'jacques_m17@hotmail.com'
-                    })
-
+user = User.first
 theme1 = Theme.create({
-                        name: 'gestion des ordures',
-                        generated_summary: 'Marche à suivre pour émettre une plainte contre le voisin',
+                        name: 'Réduction des ordures',
+                        generated_summary: 'Protéger les générations futures en réduisants les ordures',
                         category: 'environnement'
                       })
 
 Post.create({
-              user_id: user1.id,
+              user_id: user.id,
               content_text: 'Mon voisin ne respecte pas les horaires de collecte des ordures',
               theme: theme1,
               status: 'accepted'
@@ -31,65 +25,65 @@ Post.create({
 
 # create various sets of Posts and Themes that are very distinct form each other
 theme2 = Theme.create({
-                        name: 'sécurité routière',
+                        name: 'Sécurité routière',
                         generated_summary: 'Conseils pour conduire en toute sécurité',
-                        category: 'urbanisme'
+                        category: 'service_police'
                       })
 
 Post.create({
-              user_id: user2.id,
+              user_id: user.id,
               content_text: 'Quelles sont les règles à respecter pour conduire en hiver?',
               theme: theme2,
               status: 'accepted'
             })
 
 theme3 = Theme.create({
-                        name: 'alimentation saine',
+                        name: 'Alimentation saine',
                         generated_summary: 'Recettes pour des repas équilibrés',
                         category: 'loisirs_et_culture'
                       })
 
 Post.create({
-              user_id: user2.id,
+              user_id: user.id,
               content_text: 'Quels sont les aliments à privilégier pour une alimentation saine?',
               theme: theme3,
               status: 'accepted'
             })
 
 theme4 = Theme.create({
-                        name: 'économie locale',
+                        name: 'Économie locale',
                         generated_summary: 'Promotion des commerces locaux',
                         category: 'developpement_economique'
                       })
 
 Post.create({
-              user_id: user2.id,
+              user_id: user.id,
               content_text: "Quels sont les avantages d'acheter local?",
               theme: theme4,
               status: 'accepted'
             })
 
 theme5 = Theme.create({
-                        name: 'éducation',
-                        generated_summary: 'Conseils pour une éducation réussie',
+                        name: 'Écoles primaires',
+                        generated_summary: 'Conseils pour une éducation primaire réussie',
                         category: 'loisirs_et_culture'
                       })
 
 Post.create({
-              user_id: user2.id,
+              user_id: user.id,
               content_text: "Comment aider mon enfant à réussir à l'école?",
               theme: theme5,
               status: 'accepted'
             })
 
 theme6 = Theme.create({
-                        name: 'technologie',
+                        name: 'Tendances technologiques',
                         generated_summary: 'Dernières tendances technologiques',
                         category: 'developpement_economique'
                       })
 
 Post.create({
-              user_id: user2.id,
+              user_id: user.id,
               content_text: 'Quelles sont les nouvelles technologies à surveiller?',
               theme: theme6,
               status: 'accepted'

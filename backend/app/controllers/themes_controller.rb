@@ -11,7 +11,7 @@ class ThemesController < ApplicationController
                     .select('posts.theme_id, count(distinct comments.id) + count(distinct user_votes.id)  AS score')
                     .where('posts.created_at > :start OR comments.created_at > :start OR user_votes.created_at > :start', start: 1.month.ago)
                     .group('posts.theme_id')
-                    .order('score DESC, posts.created_at DESC')
+                    .order('score DESC')
                     .limit(4)
                     .map(&:theme_id)
 
