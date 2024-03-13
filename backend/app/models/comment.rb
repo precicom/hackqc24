@@ -13,7 +13,13 @@ class Comment < ApplicationRecord
 
   has_one_attached :image
 
+  after_create :process
+
   def moderatable_content
     content_text
+  end
+
+  def process
+    moderate!
   end
 end

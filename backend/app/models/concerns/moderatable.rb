@@ -1,10 +1,6 @@
 module Moderatable
   extend ActiveSupport::Concern
 
-  included do
-    after_create :moderate!
-  end
-
   def moderate!
     client = OpenAI::Client.new
     response = client.moderations(parameters: { input: moderatable_content })

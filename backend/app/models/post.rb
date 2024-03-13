@@ -1,5 +1,7 @@
 class Post < ApplicationRecord
   include Moderatable
+  include Themable
+
   enum :status, { in_process: 0, accepted: 1, rejected: 2 }
 
   belongs_to :user
@@ -9,7 +11,20 @@ class Post < ApplicationRecord
 
   has_one_attached :image
 
+  after_create :process
+
   def moderatable_content
     content_text
+  end
+
+  def classifiable_content
+    content_text
+  end
+
+  def process
+    moderate!
+    if accepted?
+      classify!
+    end
   end
 end
