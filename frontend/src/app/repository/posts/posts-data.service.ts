@@ -1,19 +1,21 @@
-import { Injectable, inject } from '@angular/core';
-import { AuthService } from '../../auth/auth.service';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Post } from './classes';
-import { environment } from '../../../environments/environment';
-import { Comment } from '../comments/classes';
+import { WebsocketService } from './../../services/websocket.service'
+import { Injectable, inject } from '@angular/core'
+import { AuthService } from '../../auth/auth.service'
+import { HttpClient } from '@angular/common/http'
+import { Observable, tap } from 'rxjs'
+import { Post } from './classes'
+import { environment } from '../../../environments/environment'
+import { Comment } from '../comments/classes'
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PostsDataService {
-  http = inject(HttpClient);
+  http = inject(HttpClient)
+  websocketService = inject(WebsocketService)
 
   create(post: FormData) {
-    return this.http.post<Post>(`${environment.apiUrl}/posts`, post )
+    return this.http.post<Post>(`${environment.apiUrl}/posts`, post)
   }
 
   getById(postId: number): Observable<Post> {
@@ -25,23 +27,26 @@ export class PostsDataService {
   }
 
   upVote(postId: number) {
-    return this.http.post(`${environment.apiUrl}/posts/${postId}/up_vote`, {})
+    return this.http
+      .post(`${environment.apiUrl}/posts/${postId}/up_vote`, {})
+      .pipe(tap(() => this.websocketService.sendRefreshPost(postId)))
   }
 
   downVote(postId: number) {
-    return this.http.post(`${environment.apiUrl}/posts/${postId}/down_vote`, {})
+    return this.http
+      .post(`${environment.apiUrl}/posts/${postId}/down_vote`, {})
+      .pipe(tap(() => this.websocketService.sendRefreshPost(postId)))
   }
 
+  getMyPosts() {
+    return this.http.get<Post[]>(`${environment.apiUrl}/posts/my_posts`)
 
-  getMyPosts(){
-     return this.http.get<Post[]>(`${environment.apiUrl}/posts/my_posts`);
-
-     // return of(MOCK_POSTS.slice(0, 3)).pipe(delay(500))
+    // return of(MOCK_POSTS.slice(0, 3)).pipe(delay(500))
   }
 
-  getAll(): Observable<Post[]>{
-    return this.http.get<Post[]>(`${environment.apiUrl}/posts`);
+  getAll(): Observable<Post[]> {
+    return this.http.get<Post[]>(`${environment.apiUrl}/posts`)
 
     // return of(MOCK_POSTS).pipe(delay(500))
-  } 
+  }
 }

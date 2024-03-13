@@ -1,4 +1,5 @@
-import { Component, ElementRef, Input, ViewChild, inject, numberAttribute } from '@angular/core'
+import { WebsocketService } from './../../../services/websocket.service'
+import { Component, ElementRef, Input, OnInit, ViewChild, inject, numberAttribute } from '@angular/core'
 import { DataServices } from '../../../repository/dataServices'
 import { Post } from '../../../repository/posts/classes'
 import { TimeDiffProPipe } from '../../../pipes/time-diff-pro/time-diff-pro.pipe'
@@ -10,6 +11,7 @@ import { Comment } from '../../../repository/comments/classes'
 import { SortByPipe } from '../../../pipes/sort-by/sort-by.pipe'
 import { CommentShowComponent } from '../../comments/comment-show/comment-show.component'
 import { ImagePreviewDirective } from '../../../directives/image-preview.directive'
+import { filter, tap } from 'rxjs'
 
 @Component({
   selector: 'app-post-show',
@@ -27,20 +29,28 @@ import { ImagePreviewDirective } from '../../../directives/image-preview.directi
     PostDownVoteCountPipe,
     CurrentUserUpVotedPipe,
     NgOptimizedImage,
-    ImagePreviewDirective
+    ImagePreviewDirective,
   ],
 })
-export class PostShowComponent {
+export class PostShowComponent implements OnInit {
   @ViewChild('textArea', { static: false }) textAreaRef: ElementRef<HTMLTextAreaElement>
   @ViewChild('fileInput', { static: false }) fileInputRef: ElementRef<HTMLInputElement>
   @ViewChild('imagePreview', { static: false }) imagePreviewRef: ElementRef<HTMLImageElement>
 
+  private _postId: number
   @Input({ transform: numberAttribute }) set postId(postId: number) {
     this.dataServices.posts.getById(postId).subscribe(post => {
+      this._postId = postId
       this.post = post
       this.comments = post.comments
     })
   }
+
+  get postId() {
+    return this._postId
+  }
+
+  websocketService = inject(WebsocketService)
 
   clampText = true
   file: File
@@ -52,6 +62,11 @@ export class PostShowComponent {
   comments: Comment[] = []
   dataServices = inject(DataServices)
 
+  ngOnInit(): void {
+    this.websocketService.getRefreshPost()
+    this.websocketService.refreshPostId$.pipe(filter(id => !!id && +id == this.postId)).subscribe(() => this.refreshPost())
+  }
+
   unClampText() {
     this.clampText = false
   }
@@ -62,45 +77,45 @@ export class PostShowComponent {
     this.fetchComments()
   }
 
-  toggleCommentBox() { 
+  toggleCommentBox() {
     this.commenting = !this.commenting
 
-    if(this.commenting){
+    if (this.commenting) {
       setTimeout(() => {
         this.textAreaRef.nativeElement.focus()
       }, 0)
     }
   }
 
-  fetchComments(){    
+  fetchComments() {
     this.dataServices.posts.comments(this.post.id).subscribe(comments => {
-      this.comments = comments     
+      this.comments = comments
     })
   }
 
-  upVote(){
+  upVote() {
     this.dataServices.posts.upVote(this.post.id).subscribe(() => {
       this.refreshPost()
     })
   }
 
-  downVote(){
+  downVote() {
     this.dataServices.posts.downVote(this.post.id).subscribe(() => {
       this.refreshPost()
     })
   }
 
-  setFile(file: File){
+  setFile(file: File) {
     this.file = file
   }
 
-  refreshPost(){
+  refreshPost() {
     this.dataServices.posts.getById(this.post.id).subscribe(post => {
       this.post = post
     })
   }
 
-  clearCommentBox(){
+  clearCommentBox() {
     this.textAreaRef.nativeElement.value = ''
     this.fileInputRef.nativeElement.value = ''
     this.file = null
@@ -127,5 +142,5 @@ export class PostShowComponent {
         this.creatingComment = false
       })
     })
-  }  
+  }
 }
