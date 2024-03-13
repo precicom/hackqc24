@@ -11,7 +11,6 @@ module Themable
     end
 
     prompt = "###Catégories###\n#{categories.join("\n")}\n\n###Thèmes###\n#{themes.join("\n")}\n\n###Instructions###\nCatégorise le texte suivant selon un des thèmes si une ressemblance existe, utilise l'ID du thème dans la réponse et dans le cas ou le texte se démarque notablement des thèmes, la valeur sera '0'.\n\nTexte: #{classifiable_content}\nThème ID: "
-    puts prompt
     # puts "Rough tokens: #{OpenAI.rough_token_count(prompt)}"
     response = client.chat(
     parameters: {
@@ -39,7 +38,7 @@ module Themable
 
       theme_info = theme_data.last.split(':')
       if new_theme = Theme.create(name: theme_info.first, generated_summary: theme_info.last, category: theme_data.second)
-        update!(theme: theme)
+        update!(theme: new_theme)
       end
     end
   end
