@@ -13,5 +13,7 @@ import { PostCommentCountPipe } from "../pipes/post-comment-count.pipe";
 })
 export class PostCardComponent {
   @Input() post: Post;
+  @Input() showStatistics = false
+  @Input() showTags = false
 
 }

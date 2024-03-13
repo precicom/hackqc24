@@ -1,15 +1,13 @@
 <div class="flex flex-col overflow-y-auto space-y-3 px-4">
-  @if( themes$ | async; as themes) {
-    @for(theme of themes; track theme.id) {
+  @if (themes$ | async; as themes) {
+    @for (theme of themes; track theme.id) {
       <div class="bg-slate-500 rounded-md p-2">
-        <div>{{ theme.name }} </div>      
+        <div>{{ theme.name }}</div>
       </div>
-    }@empty {
+    } @empty {
       <div class="text-center">No data available</div>
     }
-  }@else {
-    loading...
-  }  
+  } @else {
+    <span class="loading loading-dots loading-lg"></span>
+  }
 </div>
-
-

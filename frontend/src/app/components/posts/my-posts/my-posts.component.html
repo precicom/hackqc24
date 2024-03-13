@@ -31,12 +31,12 @@
   @if (posts; as posts) {
     <div class="flex flex-col gap-y-6 w-full mt-4">
       @for (post of posts; track post.id) {
-        <app-post-card [post]="post" [routerLink]="[post.id]"></app-post-card>
+        <app-post-card [post]="post" [showStatistics]="true" [routerLink]="[post.id]"></app-post-card>
       } @empty {
         <div class="text-center">No posts has been written yet!</div>
       }
     </div>
   } @else {
-    loading...
+    <span class="loading loading-dots loading-lg"></span>
   }
 </div>
