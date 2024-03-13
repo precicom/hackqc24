@@ -9,7 +9,7 @@ import { RouterModule } from '@angular/router'
 import { Comment } from '../../../repository/comments/classes'
 import { SortByPipe } from '../../../pipes/sort-by/sort-by.pipe'
 import { CommentShowComponent } from '../../comments/comment-show/comment-show.component'
-import { ImagePreviewDirective } from '../../directives/image-preview.directive'
+import { ImagePreviewDirective } from '../../../directives/image-preview.directive'
 
 @Component({
   selector: 'app-post-show',

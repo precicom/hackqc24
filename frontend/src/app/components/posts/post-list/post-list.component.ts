@@ -7,6 +7,7 @@ import { PostCardComponent } from "../post-card/post-card.component";
 import { RouterModule } from '@angular/router';
 import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 import {CdkAccordionModule, CDK_ACCORDION} from '@angular/cdk/accordion';
+import { SearchInputComponent } from "../../form-fields/search-input/search-input.component";
 
 interface ThemeVM {
   postCount: number
@@ -28,7 +29,7 @@ interface ViewModel {
     standalone: true,
     templateUrl: './post-list.component.html',
     styleUrl: './post-list.component.scss',
-    imports: [CommonModule, PostCardComponent, RouterModule, MatExpansionModule, CdkAccordionModule ]
+    imports: [CommonModule, PostCardComponent, RouterModule, MatExpansionModule, CdkAccordionModule, SearchInputComponent]
 })
 export class PostListComponent implements OnInit{
   @ViewChildren('accordion', { read: CDK_ACCORDION }) accordions: QueryList<MatAccordion>
@@ -67,7 +68,7 @@ export class PostListComponent implements OnInit{
         if (theme) {
           category.postCount ++
           theme.postCount ++
-          
+
           theme.posts.push(post)
         } else {
           category.themes.push({ name: post.theme.name, postCount: 1, posts: [post] })
