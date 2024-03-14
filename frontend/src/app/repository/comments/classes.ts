@@ -1,4 +1,4 @@
-import { UserVote } from "../user-votes/classes"
+import { UserVote } from '../user-votes/classes'
 
 export interface Comment {
   id: number
@@ -9,8 +9,9 @@ export interface Comment {
   rejection_reason: string
   created_at: string
   user_votes: UserVote[]
+  status: CommentStatuses
 }
 
-export interface File {
+export type CommentStatuses = 'in_process' | 'accepted' | 'rejected'
 
-}
+export interface File {}
