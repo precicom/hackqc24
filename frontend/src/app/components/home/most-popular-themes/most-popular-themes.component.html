@@ -2,7 +2,7 @@
   @if (themes$ | async; as themes) {
     @for (theme of themes; track theme.id) {
       <div @fadeIn class="badge badge-primary w-full h-12 bg-slate-300 hover:bg-slate-400 rounded-md p-2 cursor-pointer" [routerLink]="['/posts/all-posts']" [queryParams]="{themeId: theme.id}">
-        <div class="">{{ theme.name | titlecase }}</div>
+        <div class="">{{ theme.name }}</div>
       </div>
     } @empty {
       <div class="text-center">Aucune données disponibles</div>
