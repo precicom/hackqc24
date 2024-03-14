@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Comment } from '../../../repository/comments/classes';
+import { Comment } from '../repository/comments/classes';
 
 @Pipe({
   name: 'commentDownVoteCount',

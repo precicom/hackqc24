@@ -3,11 +3,12 @@ import { Component, inject } from '@angular/core';
 import { DataServices } from '../../../repository/dataServices';
 import { Observable } from 'rxjs';
 import { Theme } from '../../../repository/themes/classes';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-theme-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './theme-list.component.html',
   styleUrl: './theme-list.component.scss'
 })

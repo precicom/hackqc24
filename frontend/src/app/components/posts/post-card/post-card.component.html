@@ -1,4 +1,4 @@
-<div class="flex flex-row items-center bg-slate-300 hover:bg-slate-400 rounded-md p-2 cursor-pointer relative">
+<div class="flex flex-row items-center bg-slate-300 hover:bg-slate-400 rounded-md p-2 cursor-pointer relative shadow-xl">
   <img *ngIf="post.image" #imagePreview [ngSrc]="post.image" height="50" width="75" class="mr-2 rounded-lg" />
 
   <span *ngIf="post.rejection_reason" class="absolute top-0 left-0-0 -mt-4 -ml-6 indicator-item badge badge-warning">Rejeté</span>
@@ -26,25 +26,28 @@
   @if (showTags) {
     <div class="inline-flex flex-row items-center ml-auto gap-2 overflow-hidden">
       <div class="badge badge-primary overflow-hidden">
-        <div class="truncate">{{ post.theme.category }}</div>
+        <div class="truncate">{{ 'categories.' + post.theme.category | translate }}</div>
       </div>
       <div class="badge badge-secondary overflow-hidden">
         <div class="truncate">{{ post.theme.name }}</div>
       </div>
     </div>
   }
+
+  @if(showTagsBellow){
+    <div class="absolute flex flex-row-reverse gap-x-2 mt-1 -bottom-6 right-0">
+      <div class="badge badge-primary truncate">
+        <div class="truncate">{{ post.theme.name }}</div>     
+      </div>
+  
+      <div class="badge badge-secondary truncate">
+        <div class="truncate">
+          {{ 'categories.' + post.theme.category | translate }}
+        </div> 
+      </div>  
+    </div>
+  }
 </div>
 
-@if(showTagsBellow){
-  <div class="flex flex-row-reverse gap-x-2 mt-1">
-    <div class="badge badge-primary truncate">
-      <div class="truncate">{{ post.theme.name }}</div>     
-    </div>
-    <div class="badge badge-secondary truncate">
-      <div class="truncate">
-        {{ post.theme.category }}
-      </div> 
-    </div>
-  </div>
-}
+
 

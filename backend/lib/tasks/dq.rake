@@ -6,7 +6,8 @@ namespace :dq do
   desc "gets a data ressourcre form dq api and displays it. parameter is the id of the resource"
   task :get_ressource, [:ressource_id] => :environment do |t, args|
 
-    OpenDataManager::DQApiService.new.fetch_ressource_data(args[:ressource_id])
+    response = OpenDataManager::DQApiService.new.fetch_ressource_data(args[:ressource_id])
+    puts JSON.parse(response)
   end
 
   # example usage: rake dq:create_package
@@ -57,14 +58,13 @@ namespace :dq do
     OpenDataManager::DQApiService.new.create_ressource_data(post_data)
   end
 
-  # example usage: rake dq:populate_video_dataset_from_playlist["https://www.youtube.com/playlist?list=PLA29-Xv4NCfaBcRljPD74I5CWyNYrvx1i", resumes_generes_conseil_municipal_shawinigan]
-  desc "populate a ressource inside a specific package with dq taking videos information form a youtube playlist"
+  # example usage: rake dq:populate_video_dataset_from_playlist["https://www.youtube.com/playlist?list=PLA29-Xv4NCfaBcRljPD74I5CWyNYrvx1i",resumes_generes_conseil_municipal_shawinigan]
+  desc "populate a ressource inside a specific package within dq taking videos information form a specified youtube playlist"
   task :populate_video_dataset_from_playlist, [:playlist_url, :package_id] => :environment do |t, args|
 
     OpenDataManager::DQOpenDataManager.populate_video_dataset_from_playlist(args[:playlist_url],args[:package_id])
   end
 end
-
 
 
 namespace :youtube do
@@ -78,6 +78,4 @@ namespace :youtube do
       puts "https://www.youtube.com/watch?v=#{snippet.resource_id.video_id}"
     end
   end
-
-
 end

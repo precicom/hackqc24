@@ -1,3 +1,4 @@
+import { DISCUSSION_POINTS } from "../discussion-points/mock-data";
 import { Council } from "./classes";
 
 export const MOCK_COUNCILS: Council[] = [
@@ -7,7 +8,7 @@ export const MOCK_COUNCILS: Council[] = [
     date: '2021-01-01T00:00:00.000Z',
     youtube_link: 'https://www.youtube.com/watch?v=1',
     generated_summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec odio nec nunc vehicula tincidunt',
-    discussion_points: []
+    discussion_points: DISCUSSION_POINTS
   },
   {
     id: 2,

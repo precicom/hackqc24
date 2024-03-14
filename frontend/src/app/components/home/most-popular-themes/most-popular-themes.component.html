@@ -1,15 +1,16 @@
 <div class="flex flex-col overflow-y-auto space-y-3">
   @if (themes$ | async; as themes) {
     @for (theme of themes; track theme.id) {
-      <div class="badge badge-primary w-full h-12 bg-slate-300 hover:bg-slate-400 rounded-md p-2" [routerLink]="['/posts/all-posts']" [queryParams]="{themeId: theme.id}">
+      <div @fadeIn class="badge badge-primary w-full h-12 bg-slate-300 hover:bg-slate-400 rounded-md p-2 cursor-pointer" [routerLink]="['/posts/all-posts']" [queryParams]="{themeId: theme.id}">
         <div class="">{{ theme.name | titlecase }}</div>
       </div>
     } @empty {
       <div class="text-center">Aucune données disponibles</div>
     }
   } @else {
-    <div class="flex flex-grow items-center justify-center">
-      <span class="loading loading-dots loading-lg"></span>
-    </div>
+    <div class="rounded-md skeleton h-12 w-full flex flex-grow items-center justify-center"><span class="loading loading-dots loading"></span></div>
+    <div class="rounded-md skeleton h-12 w-full flex flex-grow items-center justify-center"><span class="loading loading-dots loading"></span></div>
+    <div class="rounded-md skeleton h-12 w-full flex flex-grow items-center justify-center"><span class="loading loading-dots loading"></span></div>
+    <div class="rounded-md skeleton h-12 w-full flex flex-grow items-center justify-center"><span class="loading loading-dots loading"></span></div> 
   }
 </div>

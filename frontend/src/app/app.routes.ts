@@ -4,7 +4,6 @@ import { inject } from '@angular/core';
 import { AuthGuard } from './auth/auth.guard';
 import { ThemeListComponent } from './components/theme/theme-list/theme-list.component';
 import { CouncilFicheComponent } from './components/council/council-fiche/council-fiche.component';
-import { MobileFrameComponent } from './components/layouts/mobile-frame/mobile-frame.component';
 import { MainLayoutComponent } from './components/layouts/main-layout/main-layout.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { CouncilListComponent } from './components/council/council-list/council-list.component';
@@ -30,22 +29,22 @@ export const routes: Routes = [
           {
             path: 'home',
             component: HomeComponent,  
-            data: { title: 'Home' },        
+            data: { title: 'Accueil' },        
           },
           {
             path: 'councils',
             component: CouncilListComponent,       
-            data: { title: 'Councils' },        
+            data: { title: 'Conseils publics' },        
           },
           {
             path: 'councils/:councilId',
             component: CouncilFicheComponent,
-            data: { title: 'Council Details' },     
+            data: { title: 'Détails du conseil' },     
           },
           {
             path: 'themes',
             component: ThemeListComponent,
-            data: { title: 'Themes' },     
+            data: { title: 'Thèmes' },     
           },
           {
             path: 'posts',
@@ -56,7 +55,7 @@ export const routes: Routes = [
             path: 'posts',
             component: PostsHomeComponent,
         
-            data: { title: 'Posts' },   
+            data: { title: 'Propositions' },   
             children: [
               {
                 path: 'my-posts',

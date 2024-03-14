@@ -16,6 +16,8 @@ gem 'jwt', '~> 2.8'
 
 gem "ruby-openai", '~>  6.3'
 
+gem 'rest-client'
+
 gem 'google-apis-youtube_v3'
 
 gem "dotenv", '~> 3.1'

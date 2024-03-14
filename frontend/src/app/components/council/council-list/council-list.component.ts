@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { DataServices } from '../../../repository/dataServices';
-import { BehaviorSubject, Subject, combineLatest } from 'rxjs';
+import { BehaviorSubject, Subject, combineLatest, delay } from 'rxjs';
 import { Council } from '../../../repository/council/classes';
 import { CommonModule } from '@angular/common';
 import { Theme } from '../../../repository/themes/classes';
@@ -9,6 +9,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ThemeFilterComponent } from '../../theme/theme-filter/theme-filter.component';
 import { SearchInputComponent } from "../../form-fields/search-input/search-input.component";
 import { CouncilCardComponent } from "../council-card/council-card.component";
+import { fadeIn, slideAndFadeIn, staggeredFadeIn } from '../../../animations/animations';
 
 @UntilDestroy()
 @Component({
@@ -16,6 +17,7 @@ import { CouncilCardComponent } from "../council-card/council-card.component";
     standalone: true,
     templateUrl: './council-list.component.html',
     styleUrl: './council-list.component.scss',
+    animations: [slideAndFadeIn, fadeIn, staggeredFadeIn],
     imports: [RouterModule, CommonModule, ThemeFilterComponent, SearchInputComponent, CouncilCardComponent]
 })
 export class CouncilListComponent implements OnInit {
@@ -42,7 +44,7 @@ export class CouncilListComponent implements OnInit {
       this.themes$.next(themes)
     })
 
-    this.dataServices.councils.getAll().subscribe(councils => {
+    this.dataServices.councils.getAll().pipe(delay(500)).subscribe(councils => {
       this.councils$.next(councils)
     })
 

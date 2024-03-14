@@ -1,93 +1,68 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common'
-import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core'
+import { Component, OnInit, ViewChild, inject } from '@angular/core'
 import { DataServices } from '../../../repository/dataServices'
-import { Observable } from 'rxjs'
+import { Observable, delay } from 'rxjs'
 import { Post } from '../../../repository/posts/classes'
 import { RouterModule } from '@angular/router'
 import { CreatePostComponent } from '../create-post/create-post.component'
 import { PostUpVoteCountPipe, PostDownVoteCountPipe } from '../pipes/post-up-vote-count.pipe'
 import { PostCommentCountPipe } from '../pipes/post-comment-count.pipe'
 import { PostCardComponent } from '../post-card/post-card.component'
+import { MessageFormComponent, MessageSubmitEvent } from "../message-form/message-form.component";
+import { fadeIn, slideAndFadeIn, staggeredFadeIn } from '../../../animations/animations'
 
 @Component({
-  selector: 'app-my-posts',
-  standalone: true,
-  templateUrl: './my-posts.component.html',
-  styleUrl: './my-posts.component.scss',
-  imports: [
-    CommonModule,
-    RouterModule,
-    CreatePostComponent,
-    PostUpVoteCountPipe,
-    PostCommentCountPipe,
-    PostDownVoteCountPipe,
-    NgOptimizedImage,
-    PostCardComponent,
-  ],
+    selector: 'app-my-posts',
+    standalone: true,
+    templateUrl: './my-posts.component.html',
+    styleUrl: './my-posts.component.scss',
+    animations: [slideAndFadeIn, fadeIn, staggeredFadeIn],
+    imports: [
+        CommonModule,
+        RouterModule,
+        CreatePostComponent,
+        PostUpVoteCountPipe,
+        PostCommentCountPipe,
+        PostDownVoteCountPipe,
+        NgOptimizedImage,
+        PostCardComponent,
+        MessageFormComponent
+    ]
 })
 export class MyPostsComponent implements OnInit {
-  @ViewChild('textArea', { static: false }) textAreaRef: ElementRef<HTMLTextAreaElement>
-  @ViewChild('fileInput', { static: false }) fileInputRef: ElementRef<HTMLInputElement>
-  @ViewChild('imagePreview', { static: false }) imagePreviewRef: ElementRef<HTMLImageElement>
+  @ViewChild(MessageFormComponent, { static: false }) messageForm: MessageFormComponent
 
   dataServices = inject(DataServices)
   posts?: Post[]
-  creatingPost: boolean = false
-  posting: boolean = true
-  file: File
-
-  posts$: Observable<Post[]> = this.dataServices.posts.getMyPosts()
+  creatingPost: boolean = false 
 
   ngOnInit(): void {
     this.refreshList()
-  }
-
-  ngAfterViewInit(): void {
-    this.fileInputRef.nativeElement.addEventListener('change', () => {
-      const reader = new FileReader()
-
-      this.file = this.fileInputRef.nativeElement.files.item(0)
-
-      reader.onloadend = () => {
-        this.imagePreviewRef.nativeElement.src = reader.result as string
-      }
-
-      if (this.file) {
-        reader.readAsDataURL(this.file)
-      }
-    })
-  }
+  } 
 
   postCreated() {
     this.refreshList()
   }
 
   refreshList() {
-    this.dataServices.posts.getMyPosts().subscribe(posts => {
+    // Added delay so user can see loader... looks more professional
+    this.dataServices.posts.getMyPosts().pipe(delay(500)).subscribe(posts => {
       this.posts = posts
     })
   }
 
-  clearCommentBox() {
-    this.textAreaRef.nativeElement.value = ''
-    this.fileInputRef.nativeElement.value = ''
-    this.file = null
-  }
-
-  submit(fileInput: HTMLInputElement, textArea: HTMLTextAreaElement) {
-    const text = textArea.value
-    const file = fileInput.files[0]
+  submit(event: MessageSubmitEvent) {
     const formData = new FormData()
 
-    formData.append('post[content_text]', text)
+    formData.append('post[content_text]', event.text)
 
-    if (file) {
-      formData.append('post[image]', file, file.name)
+    if (event.file) {
+      formData.append('post[image]', event.file, event.file.name)
     }
 
     this.creatingPost = true
     this.dataServices.posts.create(formData).subscribe(response => {
-      this.clearCommentBox()
+      this.messageForm.clearCommentBox()
 
       this.dataServices.posts.getMyPosts().subscribe(posts => {
         this.posts = posts
