@@ -23,7 +23,7 @@ class Post < ApplicationRecord
 
   def process
     moderate!
-    if accepted?
+    if accepted? && theme.nil?
       classify!
     end
   end
