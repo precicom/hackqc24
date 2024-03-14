@@ -18,4 +18,4 @@ export interface Post {
   theme?: Theme
 }
 
-export type PostStatuses = 'en_attente_triage' | 'trié' | 'rejeté'
+export type PostStatuses = 'in_process' | 'accepted' | 'rejected'

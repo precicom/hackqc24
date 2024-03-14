@@ -1,5 +1,5 @@
 import { WebsocketService } from './../../../services/websocket.service'
-import { Component, ElementRef, Input, OnInit, ViewChild, inject, numberAttribute } from '@angular/core'
+import { Component, Input, OnInit, ViewChild, inject, numberAttribute } from '@angular/core'
 import { DataServices } from '../../../repository/dataServices'
 import { Post } from '../../../repository/posts/classes'
 import { TimeDiffProPipe } from '../../../pipes/time-diff-pro/time-diff-pro.pipe'
@@ -11,31 +11,31 @@ import { Comment } from '../../../repository/comments/classes'
 import { SortByPipe } from '../../../pipes/sort-by/sort-by.pipe'
 import { CommentShowComponent } from '../../comments/comment-show/comment-show.component'
 import { ImagePreviewDirective } from '../../../directives/image-preview.directive'
-import { filter, tap } from 'rxjs'
+import { filter } from 'rxjs'
+import { MessageFormComponent, MessageSubmitEvent } from "../message-form/message-form.component";
 
 @Component({
-  selector: 'app-post-show',
-  standalone: true,
-  templateUrl: './post-show.component.html',
-  styleUrl: './post-show.component.scss',
-  imports: [
-    TimeDiffProPipe,
-    PostCommentCountPipe,
-    PostUpVoteCountPipe,
-    CommonModule,
-    RouterModule,
-    SortByPipe,
-    CommentShowComponent,
-    PostDownVoteCountPipe,
-    CurrentUserUpVotedPipe,
-    NgOptimizedImage,
-    ImagePreviewDirective,
-  ],
+    selector: 'app-post-show',
+    standalone: true,
+    templateUrl: './post-show.component.html',
+    styleUrl: './post-show.component.scss',
+    imports: [
+        TimeDiffProPipe,
+        PostCommentCountPipe,
+        PostUpVoteCountPipe,
+        CommonModule,
+        RouterModule,
+        SortByPipe,
+        CommentShowComponent,
+        PostDownVoteCountPipe,
+        CurrentUserUpVotedPipe,
+        NgOptimizedImage,
+        ImagePreviewDirective,
+        MessageFormComponent
+    ]
 })
 export class PostShowComponent implements OnInit {
-  @ViewChild('textArea', { static: false }) textAreaRef: ElementRef<HTMLTextAreaElement>
-  @ViewChild('fileInput', { static: false }) fileInputRef: ElementRef<HTMLInputElement>
-  @ViewChild('imagePreview', { static: false }) imagePreviewRef: ElementRef<HTMLImageElement>
+  @ViewChild(MessageFormComponent, { static: false }) messageForm: MessageFormComponent
 
   private _postId: number
   @Input({ transform: numberAttribute }) set postId(postId: number) {
@@ -53,7 +53,6 @@ export class PostShowComponent implements OnInit {
   websocketService = inject(WebsocketService)
 
   clampText = true
-  file: File
   commenting: boolean = false
   creatingComment: boolean = false
   showComments: boolean = true
@@ -85,7 +84,7 @@ export class PostShowComponent implements OnInit {
 
     if (this.commenting) {
       setTimeout(() => {
-        this.textAreaRef.nativeElement.focus()
+        this.messageForm.textAreaRef.nativeElement.focus()
       }, 50)
     }
   }
@@ -108,37 +107,25 @@ export class PostShowComponent implements OnInit {
     })
   }
 
-  setFile(file: File) {
-    this.file = file
-  }
-
   refreshPost() {
     this.dataServices.posts.getById(this.post.id).subscribe(post => {
       this.post = post
     })
-  }
+  } 
 
-  clearCommentBox() {
-    this.textAreaRef.nativeElement.value = ''
-    this.fileInputRef.nativeElement.value = ''
-    this.file = null
-  }
-
-  submit(fileInput: HTMLInputElement, textArea: HTMLTextAreaElement) {
-    const text = textArea.value
-    const file = fileInput.files[0]
+  submit(event: MessageSubmitEvent) {
     const formData = new FormData()
 
-    formData.append('comment[content_text]', text)
+    formData.append('comment[content_text]', event.text)
     formData.append('comment[post_id]', this.post.id.toString())
 
-    if (file) {
-      formData.append('comment[image]', file, file.name)
+    if (event.file) {
+      formData.append('comment[image]', event.file, event.file.name)
     }
 
     this.creatingComment = true
     this.dataServices.comments.create(formData).subscribe(response => {
-      this.clearCommentBox()
+      this.messageForm.clearCommentBox()
       this.websocketService.sendRefreshAllComments(this.postId)
       this.refrechComments()
     })

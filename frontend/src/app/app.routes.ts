@@ -30,22 +30,22 @@ export const routes: Routes = [
           {
             path: 'home',
             component: HomeComponent,  
-            data: { title: 'Home' },        
+            data: { title: 'Accueil' },        
           },
           {
             path: 'councils',
             component: CouncilListComponent,       
-            data: { title: 'Councils' },        
+            data: { title: 'Conseils' },        
           },
           {
             path: 'councils/:councilId',
             component: CouncilFicheComponent,
-            data: { title: 'Council Details' },     
+            data: { title: 'Détails du conseil' },     
           },
           {
             path: 'themes',
             component: ThemeListComponent,
-            data: { title: 'Themes' },     
+            data: { title: 'Thèmes' },     
           },
           {
             path: 'posts',
@@ -56,7 +56,7 @@ export const routes: Routes = [
             path: 'posts',
             component: PostsHomeComponent,
         
-            data: { title: 'Posts' },   
+            data: { title: 'Propositions' },   
             children: [
               {
                 path: 'my-posts',
