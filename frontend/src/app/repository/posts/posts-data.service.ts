@@ -1,4 +1,4 @@
-import { WebsocketService } from './../../services/websocket.service'
+// import { WebsocketService } from './../../services/websocket.service'
 import { Injectable, inject } from '@angular/core'
 import { AuthService } from '../../auth/auth.service'
 import { HttpClient } from '@angular/common/http'
@@ -12,7 +12,7 @@ import { Comment } from '../comments/classes'
 })
 export class PostsDataService {
   http = inject(HttpClient)
-  websocketService = inject(WebsocketService)
+  //websocketService = inject(WebsocketService)
 
   create(post: FormData) {
     return this.http.post<Post>(`${environment.apiUrl}/posts`, post)
@@ -29,13 +29,13 @@ export class PostsDataService {
   upVote(postId: number) {
     return this.http
       .post(`${environment.apiUrl}/posts/${postId}/up_vote`, {})
-      .pipe(tap(() => this.websocketService.sendRefreshPost(postId)))
+      //.pipe(tap(() => this.websocketService.sendRefreshPost(postId)))
   }
 
   downVote(postId: number) {
     return this.http
       .post(`${environment.apiUrl}/posts/${postId}/down_vote`, {})
-      .pipe(tap(() => this.websocketService.sendRefreshPost(postId)))
+      //.pipe(tap(() => this.websocketService.sendRefreshPost(postId)))
   }
 
   getMyPosts() {

@@ -294,6 +294,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  actioncable
   active_model_serializers
   bcrypt (~> 3.1.7)
   bootsnap
