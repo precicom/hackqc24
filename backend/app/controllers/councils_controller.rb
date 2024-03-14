@@ -2,7 +2,7 @@ class CouncilsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: %i[index show]
 
   def index
-    councils = Council.all
+    councils = Council.order(date: :desc)
     render json: councils, status: :ok
   end
 

@@ -1,32 +1,27 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
-import { Council } from './classes';
-import { Observable, delay, of } from 'rxjs';
-import { MOCK_COUNCILS } from './mock-data';
+import { HttpClient } from '@angular/common/http'
+import { Injectable, inject } from '@angular/core'
+import { Council } from './classes'
+import { Observable, delay, of } from 'rxjs'
+import { MOCK_COUNCILS } from './mock-data'
+import { environment } from '../../../environments/environment'
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CouncilsDataService {
-  http = inject(HttpClient);
+  http = inject(HttpClient)
 
-
-  getAll(): Observable<Council[]>{ 
-    // return this.http.get<Concil[]>(`${environment.apiUrl}/council`);
-
-    // mock data
-    return of(MOCK_COUNCILS).pipe(delay(500))
+  getAll(): Observable<Council[]> {
+    return this.http.get<Council[]>(`${environment.apiUrl}/councils`)
   }
 
   getById(CouncilId: number): Observable<Council> {
-    // return this.http.get<Council>(`${environment.apiUrl}/council/${CouncilId}`);
-
-    return of(MOCK_COUNCILS[0]).pipe(delay(500))
+    return this.http.get<Council>(`${environment.apiUrl}/councils/${CouncilId}`)
   }
 
-  getLatestCouncilThemes(): Observable<Council[]>{
-    // return this.http.get<Concil[]>(`${environment.apiUrl}/council`);
+  // getLatestCouncilThemes(): Observable<Council[]> {
+  //   return this.http.get<Concil[]>(`${environment.apiUrl}/council`);
 
-    return of(MOCK_COUNCILS.slice(0, 3)).pipe(delay(500))
-  }
+  //   return of(MOCK_COUNCILS.slice(0, 3)).pipe(delay(500))
+  // }
 }

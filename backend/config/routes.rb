@@ -6,8 +6,9 @@ Rails.application.routes.draw do
       post :down_vote
     end
   end
-  resources :councils
-  resources :discussion_points
+  resources :councils do
+    resources :discussion_points
+  end
 
   resources :posts do
     collection do
