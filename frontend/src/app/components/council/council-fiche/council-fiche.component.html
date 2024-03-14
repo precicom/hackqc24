@@ -9,16 +9,28 @@
 
 @if (council$ | async; as council) {
   <div class="px-4 pt-4">
-    <div class="flex flex-row items-center justify-center">
+    <div @fadeIn class="flex flex-row items-center justify-center mb-4">
       <div class="text-xl font-bold">Scéance publique du {{ council.date | date }} à {{ council.date | date: 'shortTime' }}</div>
     </div>
 
+    <div class="flex flex-row items-center justify-center mb-4">
+      <iframe
+        width="355"
+        height="200"
+        [src]="council.youtube_link | youtubeEmbedUrl"
+        frameborder="0"
+        allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      ></iframe>
+    </div>
+
     @if (filteredPoints$ | async; as points) {
-      <div @staggeredFadeIn class="flex flex-col gap-y-4 mt-2">
-        @for (point of points; track point.id) {
-          <app-discussion-point-card class="w-full" [point]="point"></app-discussion-point-card>
-        }
-      </div>
+      @if (points.length) {
+        <div @staggeredFadeIn class="flex flex-col gap-y-4 mt-2">
+          @for (point of points; track point.id) {
+            <app-discussion-point-card class="w-full" [point]="point"></app-discussion-point-card>
+          }
+        </div>
+      }
     }
   </div>
 } @else {

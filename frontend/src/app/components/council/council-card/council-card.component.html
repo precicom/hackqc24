@@ -1,13 +1,13 @@
-<div class="flex flex-col gap-y-2 rounded-xl p-2 shadow-xl  bg-slate-300 hover:bg-slate-400 cursor-pointer" [routerLink]="[council.id]">
+<div class="flex flex-col gap-y-2 rounded-xl p-2 shadow-xl bg-slate-300 hover:bg-slate-400 cursor-pointer" [routerLink]="[council.id]">
 
   <!-- title -->
-  <div class="font-semibold">{{ council.title }}</div>
+  <div class="font-semibold">{{ council.title | capitalize }}</div>
 
   <!-- summary -->
   <div class="line-clamp-2">{{ council.generated_summary }}</div>
 
   <!-- themes -->
-  <div class="flex flex-row flex-wrap">
+  <div class="flex flex-row flex-wrap gap-2">
     @for(theme of council.themes | slice: 0: 3; track theme.id) {
       <div class="badge badge-primary truncate">
         <div class="truncate">{{ theme.name }}</div>     
