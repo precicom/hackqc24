@@ -14,6 +14,7 @@ import { ImagePreviewDirective } from '../../../directives/image-preview.directi
 import { delay, filter } from 'rxjs'
 import { MessageFormComponent, MessageSubmitEvent } from "../message-form/message-form.component";
 import { fadeIn, slideAndFadeIn, staggeredFadeIn } from '../../../animations/animations'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
     selector: 'app-post-show',
@@ -33,7 +34,8 @@ import { fadeIn, slideAndFadeIn, staggeredFadeIn } from '../../../animations/ani
         CurrentUserUpVotedPipe,
         NgOptimizedImage,
         ImagePreviewDirective,
-        MessageFormComponent
+        MessageFormComponent,
+        TranslateModule
     ]
 })
 export class PostShowComponent implements OnInit {

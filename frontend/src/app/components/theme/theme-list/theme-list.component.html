@@ -10,7 +10,7 @@
       @for (theme of themes; track theme.id) {
         <div class="bg-slate-500 rounded-md p-2">
           <div>{{ theme.name }}</div>
-          <div>{{ theme.category }}</div>
+          <div>{{ 'categories.' + theme.category | translate }}</div>
         </div>
       } @empty {
         <div class="text-center">Aucune données disponibles</div>

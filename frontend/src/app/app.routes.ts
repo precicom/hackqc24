@@ -4,7 +4,6 @@ import { inject } from '@angular/core';
 import { AuthGuard } from './auth/auth.guard';
 import { ThemeListComponent } from './components/theme/theme-list/theme-list.component';
 import { CouncilFicheComponent } from './components/council/council-fiche/council-fiche.component';
-import { MobileFrameComponent } from './components/layouts/mobile-frame/mobile-frame.component';
 import { MainLayoutComponent } from './components/layouts/main-layout/main-layout.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { CouncilListComponent } from './components/council/council-list/council-list.component';

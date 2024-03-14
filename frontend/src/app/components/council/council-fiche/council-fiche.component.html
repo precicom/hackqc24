@@ -1,21 +1,32 @@
-<div class="px-4">
-  <div class="flex flex-row justify-between">
-    <div>filtrer</div>
-
-    <div>rechercher</div>
-  </div>
-
-  <br />
-
-  @if (council$ | async; as council) {
-    <div>Titre du conseil + date + heure</div>
-
-    <br />
-
-    <p>Afficher les informations du conseil. Grouper les info par thème et ensuite par catégorie (ou inverse?)</p>
-  } @else {
-    <div class="flex flex-grow items-center justify-center">
-      <span class="loading loading-dots loading-lg"></span>
-    </div>
-  }
+<div class="flex flex-row py-2 px-4">
+  <app-search-input @fadeIn class="ml-auto" (valueChange)="setSearch($event)"></app-search-input>
 </div>
+
+<div class="flex flex-row py-2 px-4">
+  <app-theme-filter
+    @fadeIn
+    [themes]="themes$ | async"
+    [selectedThemes]="selectedThemes$ | async"
+    (selectedThemesChange)="setSelectedThemes($event)"
+  ></app-theme-filter>
+</div>
+
+@if (council$ | async; as council) {
+  <div class="px-4 pt-4">
+    <div class="flex flex-row items-center justify-center">
+      <div class="text-xl font-bold">Scéance publique du {{ council.date | date }} à {{ council.date | date: 'shortTime' }}</div>
+    </div> 
+
+    @if (discussionPoints$ | async; as discussionPoints) {
+      <div @staggeredFadeIn class="flex flex-col gap-y-4 mt-2">
+        @for (point of discussionPoints; track point.id) {
+          <app-discussion-point-card class="w-full" [point]="point"></app-discussion-point-card>
+        }
+      </div>   
+    }
+  </div>
+} @else {
+  <div class="flex flex-grow items-center justify-center">
+    <span class="loading loading-dots loading-lg"></span>
+  </div>
+}

@@ -42,5 +42,18 @@ export default {
     date_yesterday: '{{time}}, yesterday',
     date_other: '{{time}}, on {{date}}',
   },
- }
+ },
+  categories: {
+    territoire: 'Territoire',
+    achats: "Achats",
+    legislation: 'Legislation',
+    direction_generale: 'Direction générale',
+    developpement_economique: 'Développement économique',
+    service_police: 'Service police',
+    securite_incendie: "Sécurité incendie",
+    travaux_publics: 'Travaux publics',
+    environnement: 'Environnement',
+    urbanisme: 'Urbanisme',
+    loisirs_et_culture: 'Loisirs et culture'
+  },
 }

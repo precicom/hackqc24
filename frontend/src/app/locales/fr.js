@@ -1,5 +1,5 @@
 export default {
-  shared: {
+  shared: {   
     time: {
       timezone: 'Timezone',
 
@@ -43,5 +43,18 @@ export default {
       date_yesterday: '{{time}}, hier',
       date_other: '{{time}}, le {{date}}',
     },
-  }
+  },
+  categories: {
+    territoire: 'territoire',
+    achats: "achats",
+    legislation: 'legislation',
+    direction_generale: 'direction générale',
+    developpement_economique: 'développement économique',
+    service_police: 'service police',
+    securite_incendie: "sécurité incendie",
+    travaux_publics: 'travaux publics',
+    environnement: 'environnement',
+    urbanisme: 'urbanisme',
+    loisirs_et_culture: 'loisirs et culture'
+  },
 }

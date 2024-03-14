@@ -26,7 +26,7 @@
   @if (showTags) {
     <div class="inline-flex flex-row items-center ml-auto gap-2 overflow-hidden">
       <div class="badge badge-primary overflow-hidden">
-        <div class="truncate">{{ post.theme.category }}</div>
+        <div class="truncate">{{ 'categories.' + post.theme.category | translate }}</div>
       </div>
       <div class="badge badge-secondary overflow-hidden">
         <div class="truncate">{{ post.theme.name }}</div>
@@ -42,7 +42,7 @@
   
       <div class="badge badge-secondary truncate">
         <div class="truncate">
-          {{ post.theme.category }}
+          {{ 'categories.' + post.theme.category | translate }}
         </div> 
       </div>  
     </div>
