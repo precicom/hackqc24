@@ -18,15 +18,18 @@ class ApplicationController < ActionController::API
       exp = payload[:exp]
 
       # Check if the exp date is less than the current time
-      raise Auth::Unauthorized, 'token expired' if exp < Time.now.to_i
+      if exp < Time.now.to_i
+        render status: :unauthorized, json: { error: 'token expired' }
+        return
+      end
 
       @current_user = User.find(user_id)
 
-      raise Auth::Forbidden, 'user not found' unless @current_user
+      render status: :unauthorized, json: { error: 'user not found' } unless @current_user
     end
 
     return true if @current_user
 
-    raise Auth::Unauthorized, 'invalid token'
+    render status: :unauthorized, json: { error: 'invalid token' } unless @current_user
   end
 end
