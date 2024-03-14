@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { AuthService } from '../../auth/auth.service';
 import { Council } from './classes';
 import { Observable, delay, of } from 'rxjs';
 import { MOCK_COUNCILS } from './mock-data';

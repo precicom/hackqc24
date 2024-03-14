@@ -1,23 +1,30 @@
-<div class="h-dvh container text-center">
+<div class="h-dvh text-center">
   <div class="bg-primary px-4 py-12 mb-8">
-      <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl lg:text-6xl max-w-lg mx-auto">Bienvenue sur Kizos!</h1>
-      <p class="mb-8 text-xl font-normal max-w-lg mx-auto">Notre plateforme interactive offre une passerelle sans précédent entre les citoyens passionnés et leurs élus locaux, permettant une connexion directe et un échange dynamique. </p>
-      <form [formGroup]="signInForm" (ngSubmit)="onSignIn()" class="space-y-4 max-w-lg mx-auto">
-        <label class="block text-left">
-          <span class="block text-sm font-medium text-slate-700">Email</span>
-          <input type="email" id="email" formControlName="email" class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
-          focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
-          disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
-          invalid:border-pink-500 invalid:text-pink-600
-          focus:invalid:border-pink-500 focus:invalid:ring-pink-500
-        ">
-        </label>
-        <button type="submit" [disabled]="!signInForm.valid" class="btn btn-neutral w-1/2">Connexion</button>
-      </form>
-</div>
-  <h2 class="text-xl font-normal lg:text-2xl max-w-lg mx-auto px-4">Connectez-vous dès maintenant à Kizos et soyez partie prenante de la transformation collaborative.</h2>
+    <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl lg:text-6xl max-w-lg mx-auto">Bienvenue sur Kizos!</h1>
+    <p class="mb-8 text-xl font-normal max-w-lg mx-auto">
+      Notre plateforme interactive offre une passerelle sans précédent entre les citoyens passionnés et leurs élus locaux, permettant une
+      connexion directe et un échange dynamique.
+    </p>
+    <form [formGroup]="signInForm" (ngSubmit)="onSignIn()" class="space-y-4 max-w-lg mx-auto">
+      <label class="block text-left">
+        <span class="block text-sm font-medium text-slate-700">Email</span>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
+        />
+      </label>
+      <button type="submit" [disabled]="!signInForm.valid" class="btn btn-neutral w-1/2">Connexion</button>
+    </form>
+  </div>
+  <h2 class="text-xl font-normal lg:text-2xl max-w-lg mx-auto px-4">
+    Connectez-vous dès maintenant à Kizos et soyez partie prenante de la transformation collaborative.
+  </h2>
   <div class="link max-w-lg mx-auto text-center py-3 px-5" [routerLink]="['/sign-up']">Je m'inscris</div>
 </div>
-<footer class="fixed bottom-0 left-0 z-20 w-full p-4 bg-white border-t border-gray-200 shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800 dark:border-gray-600">
-  <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 Kizos. All Rights Reserved.</span>
+<footer
+  class="fixed bottom-0 left-0 z-20 w-full p-4 bg-white border-t border-gray-200 shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800 dark:border-gray-600"
+>
+  <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 Kizos. All Rights Reserved.</span>
 </footer>

@@ -1,14 +1,15 @@
+<div class="flex flex-col space-y-2 p-8 pt-4">
+  <div class="text-xs">Thèmes du dernier conseil:</div>
+  <app-council-latest-information></app-council-latest-information>
+  <div class="ml-auto link" [routerLink]="['/councils']">Tous les conseils</div>
+</div>
+
 <div class="flex flex-col space-y-2 p-8">
   <div class="text-xs">Thèmes populaires:</div>
   <app-most-popular-themes></app-most-popular-themes>
   <div class="ml-auto link" [routerLink]="['/posts/all-posts']">Tous les thèmes</div>
 </div>
 
-<div class="flex flex-col space-y-2 p-8">
-  <div class="text-xs">Thèmes du dernier conseil:</div>
-  <app-council-latest-information></app-council-latest-information>
-  <div class="ml-auto link" [routerLink]="['/councils']">Tous les conseils</div>
-</div>
 
 
 

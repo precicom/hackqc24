@@ -1,0 +1,25 @@
+<div class="flex flex-col gap-y-2 bg-slate-300 rounded-xl p-2 shadow-xl" [routerLink]="[council.id]">
+
+  <!-- title -->
+  <div class="font-semibold">{{ council.title }}</div>
+
+  <!-- summary -->
+  <div class="line-clamp-2">{{ council.generated_summary }}</div>
+
+  <!-- themes -->
+  <div class="flex flex-row flex-wrap">
+    @for(theme of council.themes | slice: 0: 3; track theme.id) {
+      <div class="badge badge-primary truncate">
+        <div class="truncate">{{ theme.name }}</div>     
+      </div>         
+    }
+    @if(council.themes?.length > 3) {
+      <div class="badge badge-primary truncate">
+        <div>+{{ council.themes.length - 3 }} autres</div>     
+      </div> 
+    }
+  </div>      
+
+  <!-- date -->
+  <div>{{ council.date | date }}</div>
+</div>

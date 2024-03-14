@@ -58,7 +58,7 @@ namespace :dq do
   end
 
   # example usage: rake dq:populate_video_dataset_from_playlist["https://www.youtube.com/playlist?list=PLA29-Xv4NCfaBcRljPD74I5CWyNYrvx1i", resumes_generes_conseil_municipal_shawinigan]
-  desc "populate a ressource inside a specific package with dq api with default parameters"
+  desc "populate a ressource inside a specific package with dq taking videos information form a youtube playlist"
   task :populate_video_dataset_from_playlist, [:playlist_url, :package_id] => :environment do |t, args|
 
     OpenDataManager::DQOpenDataManager.populate_video_dataset_from_playlist(args[:playlist_url],args[:package_id])
@@ -71,10 +71,12 @@ namespace :youtube do
   # example usage: rake youtube:get_most_recent_video_url["https://www.youtube.com/playlist?list=PLA29-Xv4NCfaBcRljPD74I5CWyNYrvx1i"]
   # example usage: rake youtube:get_most_recent_video_url["https://www.youtube.com/playlist?list=PLA29-Xv4NCfaBcRljPD74I5CWyNYrvx1i", 20]
   desc "gets the most recents video url from youtube playlist, the parameter is the playlist url"
-  task :get_most_recent_video_url, [:playlist_url] => :environment do |t, args|
-    require 'csv'
-    require 'json'
-    OpenDataManager::DQOpenDataManager.populate_video_dataset_from_playlist(args[:playlist_url],'34dc4e4e-833e-4645-8e29-4057332c48e7')
+  task :get_most_recent_video_url, [:playlist_url, :number_of_videos] => :environment do |t, args|
+
+    snippet = OpenDataManager::YoutubePlaylistFetcher.new.fetch_playlist(args[:playlist_url],args[:number_of_videos] || 5)
+    snippet.each do |snippet|
+      puts "https://www.youtube.com/watch?v=#{snippet.resource_id.video_id}"
+    end
   end
 
 

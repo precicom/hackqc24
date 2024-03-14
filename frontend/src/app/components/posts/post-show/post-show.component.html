@@ -47,7 +47,9 @@
         <div class="w-full border border-transparent border-t-gray-950 py-1"></div>     
       </div>
     } @else {
-      <span class="loading loading-dots loading-lg"></span>
+      <div class="flex flex-grow items-center justify-center">
+        <span class="loading loading-dots loading-lg"></span>
+      </div>
     }
 
     @if (showComments) {

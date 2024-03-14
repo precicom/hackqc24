@@ -15,6 +15,14 @@ async function main() {
     socket.on("refreshPost", async (postId) => {
       socket.broadcast.emit("refreshPost", postId);
     });
+
+    socket.on("refreshComments", async (postId) => {
+      socket.broadcast.emit("refreshComments", postId);
+    });
+
+    socket.on("refreshComment", async (commentId) => {
+      socket.broadcast.emit("refreshComment", commentId);
+    });
   });
 
   server.listen(port, () => {
