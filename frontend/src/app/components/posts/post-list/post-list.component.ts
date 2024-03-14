@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, QueryList, ViewChildren, inject, numberAttribute } from '@angular/core';
 import { DataServices } from '../../../repository/dataServices';
-import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
 import { Post } from '../../../repository/posts/classes';
 import { PostCardComponent } from "../post-card/post-card.component";
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -10,6 +10,7 @@ import {CdkAccordionModule, CDK_ACCORDION} from '@angular/cdk/accordion';
 import { SearchInputComponent } from "../../form-fields/search-input/search-input.component";
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Theme } from '../../../repository/themes/classes';
+import { ThemeFilterComponent } from "../../theme/theme-filter/theme-filter.component";
 
 interface CategoryVM
   {
@@ -29,7 +30,7 @@ interface ViewModel {
     standalone: true,
     templateUrl: './post-list.component.html',
     styleUrl: './post-list.component.scss',
-    imports: [CommonModule, PostCardComponent, RouterModule, MatExpansionModule, CdkAccordionModule, SearchInputComponent]
+    imports: [CommonModule, PostCardComponent, RouterModule, MatExpansionModule, CdkAccordionModule, SearchInputComponent, ThemeFilterComponent]
 })
 export class PostListComponent implements OnInit {
   @ViewChildren('accordion', { read: CDK_ACCORDION }) accordions: QueryList<MatAccordion>
@@ -44,26 +45,27 @@ export class PostListComponent implements OnInit {
   searchValue$ = new BehaviorSubject<string>('')
 
   posts$: Observable<Post[]>
-  activeTheme: Theme
 
   vm: ViewModel
-  themes: Theme[]
+
+  themes$= new Subject<Theme[]>()
+  selectedThemes$ = new BehaviorSubject<Theme[]>([])
 
   firstRender = true
 
-  onThemeSelect(theme: Theme){
-    this.activeThemeId$.next(theme.id)
-    this.activeTheme = theme
+  get selectedThemes(){
+    return this.selectedThemes$.value
   }
 
-  removeActiveTheme(){
-    this.activeThemeId$.next(null)
-    this.activeTheme = null
-
-    this.router.navigate(['.'], {queryParams: {themeId: null}, replaceUrl: false, relativeTo: this.activatedRoute})
+  get selectedThemeIds(){
+    return this.selectedThemes.map(theme => theme.id)  
   }
 
-  search(value: string){
+  setSelectedThemes(themes: Theme[]){   
+    this.selectedThemes$.next(themes ?? [])
+  }
+
+  setSearch(value: string){
     this.searchValue$.next(value)
   }
 
@@ -80,28 +82,44 @@ export class PostListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dataServices.themes.getAll().subscribe(themes => {
+      this.themes$.next(themes)
+    })
+
     combineLatest([
-      this.dataServices.themes.getAll(),
+      this.activeThemeId$,
+      this.themes$
+    ]).pipe(untilDestroyed(this)).subscribe(([activeThemeId, themes]) => {
+      if(activeThemeId){
+        this.setSelectedThemes([themes.find(theme => theme.id === activeThemeId)])
+      }else {
+        this.setSelectedThemes([])
+      }
+    })
+
+    combineLatest([
       this.dataServices.posts.getAll(),
       this.searchValue$,
-      this.activeThemeId$
+      this.selectedThemes$
     ]).pipe(
       untilDestroyed(this)
-    ).subscribe(([themes, posts, searchValue, activeThemeId]) => {   
-      let filteredPost = posts
-
-      this.themes = themes
-
-      if(activeThemeId){
-        filteredPost = posts.filter(post => post.theme.id === activeThemeId)
-        this.activeTheme = themes.find(theme => theme.id === activeThemeId)
-      }
+    ).subscribe(([posts, searchValue, selectedThemes]) => {   
+      let filteredPost = posts       
 
       if(searchValue){
         filteredPost = filteredPost.filter(post => {
-          return post.content_text.toLowerCase().includes(searchValue.toLowerCase()) || 
-            post.theme.name.toLowerCase().includes(searchValue.toLowerCase()) ||
-            post.theme.category.toLowerCase().includes(searchValue.toLowerCase())
+          const text = `${post.content_text} ${post.theme.name} ${post.theme.category}`
+
+          return text.toLowerCase().includes(searchValue.toLowerCase())
+        })
+      }
+
+      // filter by user selected themes
+      if(selectedThemes.length){
+        const selectedThemeIds = selectedThemes.map(theme => theme.id)
+
+        filteredPost = filteredPost.filter(post => {
+          return selectedThemeIds.some(selectedThemeId =>selectedThemeId === post.theme_id)
         })
       }
    
@@ -141,5 +159,5 @@ export class PostListComponent implements OnInit {
     return {
       categories: categories
     }
-  }
+  } 
 }

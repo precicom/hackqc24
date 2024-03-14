@@ -1,46 +1,18 @@
-
-
-
-
-<div class="flex flex-row items-center gap-x-2 mt-5">
-  <div class="drawer w-fit">
-    <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-    <div class="drawer-content">    
-      <label for="my-drawer" class="btn drawer-button">Filtrer par:</label>
-    </div> 
-
-    <div class="drawer-side z-50">
-      <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-      <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
-        @for(theme of themes; track theme.id){
-          <li (click)="onThemeSelect(theme)" class="rounded-box" [class.bg-gray-400]="theme.id === activeTheme?.id"><a class="hover:bg-primary-100">{{ theme.name }}</a></li>
-        }        
-      </ul>
-    </div>
-  </div>
-
-  @if(activeTheme){
-    <button class="btn bg-purple-200 h-12">
-      <div class="flex flex-row flex-nowrap items-stretch gap-y-0" (click)="removeActiveTheme()">
-        <div class="">{{activeTheme.name}}</div>
-        <i class="fa-solid fa-xmark ml-4"></i>
-      </div> 
-    </button>
-  } 
+<div class="flex flex-row py-2">
+  <app-search-input class="ml-auto" (valueChange)="setSearch($event)"></app-search-input>
 </div>
 
+<div class="flex flex-row py-2">
+  <app-theme-filter [themes]="themes$ | async" [selectedThemes]="selectedThemes$ | async" (selectedThemesChange)="setSelectedThemes($event)"></app-theme-filter>
+</div>
 
-
-
-<div class="flex flex-row flex-wrap items-center gap-2 mt-5">
-  <button class="btn" (click)="expandAll()">Ouvrir</button>
-  <button class="btn" (click)="collapseAll()">Fermer</button>
-
-  <app-search-input (valueChange)="search($event)" class="ml-auto"></app-search-input>
+<div class="flex flex-row flex-wrap items-center gap-2 py-2 pt-4">
+  <button class="btn btn-sm" (click)="expandAll()">Ouvrir</button>
+  <button class="btn btn-sm" (click)="collapseAll()">Fermer</button>
 </div>
 
 @if (vm; as vm) {
-  <cdk-accordion class="flex flex-col gap-y-8 mt-8" #accordion [multi]="true">
+  <cdk-accordion class="flex flex-col gap-y-8 mt-2" #accordion [multi]="true">
     @for (category of vm.categories; track category.key) {
       <cdk-accordion-item #accordionItem="cdkAccordionItem">
       

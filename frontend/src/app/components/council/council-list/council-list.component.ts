@@ -6,14 +6,17 @@ import { Council } from '../../../repository/council/classes';
 import { CommonModule } from '@angular/common';
 import { Theme } from '../../../repository/themes/classes';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ThemeFilterComponent } from '../../theme/theme-filter/theme-filter.component';
+import { SearchInputComponent } from "../../form-fields/search-input/search-input.component";
+import { CouncilCardComponent } from "../council-card/council-card.component";
 
 @UntilDestroy()
 @Component({
-  selector: 'app-council-list',
-  standalone: true,
-  imports: [RouterModule, CommonModule],
-  templateUrl: './council-list.component.html',
-  styleUrl: './council-list.component.scss'
+    selector: 'app-council-list',
+    standalone: true,
+    templateUrl: './council-list.component.html',
+    styleUrl: './council-list.component.scss',
+    imports: [RouterModule, CommonModule, ThemeFilterComponent, SearchInputComponent, CouncilCardComponent]
 })
 export class CouncilListComponent implements OnInit {
   dataServices = inject(DataServices)
@@ -26,12 +29,12 @@ export class CouncilListComponent implements OnInit {
   councils$ = new BehaviorSubject<Council[]>([])
   selectedThemes$ = new BehaviorSubject<Theme[]>([])
 
-  get selectedThemes(){
-    return this.selectedThemes$.value
+  setSearch(value: string){
+    this.search$.next(value)  
   }
 
-  get selectedThemeIds(){
-    return this.selectedThemes.map(theme => theme.id)  
+  setSelectedThemes(themes: Theme[]){
+    this.selectedThemes$.next(themes)
   }
 
   ngOnInit(): void {
@@ -70,13 +73,5 @@ export class CouncilListComponent implements OnInit {
 
       this.councilsList$.next(filteredCouncils)
     })
-  }
-
-  toggleTheme(theme: Theme){
-    if(this.selectedThemes.some(t => t.id === theme.id)){
-      this.selectedThemes$.next( this.selectedThemes.filter(t => t.id !== theme.id))
-    }else {
-      this.selectedThemes$.next([...this.selectedThemes, theme])
-    }
   }
 }
