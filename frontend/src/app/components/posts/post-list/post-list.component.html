@@ -29,7 +29,7 @@
         <div class="ml-8 mt-2" [style.display]="accordionItem.expanded ? '' : 'none'">
           <div @staggeredFadeIn class="flex flex-col gap-y-2 ml-8 mt-2" [style.display]="accordionItem.expanded ? '' : 'none'">
             @for (post of category.posts; track post.id) {
-              <app-post-card [post]="post" [showStatistics]="true" [showTags]="false" [routerLink]="[post.id]"></app-post-card>
+              <app-post-card [@slideAndFadeIn]="accordionItem.expanded ? 'slideAndFadeIn': null" [post]="post" [showStatistics]="true" [showTags]="false" [routerLink]="[post.id]"></app-post-card>
             }
           </div>
         </div>
