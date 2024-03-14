@@ -6,7 +6,8 @@ namespace :dq do
   desc "gets a data ressourcre form dq api and displays it. parameter is the id of the resource"
   task :get_ressource, [:ressource_id] => :environment do |t, args|
 
-    OpenDataManager::DQApiService.new.fetch_ressource_data(args[:ressource_id])
+    response = OpenDataManager::DQApiService.new.fetch_ressource_data(args[:ressource_id])
+    puts JSON.parse(response)
   end
 
   # example usage: rake dq:create_package
@@ -57,11 +58,42 @@ namespace :dq do
     OpenDataManager::DQApiService.new.create_ressource_data(post_data)
   end
 
-  # example usage: rake dq:populate_video_dataset_from_playlist["https://www.youtube.com/playlist?list=PLA29-Xv4NCfaBcRljPD74I5CWyNYrvx1i", resumes_generes_conseil_municipal_shawinigan]
+  # example usage: rake dq:populate_video_dataset_from_playlist["https://www.youtube.com/playlist?list=PLA29-Xv4NCfaBcRljPD74I5CWyNYrvx1i",resumes_generes_conseil_municipal_shawinigan]
   desc "populate a ressource inside a specific package with dq taking videos information form a youtube playlist"
   task :populate_video_dataset_from_playlist, [:playlist_url, :package_id] => :environment do |t, args|
 
     OpenDataManager::DQOpenDataManager.populate_video_dataset_from_playlist(args[:playlist_url],args[:package_id])
+  end
+
+  # example usage: rake dq:update_ressource_csv["dadacc9f-5532-422f-992c-9e7826cfa797","output.csv"]
+  desc "send a file to a ressouce"
+  task :update_ressource_csv, [:ressource_id, :csv_file_path] => :environment do |t, args|
+    require 'net/http'
+    require 'uri'
+
+    jeton_PAB = ENV.fetch("DQ_API_KEY")
+    url_resource_patch = "https://pab.donneesquebec.ca/recherche/api/3/action/resource_patch"
+    uri = URI.parse(url_resource_patch)
+
+    file_ressource = args[:csv_file_path]
+    resource_id_to_update = args[:ressource_id]
+
+    file = File.open(file_ressource, "rb")
+
+
+    post_header = { "Authorization" => jeton_PAB }
+
+    request = Net::HTTP::Post.new(uri, post_header)
+    form_data = [['id', resource_id_to_update],['file', file]]
+    request.set_form(form_data, 'multipart/form-data')
+
+    #puts request.body
+
+    response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == 'https') do |http|
+      http.request(request)
+    end
+
+    puts response.body
   end
 end
 
