@@ -27,11 +27,14 @@ namespace :crunch do
     youtube_service.key = ENV.fetch("YT_API_KEY")
 
     title = youtube_service.list_videos('snippet', id: video_id).items.first.snippet.title
-    puts DateTime.parse(title).end_of_day
+    date = DateTime.parse(title).end_of_day
+    existing = Council.find_by(date: date)
+    existing.destroy! if existing
     
     transcript = Transcripter::YouTubeTranscripter.fetch_transcript(video_id).map { |e| e[:text]}.join(' ')
     client = OpenAI::Client.new
-    prompt = "###Instructions###\nSépare la transcription de la rencontre qui est ci-bas en sections et donne moi le titre de chaque section seulement comme réponse dans une liste point sans numérotation.\n\n###Transcription###\n#{transcript}\n\n###Sections###\n"
+    prompt = "###Instructions###\nIdentifie dans la transcription de la rencontre qui est ci-bas les sections granulaires et donne moi un titre pour chaque section spécifique comme réponse en respectant le format ci-dessous.\n\n###Transcription###\n#{transcript}\n\n###Exemple###\n - Adoption du réglement ABC-2\n - Question sur l'avancement des travaux de la rue Pouliot\n - Adoption du budget de la ville\n\n###Sections###\n"
+    # prompt = "###Instructions###\nSépare la transcription de la rencontre qui est ci-bas en sections assez précises et donne moi un titre spécifique suivi d'une phrase résumant le contenu de la section comme réponse dans une liste à point sans numérotation en respectant le format ci-dessous, énumère les différents réglements, lois, contrats dans le titre des sections.\n\n###Transcription###\n#{transcript}\n\n###Format###\n - Section 1: Résumé de la section 1\n - Section 2: Résumé de la section 2\n - Section 3: Résumé de la section 3\n\n###Sections###\n"
     puts "Rough tokens: #{OpenAI.rough_token_count(prompt)}"
     response = client.chat(
     parameters: {
@@ -42,11 +45,23 @@ namespace :crunch do
         temperature: 0.7,
     })
     points = response.dig("choices", 0, "message", "content").split("\n").map { |l| l.gsub('- ', '')}
+    puts response.dig("choices", 0, "message", "content")
+    # prompt = "###Instructions###\n.Pour chaque section de la transcription listée ci-dessous, analyse la transcription JSON pour identifier le début de cette section dans le champ 'text' et donne la valeur du champ 'start' la plus près du début\n\n###Sections###\n#{response.dig("choices", 0, "message", "content")}\n\n###Transcription###\n#{json_transcript}\n\n###Début de chaque section###\n"
+    # puts "Rough tokens: #{OpenAI.rough_token_count(prompt)}"
+    # response = client.chat(
+    # parameters: {
+    #     model: "gpt-4-turbo-preview",
+    #     messages: [
+    #       { role: "user", content: prompt }
+    #     ],
+    #     temperature: 0.5,
+    # })
+    # puts response.dig("choices", 0, "message", "content")
 
-    council = Council.create!()
-    points.each do |p|
-      council
-    end
+    # council = Council.create!(title: title, date: date, youtube_link: youtube_link)
+    # points.each do |point|
+    #   council.discussion_points.create!(title: point)
+    # end
   end
 
   def extract_youtube_video_id(url)

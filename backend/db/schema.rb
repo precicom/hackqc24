@@ -53,7 +53,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_11_235955) do
 
   create_table "councils", force: :cascade do |t|
     t.string "title"
-    t.datetime "datetime"
+    t.date "date"
     t.string "youtube_link"
     t.text "generated_summary"
     t.datetime "created_at", null: false
@@ -61,8 +61,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_11_235955) do
   end
 
   create_table "discussion_points", force: :cascade do |t|
-    t.integer "theme_id", null: false
     t.integer "council_id", null: false
+    t.integer "theme_id"
+    t.string "title"
     t.text "generated_summary"
     t.string "minute_link_url"
     t.datetime "created_at", null: false

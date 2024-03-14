@@ -1,3 +1,3 @@
 class Council < ApplicationRecord
-  has_many :discussion_points
+  has_many :discussion_points, dependent: :destroy
 end
