@@ -58,9 +58,11 @@ export class CouncilListComponent implements OnInit {
 
         // filter by user search input
         if (search) {
-          filteredCouncils = filteredCouncils.filter(council =>
-            `${council.generated_summary} ${council.title}`.toLowerCase().includes(search.toLowerCase()),
-          )
+          filteredCouncils = filteredCouncils.filter(council => {
+            const allThemeText = council.themes.reduce((acc, theme) => `${acc} ${theme.name} ${theme.category}`, '');
+
+            return `${council.generated_summary} ${council.title} ${allThemeText}`.toLowerCase().includes(search.toLowerCase())
+          })
         }
 
         // filter by user selected themes
