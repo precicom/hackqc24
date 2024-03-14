@@ -3,7 +3,15 @@ class AuthController < ApplicationController
 
   def create
     email = params[:email]
-    user = User.find_by(email: email)
+    fb_token = params[:fb_token]
+    user = nil
+    if email
+      user = User.find_by(email: email)
+    elsif fb_token
+      res = HTTParty.get("https://graph.facebook.com/v2.8/me", query: { access_token: fb_token, fields: 'email,name' })
+      email = res.parsed_response['email'] if res.code == 200
+      user = User.find_or_create_by(email: email)
+    end
 
     if user
       # User found, create and return a JWT token

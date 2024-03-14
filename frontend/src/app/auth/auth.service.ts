@@ -51,6 +51,25 @@ export class AuthService {
     )
   }
 
+  loginFb(accessToken: string): Observable<boolean> {
+    return this.http.post<any>(`${environment.apiUrl}/login`, { fb_token: accessToken }).pipe(
+      switchMap(response => {
+        this.setToken(response.token)
+
+        return this.dataServices.users.me().pipe(
+          map(user => {
+            this.currentUser = user
+            this.currentUserId = user.id
+
+            this.isAuthenticated.next(true)
+
+            return true
+          }),
+        )
+      }),
+    )
+  }
+
   logout(): void {
     this.isAuthenticated.next(false)
 

@@ -7,8 +7,12 @@ class ApplicationController < ActionController::API
     authorization_header = request.headers['Authorization'] || ''
     token = authorization_header.split(' ')[1]
 
-    decoded_token = JWT.decode(token, Rails.application.secret_key_base, true, { algorithm: 'HS256' })
-
+    decoded_token = nil
+    begin
+      decoded_token = JWT.decode(token, Rails.application.secret_key_base, true, { algorithm: 'HS256' })
+    rescue
+    end
+    
     if (payload = decoded_token&.first&.deep_symbolize_keys)
       user_id = payload[:user_id]
       exp = payload[:exp]

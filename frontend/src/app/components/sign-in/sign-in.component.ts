@@ -1,13 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../../auth/auth.service';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core'
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
+import { Router, RouterModule } from '@angular/router'
+import { AuthService } from '../../auth/auth.service'
+import { CommonModule } from '@angular/common'
+import { FacebookService } from 'ngx-facebook'
 
 @Component({
   selector: 'app-sign-in',
@@ -17,25 +13,34 @@ import { CommonModule } from '@angular/common';
   styleUrl: './sign-in.component.scss',
 })
 export class SignInComponent implements OnInit {
-  signInForm: FormGroup;
+  fb = inject(FacebookService)
+  authService = inject(AuthService)
+  router = inject(Router)
 
-  constructor(private authService: AuthService, private router: Router) {
-    this.signInForm = new FormGroup({
-      email: new FormControl(null, [Validators.required, Validators.email]),
-    });
-  }
-  
+  signInForm: FormGroup
+
   ngOnInit(): void {
     this.signInForm = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
-    });
+    })
+  }
+
+  loginWithFacebook(): void {
+    this.fb
+      .login({ scope: 'public_profile,email' })
+      .then(response => {
+        this.authService.loginFb(response.authResponse.accessToken).subscribe(() => {
+          this.router.navigate(['/'])
+        })
+      })
+      .catch((error: any) => console.error(error))
   }
 
   onSignIn() {
-    const email = this.signInForm.get('email')?.value;
+    const email = this.signInForm.get('email')?.value
     this.authService.login(email).subscribe(() => {
-      console.log('loggin');
-      this.router.navigate(['/']);
-    });
+      console.log('loggin')
+      this.router.navigate(['/'])
+    })
   }
 }
