@@ -3,7 +3,7 @@
 </div>
 
 <div class="flex flex-row p-4">
-  <app-theme-filter [themes]="themes$ | async" (selectedThemesChange)="setSelectedThemes($event)"></app-theme-filter>
+  <app-theme-filter [themes]="themes$ | async" [selectedThemes]="selectedThemes$ | async" (selectedThemesChange)="setSelectedThemes($event)"></app-theme-filter>
 </div>
 
 <div class="flex flex-col overflow-y-auto gap-y-6 my-4 overflow-visible px-4 pb-8">

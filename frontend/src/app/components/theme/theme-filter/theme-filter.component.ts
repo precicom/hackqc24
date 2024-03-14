@@ -17,7 +17,7 @@ export class ThemeFilterComponent implements OnChanges {
   selectedThemes$ = new BehaviorSubject<Theme[]>([])
 
   get selectedThemeIds(){
-    return this.selectedThemes.map(theme => theme.id)  
+    return this.selectedThemes?.map(theme => theme.id) ?? []
   }
 
   ngOnChanges(changes: SimpleChanges): void {
