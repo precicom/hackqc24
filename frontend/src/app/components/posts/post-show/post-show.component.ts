@@ -1,5 +1,5 @@
-import { WebsocketService } from './../../../services/websocket.service'
-import { Component, Input, OnInit, ViewChild, inject, numberAttribute } from '@angular/core'
+// import { WebsocketService } from './../../../services/websocket.service'
+import { AfterViewInit, Component, INJECTOR, Input, OnDestroy, OnInit, ViewChild, inject, numberAttribute } from '@angular/core'
 import { DataServices } from '../../../repository/dataServices'
 import { Post } from '../../../repository/posts/classes'
 import { TimeDiffProPipe } from '../../../pipes/time-diff-pro/time-diff-pro.pipe'
@@ -15,6 +15,8 @@ import { delay, filter } from 'rxjs'
 import { MessageFormComponent, MessageSubmitEvent } from "../message-form/message-form.component";
 import { fadeIn, slideAndFadeIn, staggeredFadeIn } from '../../../animations/animations'
 import { TranslateModule } from '@ngx-translate/core'
+import { ActionCableService } from '../../../services/action-cable/action-cable'
+import { ActionCableBroadcaster } from '../../../services/action-cable/action-cable-broadcaster'
 
 @Component({
     selector: 'app-post-show',
@@ -38,23 +40,20 @@ import { TranslateModule } from '@ngx-translate/core'
         TranslateModule
     ]
 })
-export class PostShowComponent implements OnInit {
+export class PostShowComponent implements OnInit, OnDestroy {
   @ViewChild(MessageFormComponent, { static: false }) messageForm: MessageFormComponent
 
   private _postId: number
   @Input({ transform: numberAttribute }) set postId(postId: number) {
-    this.dataServices.posts.getById(postId).pipe(delay(500)).subscribe(post => {
-      this._postId = postId
-      this.post = post
-      this.comments = post.comments
-    })
+    this._postId = postId
+    this.fetchPost()   
   }
 
   get postId() {
     return this._postId
   }
 
-  websocketService = inject(WebsocketService)
+  // websocketService = inject(WebsocketService)
 
   clampText = true
   commenting: boolean = false
@@ -64,13 +63,33 @@ export class PostShowComponent implements OnInit {
   post?: Post
   comments: Comment[] = []
   dataServices = inject(DataServices)
+  actionCableService = inject(ActionCableService)
+
+  postBroadCaster: ActionCableBroadcaster
 
   ngOnInit(): void {
-    this.websocketService.getRefreshPost()
-    this.websocketService.getRefreshAllComments()
+    // this.websocketService.getRefreshPost()
+    // this.websocketService.getRefreshAllComments()
 
-    this.websocketService.refreshPostId$.pipe(filter(id => !!id && +id == this.postId)).subscribe(() => this.refreshPost())
-    this.websocketService.refreshAllComments$.pipe(filter(id => !!id && +id == this.postId)).subscribe(() => this.refrechComments())
+    // this.websocketService.refreshPostId$.pipe(filter(id => !!id && +id == this.postId)).subscribe(() => this.refreshPost())
+    // this.websocketService.refreshAllComments$.pipe(filter(id => !!id && +id == this.postId)).subscribe(() => this.refrechComments())
+
+    this.postBroadCaster = this.actionCableService.subscribe('PostChannel', { params: { post_id: this.postId } })
+
+    this.postBroadCaster.on('post_changed').subscribe(() => {
+      this.fetchPost()      
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.postBroadCaster.unsubscribe()
+  }
+
+  fetchPost(){
+    this.dataServices.posts.getById(this.postId).pipe(delay(500)).subscribe(post => {     
+      this.post = post
+      this.comments = post.comments
+    })
   }
 
   unClampText() {
@@ -130,7 +149,7 @@ export class PostShowComponent implements OnInit {
     this.creatingComment = true
     this.dataServices.comments.create(formData).subscribe(response => {
       this.messageForm.clearCommentBox()
-      this.websocketService.sendRefreshAllComments(this.postId)
+    //  this.websocketService.sendRefreshAllComments(this.postId)
       this.refrechComments()
     })
   }

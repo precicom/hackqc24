@@ -6,6 +6,8 @@ import english from './pipes/locales/en'
 import french from './pipes/locales/fr'
 import { TranslateService } from '@ngx-translate/core'
 import { FacebookService } from 'ngx-facebook'
+import { ActionCableService } from './services/action-cable/action-cable'
+import { environment } from '../environments/environment'
 
 const locales = {
   en: english,
@@ -25,10 +27,12 @@ export class AppComponent implements OnInit {
   pageInfoService = inject(PageInformation)
   translate = inject(TranslateService)
   fb = inject(FacebookService)
+  actionCableService = inject(ActionCableService)
 
   title = 'frontend'
 
   ngOnInit(): void {
+    this.actionCableService.connect(this.websocketUrl(), 'no_token')
     this.trackRouterTitleDate()
     this.initTranslations()
     this.fb.init({
@@ -36,6 +40,16 @@ export class AppComponent implements OnInit {
       xfbml: true,
       version: 'v2.8',
     })
+  }
+
+  websocketUrl(){
+    // if (this.authService.tenant.region_url.includes('localhost')) {
+    //   return `${this.authService.tenant.api_url}/cable`
+    // } else {
+    //   return `${this.authService.tenant.region_url}/${this.authService.tenant.uuid}/cable`
+    // }
+
+    return environment.apiUrl + '/cable'
   }
 
   initTranslations() {

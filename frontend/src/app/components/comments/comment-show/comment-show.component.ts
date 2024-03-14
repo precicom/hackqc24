@@ -1,4 +1,4 @@
-import { WebsocketService } from './../../../services/websocket.service'
+// import { WebsocketService } from './../../../services/websocket.service'
 import { Component, Input, OnInit, inject } from '@angular/core'
 import { Comment } from '../../../repository/comments/classes'
 import { CommonModule, NgOptimizedImage } from '@angular/common'
@@ -18,21 +18,21 @@ import { filter } from 'rxjs'
 export class CommentShowComponent implements OnInit {
   @Input() comment: Comment
 
-  websocketService = inject(WebsocketService)
+  //websocketService = inject(WebsocketService)
 
   clampText: boolean = true
 
   dataServices = inject(DataServices)
 
   ngOnInit(): void {
-    this.websocketService
-      .getRefreshComment()
-      .pipe(
-        filter(id => {
-          return !!id && +id == this.comment.id
-        }),
-      )
-      .subscribe(() => this.refrechComment())
+    // this.websocketService
+    //   .getRefreshComment()
+    //   .pipe(
+    //     filter(id => {
+    //       return !!id && +id == this.comment.id
+    //     }),
+    //   )
+    //   .subscribe(() => this.refrechComment())
   }
 
   unClampText() {
@@ -64,6 +64,6 @@ export class CommentShowComponent implements OnInit {
   }
 
   websocketRefrechComment() {
-    this.websocketService.sendRefreshComment(this.comment.id)
+   // this.websocketService.sendRefreshComment(this.comment.id)
   }
 }
