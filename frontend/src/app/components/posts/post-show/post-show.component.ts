@@ -64,10 +64,10 @@ export class PostShowComponent implements OnInit {
 
   ngOnInit(): void {
     this.websocketService.getRefreshPost()
-    this.websocketService.getRefreshComments()
+    this.websocketService.getRefreshAllComments()
 
     this.websocketService.refreshPostId$.pipe(filter(id => !!id && +id == this.postId)).subscribe(() => this.refreshPost())
-    this.websocketService.refreshComments$.pipe(filter(id => !!id && +id == this.postId)).subscribe(() => this.refrechComments())
+    this.websocketService.refreshAllComments$.pipe(filter(id => !!id && +id == this.postId)).subscribe(() => this.refrechComments())
   }
 
   unClampText() {
@@ -139,7 +139,7 @@ export class PostShowComponent implements OnInit {
     this.creatingComment = true
     this.dataServices.comments.create(formData).subscribe(response => {
       this.clearCommentBox()
-      this.websocketService.sendRefreshComments(this.postId)
+      this.websocketService.sendRefreshAllComments(this.postId)
       this.refrechComments()
     })
   }

@@ -1,9 +1,8 @@
-
 <div class="inline-flex flex-col">
   <div class="inline-flex flex-col rounded-2xl bg-slate-200 min-h-12 p-3">
     <div>Anonyme</div>
-    <div [class.line-clamp-2]="clampText" (click)="unClampText()">{{comment.content_text}}</div>
-    <img *ngIf="comment.image" #imagePreview [ngSrc]="comment.image" height="300" width="200"/>    
+    <div [class.line-clamp-2]="clampText" (click)="unClampText()">{{ comment.content_text }}</div>
+    <img *ngIf="comment.image" #imagePreview [ngSrc]="comment.image" height="300" width="200" />
   </div>
 
   <div class="inline-flex flex-row items-center pl-3">
