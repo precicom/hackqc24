@@ -4,8 +4,8 @@ import { Comment } from '../../../repository/comments/classes'
 import { CommonModule, NgOptimizedImage } from '@angular/common'
 import { TimeDiffProPipe } from '../../../pipes/time-diff-pro/time-diff-pro.pipe'
 import { DataServices } from '../../../repository/dataServices'
-import { CommentUpVoteCountPipe } from '../pipes/comments-up-vote-count.pipe'
-import { CommentDownVoteCountPipe } from '../pipes/comments-down-vote-count.pipe'
+import { CommentUpVoteCountPipe } from '../../../pipes/comments-up-vote-count.pipe'
+import { CommentDownVoteCountPipe } from '../../../pipes/comments-down-vote-count.pipe'
 import { filter } from 'rxjs'
 
 @Component({

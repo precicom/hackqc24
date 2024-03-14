@@ -26,6 +26,7 @@ export class CouncilFicheComponent implements OnInit {
 
   dataServices = inject(DataServices)
 
+  filteredPoints$ = new BehaviorSubject<DiscussionPoint[]>([])
   discussionPoints$ = new BehaviorSubject<DiscussionPoint[]>([])
   council$ = new Subject<Council>()
   search$ = new BehaviorSubject<string>('')
@@ -48,7 +49,21 @@ export class CouncilFicheComponent implements OnInit {
     ]).pipe(
       untilDestroyed(this)
     ).subscribe(([selectedThemes, search, discussionPoints]) => {
+      let filteredPoints = discussionPoints
 
+      // filter by user search input
+      if(search){     
+        filteredPoints = filteredPoints.filter(point => `${point.generated_summary} ${point.theme.category} ${point.theme.name}`.toLowerCase().includes(search.toLowerCase()))
+      }
+
+      // filter by user selected themes
+      if(selectedThemes.length){
+        const selectedThemeIds = selectedThemes.map(theme => theme.id)
+
+        filteredPoints = filteredPoints.filter(point => selectedThemeIds.some(selectedThemeId => selectedThemeId === point.theme_id) )
+      }
+
+      this.filteredPoints$.next(filteredPoints)
     })
   }
 

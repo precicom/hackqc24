@@ -1,9 +1,6 @@
 <div @fadeIn class="flex flex-row p-4">
-  <app-search-input class="ml-auto" (valueChange)="setSearch($event)"></app-search-input>
-</div>
-
-<div @fadeIn class="flex flex-row p-4 pb-0">
   <app-theme-filter [themes]="themes$ | async" [selectedThemes]="selectedThemes$ | async" (selectedThemesChange)="setSelectedThemes($event)"></app-theme-filter>
+  <app-search-input class="ml-auto" (valueChange)="setSearch($event)"></app-search-input>
 </div>
 
 <div class="flex flex-col overflow-y-auto gap-y-6 my-4 overflow-visible px-4 pb-8 pt-4">

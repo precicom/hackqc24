@@ -1,9 +1,6 @@
 <div class="flex flex-row py-2">
-  <app-search-input @fadeIn class="ml-auto" (valueChange)="setSearch($event)"></app-search-input>
-</div>
-
-<div class="flex flex-row py-2">
   <app-theme-filter @fadeIn [themes]="themes$ | async" [selectedThemes]="selectedThemes$ | async" (selectedThemesChange)="setSelectedThemes($event)"></app-theme-filter>
+  <app-search-input @fadeIn class="ml-auto" (valueChange)="setSearch($event)"></app-search-input>
 </div>
 
 <div class="flex flex-row flex-wrap items-center gap-2 py-2 pt-4">

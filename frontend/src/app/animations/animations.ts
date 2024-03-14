@@ -1,4 +1,4 @@
-import { animate, keyframes, query, stagger, style, transition, trigger } from "@angular/animations"
+import { animate, keyframes, query, stagger, state, style, transition, trigger } from "@angular/animations"
 
 export const fadeIn = trigger('fadeIn', [
     transition(':enter', [
@@ -40,6 +40,13 @@ export const staggeredFadeIn = trigger('staggeredFadeIn', [
       ])
     ])
   ])
+]);
+
+// create an angular2 animation that enlarges an element from a width of zero to it's final width and vice versa on boolean trigger
+export const growShrink = trigger('growShrink', [
+  state('true', style({ width: '*' })),
+  state('false', style({ width: '0' })),
+  transition('false <=> true', animate('0.25s ease-in-out'))
 ]);
 
 

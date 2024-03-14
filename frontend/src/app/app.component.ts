@@ -2,8 +2,8 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs';
 import { PageInformation } from './services/page-information';
-import english from './locales/en'
-import french from './locales/fr'
+import english from './pipes/locales/en'
+import french from './pipes/locales/fr'
 import { TranslateService } from '@ngx-translate/core'
 
 const locales = {
