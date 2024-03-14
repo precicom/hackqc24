@@ -1,7 +1,7 @@
 <div class="flex flex-col w-full px-3 h-full relative">
   <div class="overflow-y-auto mt-4 grow pb-24">
     @if (post; as post) {
-      <div class="flex flex-col gap-y-3">
+      <div @fadeIn class="flex flex-col gap-y-3">
         <div class="flex flex-col">
           @if(post.status === 'rejected'){
             <span class="indicator-item badge badge-warning">Rejeté</span>
@@ -55,14 +55,14 @@
         <div class="w-full border border-transparent border-t-gray-950 py-1"></div>     
       </div>
     } @else {
-      <div class="flex flex-grow items-center justify-center">
+      <div class="flex flex-grow items-center justify-center h-full">
         <span class="loading loading-dots loading-lg"></span>
       </div>
     }
 
-    @if (showComments &&  post?.status !== 'rejected') {
+    @if (showComments &&  post && post?.status !== 'rejected') {
       @if (!commenting) {
-        <div class="flex flex-row items-center">
+        <div @fadeIn class="flex flex-row items-center">
           <button class="btn ml-auto mr-auto" (click)="toggleCommentBox()">Ajouter un commentaire</button>
         </div>
       }
@@ -72,7 +72,7 @@
       </div>
 
       @if (comments; as comments) {
-        <div class="flex flex-col gap-y-3 mt-3">
+        <div @staggeredFadeIn class="flex flex-col gap-y-3 mt-3">
           @for (comment of comments | sortBy: 'created_at' : 'reverse'; track comment.id) {
             <app-comment-show [comment]="comment"></app-comment-show>
           }

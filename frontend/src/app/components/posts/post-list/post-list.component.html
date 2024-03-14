@@ -16,7 +16,7 @@
     @for (category of vm.categories; track category.key) {
       <cdk-accordion-item #accordionItem="cdkAccordionItem">
       
-        <button class="btn flex flex-row bg-purple-300 h-16 rounded-xl shadow-xl pl-2" (click)="accordionItem.toggle()">
+        <button class="btn flex flex-row bg-purple-300 h-16 rounded-xl shadow-xl pl-2 border-none" (click)="accordionItem.toggle()">
           <i class="fa-solid fa-angle-right" [class.rotate-90]="accordionItem.expanded"></i>
 
           <div class="flex flex-col flex-nowrap items-start gap-y-0 ">

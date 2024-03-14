@@ -11,14 +11,16 @@ import { Comment } from '../../../repository/comments/classes'
 import { SortByPipe } from '../../../pipes/sort-by/sort-by.pipe'
 import { CommentShowComponent } from '../../comments/comment-show/comment-show.component'
 import { ImagePreviewDirective } from '../../../directives/image-preview.directive'
-import { filter } from 'rxjs'
+import { delay, filter } from 'rxjs'
 import { MessageFormComponent, MessageSubmitEvent } from "../message-form/message-form.component";
+import { fadeIn, slideAndFadeIn, staggeredFadeIn } from '../../../animations/animations'
 
 @Component({
     selector: 'app-post-show',
     standalone: true,
     templateUrl: './post-show.component.html',
     styleUrl: './post-show.component.scss',
+    animations: [slideAndFadeIn, fadeIn, staggeredFadeIn],
     imports: [
         TimeDiffProPipe,
         PostCommentCountPipe,
@@ -39,7 +41,7 @@ export class PostShowComponent implements OnInit {
 
   private _postId: number
   @Input({ transform: numberAttribute }) set postId(postId: number) {
-    this.dataServices.posts.getById(postId).subscribe(post => {
+    this.dataServices.posts.getById(postId).pipe(delay(500)).subscribe(post => {
       this._postId = postId
       this.post = post
       this.comments = post.comments
