@@ -5,7 +5,7 @@
       <div class="flex-1">
         <a class="btn btn-ghost text-xl" (click)="home()">Kizos </a>
       </div>
-      <div class="flex-1 -ml-10">
+      <div class="flex-1 -ml-8">
         {{ title }}
       </div>
       <div class="flex-none">
@@ -30,7 +30,6 @@
   >
     <div class="flex h-full max-w-lg justify-between mx-auto">
       <button
-        data-tooltip-target="tooltip-self"
         type="button"
         class="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
         [routerLink]="['/posts/my-posts']"
@@ -45,7 +44,6 @@
         </div> -->
 
       <button
-        data-tooltip-target="tooltip-self"
         type="button"
         class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
         [routerLink]="['/councils']"
@@ -75,7 +73,6 @@
       </div>
        -->
       <button
-        data-tooltip-target="tooltip-all"
         type="button"
         class="inline-flex flex-col items-center justify-center px-2 md:px-5 rounded-r-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
         [routerLink]="['/posts/all-posts']"

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common'
 import { Component, Input, OnInit, QueryList, ViewChildren, inject, numberAttribute } from '@angular/core'
 import { DataServices } from '../../../repository/dataServices'
-import { BehaviorSubject, Observable, Subject, combineLatest, delay } from 'rxjs'
+import { BehaviorSubject, Observable, ReplaySubject, Subject, combineLatest, delay } from 'rxjs'
 import { Post } from '../../../repository/posts/classes'
 import { PostCardComponent } from '../post-card/post-card.component'
 import { ActivatedRoute, Router, RouterModule } from '@angular/router'
@@ -61,7 +61,7 @@ export class PostListComponent implements OnInit {
 
   vm: ViewModel
 
-  themes$ = new Subject<Theme[]>()
+  themes$ = new ReplaySubject<Theme[]>(1)
   selectedThemes$ = new BehaviorSubject<Theme[]>([])
 
   firstRender = true

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, inject, numberAttribute } from '@angular/core';
 import { DataServices } from '../../../repository/dataServices';
-import { BehaviorSubject, Subject, combineLatest, delay } from 'rxjs';
+import { BehaviorSubject, ReplaySubject, Subject, combineLatest, delay } from 'rxjs';
 import { Council } from '../../../repository/council/classes';
 import { CommonModule } from '@angular/common';
 import { fadeIn, slideAndFadeIn, staggeredFadeIn } from '../../../animations/animations';
@@ -23,14 +23,18 @@ import { RouterModule } from '@angular/router';
 })
 export class CouncilFicheComponent implements OnInit {
   @Input({transform: numberAttribute}) councilId?: number;
+  @Input({ transform: numberAttribute }) set themeId(themeId: number) {
+    this.activeThemeId$.next(themeId)
+  }
 
   dataServices = inject(DataServices)
 
+  activeThemeId$ = new BehaviorSubject<number>(null)
   filteredPoints$ = new BehaviorSubject<DiscussionPoint[]>([])
   discussionPoints$ = new BehaviorSubject<DiscussionPoint[]>([])
   council$ = new Subject<Council>()
   search$ = new BehaviorSubject<string>('')
-  themes$= new BehaviorSubject<Theme[]>([])
+  themes$= new ReplaySubject<Theme[]>(1)
   selectedThemes$ = new BehaviorSubject<Theme[]>([])
 
   ngOnInit(): void {
@@ -41,6 +45,16 @@ export class CouncilFicheComponent implements OnInit {
     if(typeof this.councilId === 'number'){
       this.fetchCouncil(this.councilId)
     }
+
+    combineLatest([this.activeThemeId$, this.themes$])
+    .pipe(untilDestroyed(this))
+    .subscribe(([activeThemeId, themes]) => {
+      if (activeThemeId) {
+        this.setSelectedThemes([themes.find(theme => theme.id === activeThemeId)])
+      } else {
+        this.setSelectedThemes([])
+      }
+    })
 
     combineLatest([
       this.selectedThemes$,
