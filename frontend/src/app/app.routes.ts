@@ -34,7 +34,7 @@ export const routes: Routes = [
           {
             path: 'councils',
             component: CouncilListComponent,       
-            data: { title: 'Conseils' },        
+            data: { title: 'Conseils publics' },        
           },
           {
             path: 'councils/:councilId',

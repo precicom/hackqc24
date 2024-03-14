@@ -27,10 +27,12 @@
           </div>
         }
 
-        <div class="flex flex-row gap-x-2">
-          <div class="badge badge-secondary">{{ 'categories.' +post.theme.category | translate }}</div>
-          <div class="badge badge-primary">{{ post.theme.name }}</div>
-        </div>
+        @if(post.status !== 'rejected') {
+          <div class="flex flex-row gap-x-2">
+            <div class="badge badge-secondary">{{ 'categories.' +post.theme.category | translate }}</div>
+            <div class="badge badge-primary">{{ post.theme.name }}</div>
+          </div>
+        }       
 
         @if(post.status !== 'rejected'){
           <div class="flex flex-row">
