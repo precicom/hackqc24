@@ -10,7 +10,7 @@ import { Theme } from '../../../repository/themes/classes';
 import { DiscussionPoint } from '../../../repository/discussion-points/classes';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { DiscussionPointCardComponent } from "../discussion-point-card/discussion-point-card.component";
-import { TranslateModule } from '@ngx-translate/core';
+import { RouterModule } from '@angular/router';
 
 @UntilDestroy()
 @Component({
@@ -19,7 +19,7 @@ import { TranslateModule } from '@ngx-translate/core';
     templateUrl: './council-fiche.component.html',
     animations: [slideAndFadeIn, fadeIn, staggeredFadeIn],
     styleUrl: './council-fiche.component.scss',
-    imports: [CommonModule, SearchInputComponent, ThemeFilterComponent, DiscussionPointCardComponent]
+    imports: [CommonModule, SearchInputComponent, ThemeFilterComponent, DiscussionPointCardComponent, RouterModule]
 })
 export class CouncilFicheComponent implements OnInit {
   @Input({transform: numberAttribute}) councilId?: number;
