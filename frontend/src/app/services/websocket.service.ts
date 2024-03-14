@@ -8,6 +8,7 @@ import { io } from 'socket.io-client'
 export class WebsocketService {
   socket = io('http://localhost:3001')
   refreshPostId$ = new BehaviorSubject(null)
+  refreshComments$ = new BehaviorSubject(null)
   constructor() {}
 
   sendRefreshPost(postId: number) {
@@ -17,6 +18,16 @@ export class WebsocketService {
   getRefreshPost() {
     this.socket.on('refreshPost', postId => {
       this.refreshPostId$.next(postId)
+    })
+  }
+
+  sendRefreshComments(postId: number) {
+    this.socket.emit('refreshComments', postId)
+  }
+
+  getRefreshComments() {
+    this.socket.on('refreshComments', postId => {
+      this.refreshComments$.next(postId)
     })
   }
 }
