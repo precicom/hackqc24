@@ -2,12 +2,17 @@ require 'net/http'
 require 'uri'
 
 namespace :dq do
-  # example usage: rake dq:get_package["resumes_generes_conseil_municipal_shawinigan"]
-  desc "gets metadata of a package form dq api and displays it. parameter is the id of the package"
-  task :get_package, [:package_id] => :environment do |t, args|
+  ######################################
+  #                                    #
+  #  Datastets maintenance and usage   #
+  #                                    #
+  ######################################
 
-    response = OpenDataManager::DQApiService.new.fetch_package_data(args[:package_id])
-    puts JSON.parse(response)
+  # example usage: rake dq:populate_video_dataset_from_playlist["https://www.youtube.com/playlist?list=PLA29-Xv4NCfaBcRljPD74I5CWyNYrvx1i",videos_conseil_municipal_shawinigan]
+  desc "populate a ressource inside a specific package within dq taking videos information form a specified youtube playlist"
+  task :populate_video_dataset_from_playlist, [:playlist_url, :package_id] => :environment do |t, args|
+
+    OpenDataManager::DQOpenDataManager.populate_video_dataset_from_playlist(args[:playlist_url],args[:package_id])
   end
 
   # example usage: rake dq:fetch_video_urls_from_dq_resource["1e5f2679-c029-40ad-9794-34e7afd41749"]
@@ -16,6 +21,12 @@ namespace :dq do
     urls = OpenDataManager::DQOpenDataManager.fetch_video_urls_from_dq_resource(args[:ressource_id])
     puts urls
   end
+
+  ############################
+  #                          #
+  #    DQ API simple calls   #
+  #                          #
+  ############################
 
   # example usage: rake dq:get_ressource["1e5f2679-c029-40ad-9794-34e7afd41749"]
   desc "gets a data ressourcre form dq api and displays it. parameter is the id of the resource"
@@ -45,13 +56,6 @@ namespace :dq do
     }
 
     OpenDataManager::DQApiService.new.create_package(post_data)
-  end
-
-  # example usage: rake dq:populate_video_dataset_from_playlist["https://www.youtube.com/playlist?list=PLA29-Xv4NCfaBcRljPD74I5CWyNYrvx1i",videos_conseil_municipal_shawinigan]
-  desc "populate a ressource inside a specific package within dq taking videos information form a specified youtube playlist"
-  task :populate_video_dataset_from_playlist, [:playlist_url, :package_id] => :environment do |t, args|
-
-    OpenDataManager::DQOpenDataManager.populate_video_dataset_from_playlist(args[:playlist_url],args[:package_id])
   end
 
   # example usage: rake dq:delete_ressource["c3a3e2e0-33ea-4cde-b916-10a8f9c714e7"]
