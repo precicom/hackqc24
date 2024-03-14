@@ -1,9 +1,6 @@
 module OpenDataManager
   class DQOpenDataManager
     def self.fetch_video_urls_from_dq_resource(resource_id)
-      # TODO : get video urls from the resouce id using DQ API : https://pab.donneesquebec.ca/api/3/action/datastore_search?resource_id=resource_id
-      # TODO : return an array of video urls
-
       # fetch ressource
       service_dq = DQApiService.new
       response = service_dq.fetch_ressource_data(resource_id)
