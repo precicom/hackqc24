@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, QueryList, ViewChildren, inject, numberAttribute } from '@angular/core';
 import { DataServices } from '../../../repository/dataServices';
-import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, combineLatest, delay } from 'rxjs';
 import { Post } from '../../../repository/posts/classes';
 import { PostCardComponent } from "../post-card/post-card.component";
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -11,6 +11,7 @@ import { SearchInputComponent } from "../../form-fields/search-input/search-inpu
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Theme } from '../../../repository/themes/classes';
 import { ThemeFilterComponent } from "../../theme/theme-filter/theme-filter.component";
+import { fadeIn, slideAndFadeIn, staggeredFadeIn } from '../../../animations/animations';
 
 interface CategoryVM
   {
@@ -30,7 +31,8 @@ interface ViewModel {
     standalone: true,
     templateUrl: './post-list.component.html',
     styleUrl: './post-list.component.scss',
-    imports: [CommonModule, PostCardComponent, RouterModule, MatExpansionModule, CdkAccordionModule, SearchInputComponent, ThemeFilterComponent]
+    imports: [CommonModule, PostCardComponent, RouterModule, MatExpansionModule, CdkAccordionModule, SearchInputComponent, ThemeFilterComponent],
+    animations: [slideAndFadeIn, fadeIn, staggeredFadeIn]
 })
 export class PostListComponent implements OnInit {
   @ViewChildren('accordion', { read: CDK_ACCORDION }) accordions: QueryList<MatAccordion>
@@ -98,7 +100,7 @@ export class PostListComponent implements OnInit {
     })
 
     combineLatest([
-      this.dataServices.posts.getAll(),
+      this.dataServices.posts.getAll().pipe(delay(250)),
       this.searchValue$,
       this.selectedThemes$
     ]).pipe(

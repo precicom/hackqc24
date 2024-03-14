@@ -1,7 +1,7 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common'
 import { Component, OnInit, ViewChild, inject } from '@angular/core'
 import { DataServices } from '../../../repository/dataServices'
-import { Observable } from 'rxjs'
+import { Observable, delay } from 'rxjs'
 import { Post } from '../../../repository/posts/classes'
 import { RouterModule } from '@angular/router'
 import { CreatePostComponent } from '../create-post/create-post.component'
@@ -9,12 +9,14 @@ import { PostUpVoteCountPipe, PostDownVoteCountPipe } from '../pipes/post-up-vot
 import { PostCommentCountPipe } from '../pipes/post-comment-count.pipe'
 import { PostCardComponent } from '../post-card/post-card.component'
 import { MessageFormComponent, MessageSubmitEvent } from "../message-form/message-form.component";
+import { fadeIn, slideAndFadeIn, staggeredFadeIn } from '../../../animations/animations'
 
 @Component({
     selector: 'app-my-posts',
     standalone: true,
     templateUrl: './my-posts.component.html',
     styleUrl: './my-posts.component.scss',
+    animations: [slideAndFadeIn, fadeIn, staggeredFadeIn],
     imports: [
         CommonModule,
         RouterModule,
@@ -34,8 +36,6 @@ export class MyPostsComponent implements OnInit {
   posts?: Post[]
   creatingPost: boolean = false 
 
-  posts$: Observable<Post[]> = this.dataServices.posts.getMyPosts()
-
   ngOnInit(): void {
     this.refreshList()
   } 
@@ -45,7 +45,8 @@ export class MyPostsComponent implements OnInit {
   }
 
   refreshList() {
-    this.dataServices.posts.getMyPosts().subscribe(posts => {
+    // Added delay so user can see loader... looks more professional
+    this.dataServices.posts.getMyPosts().pipe(delay(500)).subscribe(posts => {
       this.posts = posts
     })
   }

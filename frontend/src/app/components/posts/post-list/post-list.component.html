@@ -1,22 +1,24 @@
 <div class="flex flex-row py-2">
-  <app-search-input class="ml-auto" (valueChange)="setSearch($event)"></app-search-input>
+  <app-search-input @fadeIn class="ml-auto" (valueChange)="setSearch($event)"></app-search-input>
 </div>
 
 <div class="flex flex-row py-2">
-  <app-theme-filter [themes]="themes$ | async" [selectedThemes]="selectedThemes$ | async" (selectedThemesChange)="setSelectedThemes($event)"></app-theme-filter>
+  <app-theme-filter @fadeIn [themes]="themes$ | async" [selectedThemes]="selectedThemes$ | async" (selectedThemesChange)="setSelectedThemes($event)"></app-theme-filter>
 </div>
 
 <div class="flex flex-row flex-wrap items-center gap-2 py-2 pt-4">
-  <button class="btn btn-sm" (click)="expandAll()">Ouvrir</button>
-  <button class="btn btn-sm" (click)="collapseAll()">Fermer</button>
+  <button @fadeIn class="btn btn-sm rounded-lg" (click)="expandAll()">Ouvrir</button>
+  <button @fadeIn class="btn btn-sm rounded-lg" (click)="collapseAll()">Fermer</button>
 </div>
 
 @if (vm; as vm) {
-  <cdk-accordion class="flex flex-col gap-y-8 mt-2" #accordion [multi]="true">
+  <cdk-accordion @staggeredFadeIn class="flex flex-col gap-y-8 mt-2" #accordion [multi]="true">
     @for (category of vm.categories; track category.key) {
       <cdk-accordion-item #accordionItem="cdkAccordionItem">
       
-        <button class="btn flex flex-row bg-purple-300 h-16" (click)="accordionItem.toggle()">
+        <button class="btn flex flex-row bg-purple-300 h-16 rounded-xl shadow-xl pl-2" (click)="accordionItem.toggle()">
+          <i class="fa-solid fa-angle-right" [class.rotate-90]="accordionItem.expanded"></i>
+
           <div class="flex flex-col flex-nowrap items-start gap-y-0 ">
             <div class="text-xs text-stone-600">{{ category.categoryName | titlecase }} ></div>
             <div class="text-xl ml-4">{{ category.themeName | titlecase }}</div>
@@ -25,7 +27,7 @@
         </button>    
 
         <div class="ml-8 mt-2" [style.display]="accordionItem.expanded ? '' : 'none'">
-          <div class="flex flex-col gap-y-2 ml-8 mt-2" [style.display]="accordionItem.expanded ? '' : 'none'">
+          <div @staggeredFadeIn class="flex flex-col gap-y-2 ml-8 mt-2" [style.display]="accordionItem.expanded ? '' : 'none'">
             @for (post of category.posts; track post.id) {
               <app-post-card [post]="post" [showStatistics]="true" [showTags]="false" [routerLink]="[post.id]"></app-post-card>
             }
@@ -37,5 +39,7 @@
     }
   </cdk-accordion>
 } @else {
-  loading...
+  <div class="flex flex-grow items-center justify-center">
+    <span class="loading loading-dots loading-lg"></span>
+  </div>
 }
