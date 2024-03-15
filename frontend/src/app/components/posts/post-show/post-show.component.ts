@@ -17,6 +17,7 @@ import { fadeIn, slideAndFadeIn, staggeredFadeIn } from '../../../animations/ani
 import { TranslateModule } from '@ngx-translate/core'
 import { ActionCableService } from '../../../services/action-cable/action-cable'
 import { ActionCableBroadcaster } from '../../../services/action-cable/action-cable-broadcaster'
+import { AuthService } from '../../../auth/auth.service'
 
 @Component({
   selector: 'app-post-show',
@@ -53,8 +54,6 @@ export class PostShowComponent implements OnInit, OnDestroy {
     return this._postId
   }
 
-  // websocketService = inject(WebsocketService)
-
   clampText = true
   commenting: boolean = false
   creatingComment: boolean = false
@@ -64,6 +63,7 @@ export class PostShowComponent implements OnInit, OnDestroy {
   comments: Comment[] = []
   dataServices = inject(DataServices)
   actionCableService = inject(ActionCableService)
+  currenUserId = inject(AuthService).currentUserId
 
   postBroadCaster: ActionCableBroadcaster
 

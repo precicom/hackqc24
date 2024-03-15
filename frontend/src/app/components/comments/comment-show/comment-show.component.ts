@@ -30,15 +30,6 @@ export class CommentShowComponent implements OnInit {
   dataServices = inject(DataServices)
 
   ngOnInit(): void {
-    // this.websocketService
-    //   .getRefreshComment()
-    //   .pipe(
-    //     filter(id => {
-    //       return !!id && +id == this.comment.id
-    //     }),
-    //   )
-    //   .subscribe(() => this.refrechComment())
-
     this.postBroadCaster = this.actionCableService.subscribe('CommentChannel', { params: { comment_id: this.comment.id } })
 
     this.postBroadCaster
@@ -54,7 +45,6 @@ export class CommentShowComponent implements OnInit {
   upVote() {
     this.dataServices.comments.upVote(this.comment.id).subscribe(response => {
       this.dataServices.comments.getById(this.comment.id).subscribe(comment => {
-        this.websocketRefrechComment()
         this.comment = comment
       })
     })
@@ -63,7 +53,6 @@ export class CommentShowComponent implements OnInit {
   downVote() {
     this.dataServices.comments.downVote(this.comment.id).subscribe(response => {
       this.dataServices.comments.getById(this.comment.id).subscribe(comment => {
-        this.websocketRefrechComment()
         this.comment = comment
       })
     })
@@ -73,9 +62,5 @@ export class CommentShowComponent implements OnInit {
     this.dataServices.comments.getById(this.comment.id).subscribe(comment => {
       this.comment = comment
     })
-  }
-
-  websocketRefrechComment() {
-    // this.websocketService.sendRefreshComment(this.comment.id)
   }
 }
