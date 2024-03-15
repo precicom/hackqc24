@@ -49,7 +49,7 @@
             </div>
 
             <div class="flex flex-row items-center ml-auto cursor-pointer" (click)="toggleComments()">
-              <p class="ml-1">{{ comments?.length ?? 0 }} commentaires</p>
+              <p class="ml-1">{{ post | postCommentCount }} commentaires</p>
             </div>
           </div>
         }
