@@ -1,3 +1,18 @@
+@if (council$ | async; as council) {
+  <div class="">
+
+    <div class="flex flex-col items-center justify-center mb-4 bg-secondary-content">
+      <iframe
+        class="w-full aspect-video max-w-4xl"
+        [src]="council.youtube_link | youtubeEmbedUrl"
+        frameborder="0"
+        allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      ></iframe>
+      <div @fadeIn class="flex flex-row items-center justify-center py-4">
+      <div class="text-xl font-bold text-base-100">Séance publique du {{ council.date | date }}</div>
+    </div>
+
+    </div>
 <div @fadeIn class="flex flex-row py-2 px-4">
   <app-theme-filter
     [themes]="themes$ | async"
@@ -7,25 +22,9 @@
   <app-search-input class="ml-auto" (valueChange)="setSearch($event)"></app-search-input>
 </div>
 
-@if (council$ | async; as council) {
-  <div class="px-4 pt-4">
-    <div @fadeIn class="flex flex-row items-center justify-center mb-4">
-      <div class="text-xl font-bold">Séance publique du {{ council.date | date }}</div>
-    </div>
-
-    <div class="flex flex-row items-center justify-center mb-4">
-      <iframe
-        width="355"
-        height="200"
-        [src]="council.youtube_link | youtubeEmbedUrl"
-        frameborder="0"
-        allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      ></iframe>
-    </div>
-
     @if (filteredPoints$ | async; as points) {
       @if (points.length) {
-        <div @staggeredFadeIn class="flex flex-col gap-y-4 mt-2">
+        <div @staggeredFadeIn class="flex flex-col gap-y-4 mt-2 px-4">
           @for (point of points; track point.id) {
             <app-discussion-point-card class="w-full" [point]="point"></app-discussion-point-card>
           }
@@ -38,3 +37,5 @@
     <span class="loading loading-dots loading-lg"></span>
   </div>
 }
+
+

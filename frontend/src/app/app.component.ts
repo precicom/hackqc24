@@ -2,8 +2,8 @@ import { Component, OnInit, inject } from '@angular/core'
 import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router'
 import { filter, map, mergeMap } from 'rxjs'
 import { PageInformation } from './services/page-information'
-import english from './pipes/locales/en'
-import french from './pipes/locales/fr'
+import english from '../locales/en'
+import french from '../locales/fr'
 import { TranslateService } from '@ngx-translate/core'
 import { FacebookService } from 'ngx-facebook'
 import { ActionCableService } from './services/action-cable/action-cable'
@@ -43,12 +43,6 @@ export class AppComponent implements OnInit {
   }
 
   websocketUrl(){
-    // if (this.authService.tenant.region_url.includes('localhost')) {
-    //   return `${this.authService.tenant.api_url}/cable`
-    // } else {
-    //   return `${this.authService.tenant.region_url}/${this.authService.tenant.uuid}/cable`
-    // }
-
     return environment.apiUrl + '/cable'
   }
 
