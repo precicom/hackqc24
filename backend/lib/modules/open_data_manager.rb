@@ -54,23 +54,21 @@ module OpenDataManager
     end
 
     def self.populate_generated_councils_summary_dataset(package_id)
-      #get the councils summaries
-      summaries = []
-
-      selected_properties = ['title','description','position','published_at','video_url']
+      #get the councils
+      councils = Council.order(date: :desc)
 
       #turn the list into a csv
-      CSV.open('output.csv', 'w') do |csv|
-        csv << selected_properties  # Access the keys of the first JSON object
-        summaries.each do |obj|
-          csv << selected_properties.map { |prop| prop == 'video_url' ? "https://www.youtube.com/watch?v=#{obj['resource_id']['video_id']}" : obj[prop] }
+      CSV.open('output_generated.csv', 'w') do |csv|
+        csv << ['titre','date','resume']  # Access the keys of the first JSON object
+        councils.each do |council|
+          csv << [council.title, council.date, council.generated_summary]
         end
       end
 
       #create the ressource
       post_data = {
         package_id: package_id,
-        name: 'resumés_generes_conseil_municipal',
+        name: 'resumes_generes_conseil_municipal',
         description: 'Fichier CSV contenant les résumés générés par openAI des séances du conseil municipal',
         taille_entier: 1,
         format:'CSV',
@@ -87,11 +85,11 @@ module OpenDataManager
         mimetype: 'text/csv'
       }
       service_dq = DQApiService.new
-      ressource_id = service_dq.create_ressource_data(post_data, 'output.csv')
+      ressource_id = service_dq.create_ressource_data(post_data, 'output_generated.csv')
       puts "Ressource #{ressource_id} created successfully"
 
       #delete the csv
-      File.delete('output.csv')
+      File.delete('output_generated.csv')
     end
   end
 

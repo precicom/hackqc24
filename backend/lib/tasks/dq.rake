@@ -22,6 +22,12 @@ namespace :dq do
     puts urls
   end
 
+  # example usage: rake dq:populate_generated_councils_summary_dataset["resumes_generes_conseil_municipal_shawinigan"]
+  desc "populate a ressource inside a specific package within dq taking councils generated summary"
+  task :populate_generated_councils_summary_dataset, [:package_id] => :environment do |t, args|
+    OpenDataManager::DQOpenDataManager.populate_generated_councils_summary_dataset(args[:package_id])
+  end
+
   ############################
   #                          #
   #    DQ API simple calls   #
