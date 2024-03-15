@@ -5,6 +5,6 @@ export interface DiscussionPoint {
   generated_summary: string,
   council_id: number,
   theme_id: number,
-  theme: Partial<Theme>
+  theme: Theme
   minute_link_url: string
 }

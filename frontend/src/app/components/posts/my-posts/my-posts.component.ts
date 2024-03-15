@@ -1,10 +1,9 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common'
 import { Component, OnInit, ViewChild, inject } from '@angular/core'
 import { DataServices } from '../../../repository/dataServices'
-import { Observable, delay } from 'rxjs'
+import { delay } from 'rxjs'
 import { Post } from '../../../repository/posts/classes'
 import { RouterModule } from '@angular/router'
-import { CreatePostComponent } from '../create-post/create-post.component'
 import { PostUpVoteCountPipe, PostDownVoteCountPipe } from '../pipes/post-up-vote-count.pipe'
 import { PostCommentCountPipe } from '../pipes/post-comment-count.pipe'
 import { PostCardComponent } from '../post-card/post-card.component'
@@ -20,7 +19,6 @@ import { fadeIn, slideAndFadeIn, staggeredFadeIn } from '../../../animations/ani
     imports: [
         CommonModule,
         RouterModule,
-        CreatePostComponent,
         PostUpVoteCountPipe,
         PostCommentCountPipe,
         PostDownVoteCountPipe,

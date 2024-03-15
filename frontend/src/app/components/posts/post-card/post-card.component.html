@@ -1,6 +1,8 @@
 <div class="flex flex-row items-center bg-slate-300 hover:bg-slate-400 rounded-md p-2 cursor-pointer relative shadow-xl">
   <img *ngIf="post.image" #imagePreview [ngSrc]="post.image" height="50" width="75" class="mr-2 rounded-lg" />
 
+  <i class="fa-regular fa-user fa-lg mr-2"></i>
+
   <span *ngIf="post.rejection_reason" class="absolute top-0 left-0-0 -mt-4 -ml-6 indicator-item badge badge-warning">Rejeté</span>
   <div class="line-clamp-2 mr-4">{{ post.content_text }}</div>
 

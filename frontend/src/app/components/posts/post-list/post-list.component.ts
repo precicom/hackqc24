@@ -14,13 +14,23 @@ import { ThemeFilterComponent } from '../../theme/theme-filter/theme-filter.comp
 import { fadeIn, slideAndFadeIn, staggeredFadeIn } from '../../../animations/animations'
 import { TranslateModule } from '@ngx-translate/core'
 import { CapitalizePipe } from '../../../pipes/capitalize/capitalize.pipe'
+import { DiscussionPoint } from '../../../repository/discussion-points/classes'
+import { DicussionPointCardComponent } from "./dicussion-point-card/dicussion-point-card.component";
+
+interface ListItem {
+  id: number
+  type: 'post' | 'point',
+  post?: Post
+  point?: DiscussionPoint
+  theme: Theme
+}
 
 interface CategoryVM {
   key: string
   categoryName: string
   themeName: string
   postCount: number
-  posts: Post[]
+  items: ListItem[]
 }
 interface ViewModel {
   categories: CategoryVM[]
@@ -28,22 +38,23 @@ interface ViewModel {
 
 @UntilDestroy()
 @Component({
-  selector: 'app-post-list',
-  standalone: true,
-  templateUrl: './post-list.component.html',
-  styleUrl: './post-list.component.scss',
-  imports: [
-    CommonModule,
-    PostCardComponent,
-    RouterModule,
-    MatExpansionModule,
-    CdkAccordionModule,
-    SearchInputComponent,
-    ThemeFilterComponent,
-    TranslateModule,
-    CapitalizePipe,
-  ],
-  animations: [slideAndFadeIn, fadeIn, staggeredFadeIn],
+    selector: 'app-post-list',
+    standalone: true,
+    templateUrl: './post-list.component.html',
+    styleUrl: './post-list.component.scss',
+    animations: [slideAndFadeIn, fadeIn, staggeredFadeIn],
+    imports: [
+        CommonModule,
+        PostCardComponent,
+        RouterModule,
+        MatExpansionModule,
+        CdkAccordionModule,
+        SearchInputComponent,
+        ThemeFilterComponent,
+        TranslateModule,
+        CapitalizePipe,
+        DicussionPointCardComponent
+    ]
 })
 export class PostListComponent implements OnInit {
   @ViewChildren('accordion', { read: CDK_ACCORDION }) accordions: QueryList<MatAccordion>
@@ -51,16 +62,17 @@ export class PostListComponent implements OnInit {
     this.activeThemeId$.next(themeId)
   }
 
+  
+  vm: ViewModel
+
   activatedRoute = inject(ActivatedRoute)
   router = inject(Router)
   dataServices = inject(DataServices)
   activeThemeId$ = new BehaviorSubject<number>(null)
   searchValue$ = new BehaviorSubject<string>('')
 
-  posts$: Observable<Post[]>
-
-  vm: ViewModel
-
+  discussionPoints$ = new ReplaySubject<DiscussionPoint[]>(1)
+  posts$ = new ReplaySubject<Post[]>(1)
   themes$ = new ReplaySubject<Theme[]>(1)
   selectedThemes$ = new BehaviorSubject<Theme[]>([])
 
@@ -99,6 +111,14 @@ export class PostListComponent implements OnInit {
       this.themes$.next(themes)
     })
 
+    this.dataServices.posts.getAll().pipe(delay(250)).subscribe(posts => {
+      this.posts$.next(posts)
+    })
+
+    this.dataServices.discussionPoints.getAll().pipe(delay(250)).subscribe(discussionPoints => {
+      this.discussionPoints$.next(discussionPoints)
+    })
+
     combineLatest([this.activeThemeId$, this.themes$])
       .pipe(untilDestroyed(this))
       .subscribe(([activeThemeId, themes]) => {
@@ -109,29 +129,13 @@ export class PostListComponent implements OnInit {
         }
       })
 
-    combineLatest([this.dataServices.posts.getAll().pipe(delay(250)), this.searchValue$, this.selectedThemes$])
+    combineLatest([this.posts$, this.discussionPoints$, this.searchValue$, this.selectedThemes$])
       .pipe(untilDestroyed(this))
-      .subscribe(([posts, searchValue, selectedThemes]) => {
-        let filteredPost = posts
+      .subscribe(([posts, discussionPoints, searchValue, selectedThemes]) => {
+        const filteredPost = this.filterPosts(posts, searchValue, selectedThemes)
+        const filteredPoints = this.filterPoints(discussionPoints, searchValue, selectedThemes)        
 
-        if (searchValue) {
-          filteredPost = filteredPost.filter(post => {
-            const text = `${post.content_text} ${post.theme.name} ${post.theme.category}`
-
-            return text.toLowerCase().includes(searchValue.toLowerCase())
-          })
-        }
-
-        // filter by user selected themes
-        if (selectedThemes.length) {
-          const selectedThemeIds = selectedThemes.map(theme => theme.id)
-
-          filteredPost = filteredPost.filter(post => {
-            return selectedThemeIds.some(selectedThemeId => selectedThemeId === post.theme_id)
-          })
-        }
-
-        this.vm = this.buildViewModel(filteredPost)
+        this.vm = this.buildViewModel(filteredPost, filteredPoints)
 
         if (this.firstRender) {
           this.firstRender = false
@@ -142,24 +146,85 @@ export class PostListComponent implements OnInit {
       })
   }
 
-  // groups posts by categories and theme name (aka groupBy on two fields at the same time)
-  buildViewModel(posts: Post[]): ViewModel {
-    const categories = posts.reduce((acc, post) => {
-      let category = acc.find(c => c.categoryName === post.theme.category && c.themeName === post.theme.name)
+  filterPoints(points: DiscussionPoint[], search: string, themes: Theme[]): DiscussionPoint[] {
+    let filteredPoints = points
+    
+    if (search) {
+      filteredPoints = filteredPoints.filter(post => {
+        const text = `${post.generated_summary} ${post.theme.name} ${post.theme.category}`
+
+        return text.toLowerCase().includes(search.toLowerCase())
+      })
+    }
+
+    // filter by user selected themes
+    if (themes.length) {
+      const selectedThemeIds = themes.map(theme => theme.id)
+
+      filteredPoints = filteredPoints.filter(point => {
+        return selectedThemeIds.some(selectedThemeId => selectedThemeId === point.theme_id)
+      })
+    }
+
+    return filteredPoints
+  }
+
+  filterPosts(posts: Post[], search: string, themes: Theme[]): Post[]{
+    let filteredPosts = posts
+    
+    if (search) {
+      filteredPosts = filteredPosts.filter(post => {
+        const text = `${post.content_text} ${post.theme.name} ${post.theme.category}`
+
+        return text.toLowerCase().includes(search.toLowerCase())
+      })
+    }
+
+    // filter by user selected themes
+    if (themes.length) {
+      const selectedThemeIds = themes.map(theme => theme.id)
+
+      filteredPosts = filteredPosts.filter(post => {
+        return selectedThemeIds.some(selectedThemeId => selectedThemeId === post.theme_id)
+      })
+    }
+
+    return filteredPosts
+  }
+
+  // groups posts and points by theme
+  buildViewModel(posts: Post[], points: DiscussionPoint[]): ViewModel {
+    const postItem: ListItem[] = posts.map(post => { return { id: post.id, type:'post', post: post, theme: post.theme } })
+    const pointItem: ListItem[] = points.map(point => { return {id: point.id, type:'point', point: point, theme: point.theme } })
+
+    // aggregate posts and points into one array
+    const listItems = [...postItem, ...pointItem]
+
+    // Group post and points into themes
+    const categories = listItems.reduce((acc, item) => {
+      let category = acc.find(c => c.categoryName === item.theme.category && c.themeName === item.theme.name)
 
       if (!category) {
+        const theme = item.theme
+
         category = {
-          key: `${post.theme.category}-${post.theme.name}`,
-          categoryName: post.theme.category,
-          themeName: post.theme.name,
+          key: `${theme.category}-${theme.name}`,
+          categoryName: theme.category,
+          themeName: theme.name,
           postCount: 0,
-          posts: [],
+          items: [],
         }
         acc.push(category)
       }
 
       category.postCount++
-      category.posts.push(post)
+
+      // sorts points before posts
+      if(item.type === 'point'){
+        category.items.unshift(item)
+      }else {
+        category.items.push(item)
+      }
 
       return acc
     }, [] as CategoryVM[])
