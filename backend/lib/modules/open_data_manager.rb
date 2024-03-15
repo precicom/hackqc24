@@ -12,7 +12,6 @@ module OpenDataManager
     end
 
     def self.populate_video_dataset_from_playlist(playlist_url, package_id)
-
       #get the list from youtube playlist
       snippets = YoutubePlaylistFetcher.new.fetch_playlist(playlist_url, 20)
       parsed_json = JSON.parse(snippets.to_json)
@@ -52,7 +51,47 @@ module OpenDataManager
 
       #delete the csv
       File.delete('output.csv')
+    end
 
+    def self.populate_generated_councils_summary_dataset(package_id)
+      #get the councils summaries
+      summaries = []
+
+      selected_properties = ['title','description','position','published_at','video_url']
+
+      #turn the list into a csv
+      CSV.open('output.csv', 'w') do |csv|
+        csv << selected_properties  # Access the keys of the first JSON object
+        summaries.each do |obj|
+          csv << selected_properties.map { |prop| prop == 'video_url' ? "https://www.youtube.com/watch?v=#{obj['resource_id']['video_id']}" : obj[prop] }
+        end
+      end
+
+      #create the ressource
+      post_data = {
+        package_id: package_id,
+        name: 'resumés_generes_conseil_municipal',
+        description: 'Fichier CSV contenant les résumés générés par openAI des séances du conseil municipal',
+        taille_entier: 1,
+        format:'CSV',
+        resource_type: 'donnees',
+        relidi_condon_valinc:'oui',
+        relidi_condon_nombre:'n/a',
+        relidi_condon_boolee:'oui',
+        relidi_condon_datheu:'oui',
+        relidi_confic_utf8:'oui',
+        relidi_confic_separateur_virgule:'oui',
+        relidi_confic_pascom:'n/a',
+        relidi_confic_epsg:'n/a',
+        url_type: 'upload',
+        mimetype: 'text/csv'
+      }
+      service_dq = DQApiService.new
+      ressource_id = service_dq.create_ressource_data(post_data, 'output.csv')
+      puts "Ressource #{ressource_id} created successfully"
+
+      #delete the csv
+      File.delete('output.csv')
     end
   end
 
