@@ -7,8 +7,11 @@ import { Theme } from '../../../repository/themes/classes';
 })
 export class SortThemesPipe implements PipeTransform {
 
-  transform(themes: Theme[]): Theme[] {
-    return [...themes].sort((a,b) => a.name.localeCompare(b.name));
+  transform(themes: Theme[] = []): Theme[] {
+    if(Array.isArray(themes) ){
+      return [...themes].sort((a,b) => a.name.localeCompare(b.name))
+    }else {
+      return []
+    }   
   }
-
 }
