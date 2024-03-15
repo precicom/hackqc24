@@ -1,11 +1,9 @@
-<div class="rounded-lg bg-slate-300 px-4 py-1 shadow-xl">
+<div class="rounded-lg bg-indigo-300 hover:bg-indigo-400 px-4 py-1 shadow-xl">
   <div class="font-semibold text-xl">{{ 'categories.' + point.theme.category | translate | capitalize }}</div>
   <div class="font-medium mb-3">{{ point.theme.name }}</div>
   <div>{{ point.generated_summary }}</div>
-  
+
   <div class="flex flex-row align-center">
-    <div class="ml-auto link"[routerLink]="['/posts/all-posts']" [queryParams]="{ themeId: point.theme_id }">Explorer</div>
+    <div class="ml-auto link" [routerLink]="['/posts/all-posts']" [queryParams]="{ themeId: point.theme_id }">Explorer</div>
   </div>
 </div>
-
- 
