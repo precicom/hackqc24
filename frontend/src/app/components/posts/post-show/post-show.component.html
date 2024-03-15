@@ -76,7 +76,7 @@
       @if (comments; as comments) {
         <div class="flex flex-col gap-y-3 mt-3">
           @for (comment of comments | sortBy: 'created_at' : 'reverse'; track comment.id) {
-            @if (comment.status == 'accepted' || currenUserId == comment.currenUserId) {
+            @if (comment.status == 'accepted' || currenUserId == comment.user_id) {
               <app-comment-show [comment]="comment"></app-comment-show>
             }
           }
