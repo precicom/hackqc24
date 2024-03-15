@@ -1,29 +1,30 @@
 <div class="h-dvh text-center">
-  <div class="bg-primary px-4 py-12 mb-8">
-    <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl lg:text-6xl max-w-lg mx-auto">Bienvenue sur Kizos!</h1>
+  <div class="bg-primary bg-[url('/assets/images/message-smile-solid.svg')] bg-[length:50dvw_50dvw] md:bg-[length:30dvw_30dvw] bg-repeat-round px-4 py-12 mb-8">
+    <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl lg:text-6xl max-w-lg mx-auto">Bienvenue sur</h1>
+    <img src="../assets/images/Kizos-logo.svg" alt="" class="w-2/3 max-w-sm mx-auto">
     <p class="mb-8 text-xl font-normal max-w-lg mx-auto">
-      Notre plateforme interactive offre une passerelle sans précédent entre les citoyens passionnés et leurs élus locaux, permettant une
-      connexion directe et un échange dynamique.
+      La passerelle de communication entre les citoyens et leurs élus locaux.
     </p>
     <form [formGroup]="signInForm" (ngSubmit)="onSignIn()" class="space-y-4 max-w-lg mx-auto">
+      <button type="button" (click)="loginWithFacebook()" class="btn btn-neutral w-auto block mx-auto fb-button flex flex-row flex-nowrap align-items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0" x="0px" y="0px" width="20" height="20" viewBox="0 0 50 50" class="icon icons8-Facebook-Filled" >    <path fill="currentColor" d="M40,0H10C4.486,0,0,4.486,0,10v30c0,5.514,4.486,10,10,10h30c5.514,0,10-4.486,10-10V10C50,4.486,45.514,0,40,0z M39,17h-3 c-2.145,0-3,0.504-3,2v3h6l-1,6h-5v20h-7V28h-3v-6h3v-3c0-4.677,1.581-8,7-8c2.902,0,6,1,6,1V17z"></path></svg>
+        Connexion avec Facebook
+      </button>
+        <span class="block text-sm font-medium text-slate-700">- ou -</span>
       <label class="block text-left">
-        <span class="block text-sm font-medium text-slate-700">Email</span>
         <input
           type="email"
           id="email"
           formControlName="email"
-          class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
+          placeholder="Inscrivez votre courriel"
+          class="mt-1 block w-5/6 mx-auto px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
         />
       </label>
       <button type="submit" [disabled]="!signInForm.valid" class="btn btn-neutral w-1/2 block mx-auto mb-1">Connexion</button>
-      <button type="button" (click)="loginWithFacebook()" class="btn btn-neutral w-1/2 block mx-auto fb-button flex flex-row flex-nowrap align-items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0" x="0px" y="0px" width="20" height="20" viewBox="0 0 50 50" class="icon icons8-Facebook-Filled" >    <path fill="currentColor" d="M40,0H10C4.486,0,0,4.486,0,10v30c0,5.514,4.486,10,10,10h30c5.514,0,10-4.486,10-10V10C50,4.486,45.514,0,40,0z M39,17h-3 c-2.145,0-3,0.504-3,2v3h6l-1,6h-5v20h-7V28h-3v-6h3v-3c0-4.677,1.581-8,7-8c2.902,0,6,1,6,1V17z"></path></svg>
-        Connexion avec Facebook
-      </button>
     </form>
   </div>
   <h2 class="text-xl font-normal lg:text-2xl max-w-lg mx-auto px-4">
-    Connectez-vous dès maintenant à Kizos et soyez partie prenante de la transformation collaborative.
+    Inscrivez-vous! Soyez partie prenante de la transformation collaborative.
   </h2>
   <div class="link max-w-lg mx-auto text-center py-3 px-5" [routerLink]="['/sign-up']">Je m'inscris</div>
 </div>
