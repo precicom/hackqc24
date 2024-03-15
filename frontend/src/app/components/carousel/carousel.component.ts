@@ -21,7 +21,6 @@ import { fadeIn } from '../../animations/animations';
   ],
   templateUrl: './carousel.component.html',
   styleUrl: './carousel.component.scss',
-  animations: [fadeIn],
   standalone: true
 })
 export class CarousselComponent  {

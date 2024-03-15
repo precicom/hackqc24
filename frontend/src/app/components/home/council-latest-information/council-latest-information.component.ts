@@ -17,5 +17,5 @@ import { RouterModule } from '@angular/router'
 export class CouncilLatestInformationComponent {
   dataServices = inject(DataServices)
 
-  discussionPoints$: Observable<DiscussionPoint[]> = this.dataServices.discussionPoints.getLatestDiscussionPoints()
+  discussionPoints$: Observable<DiscussionPoint[]> = this.dataServices.discussionPoints.getLatestDiscussionPoints().pipe(delay(300))
 }
