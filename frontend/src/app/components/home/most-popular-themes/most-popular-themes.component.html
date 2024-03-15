@@ -2,7 +2,7 @@
   @if (themes$ | async; as themes) {
     @for (theme of themes; track theme.id) {
       <button
-        class="btn flex flex-row bg-purple-300 h-16 rounded-xl shadow-xl pl-2 border-none my-2"
+        class="btn flex flex-row bg-purple-300 h-16 rounded-xl shadow-lg pl-2 border-none my-2"
         [routerLink]="['/posts/all-posts']"
         [queryParams]="{ themeId: theme.id }"
       >

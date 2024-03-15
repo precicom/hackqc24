@@ -5,7 +5,7 @@ import { MostPopularThemesComponent } from "../most-popular-themes/most-popular-
 import { fadeIn, slideAndFadeIn } from '../../../animations/animations';
 import { CarousselComponent } from "../../carousel/carousel.component";
 import { DataServices } from '../../../repository/dataServices';
-import { Observable } from 'rxjs';
+import { Observable, delay } from 'rxjs';
 import { DiscussionPoint } from '../../../repository/discussion-points/classes';
 import { CommonModule } from '@angular/common';
 
@@ -20,5 +20,5 @@ import { CommonModule } from '@angular/common';
 export class HomeComponent {
   dataServices = inject(DataServices)
 
-  discussionPoints$: Observable<DiscussionPoint[]> = this.dataServices.discussionPoints.getLatestDiscussionPoints()
+  discussionPoints$: Observable<DiscussionPoint[]> = this.dataServices.discussionPoints.getLatestDiscussionPoints().pipe(delay(500))
 }
