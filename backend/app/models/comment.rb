@@ -15,6 +15,10 @@ class Comment < ApplicationRecord
 
   after_create :process
 
+  after_create do
+    PostChannel.broadcast_message(post_id, 'post_changed')
+  end
+
   def moderatable_content
     content_text
   end
