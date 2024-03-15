@@ -8,7 +8,7 @@
   <textarea
     #textArea
     class="grow h-12 ml-2"
-    placeholder="Votre proposition..."
+    [placeholder]="placeholder"
     (keydown.control.enter)="submit(fileInput, textArea)"
   ></textarea>
 

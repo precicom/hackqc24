@@ -20,6 +20,7 @@ export class MessageFormComponent {
   @ViewChild('fileInput', { static: false }) fileInputRef: ElementRef<HTMLInputElement>
   @ViewChild('imagePreview', { static: false }) imagePreviewRef: ElementRef<HTMLImageElement>
   
+  @Input() placeholder: string
   @Input() loading: boolean = false
   @Output() onSubmit = new EventEmitter<MessageSubmitEvent>()  
 

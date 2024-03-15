@@ -70,7 +70,7 @@
       }
 
       <div [class.hidden]="!commenting" class="p-2 border border-transparent py-3 border-b-gray-950">
-        <app-message-form (onSubmit)="submit($event)" [loading]="creatingComment"></app-message-form>
+        <app-message-form (onSubmit)="submit($event)" [loading]="creatingComment" placeholder="Votre message..."></app-message-form>
       </div>
 
       @if (comments; as comments) {
