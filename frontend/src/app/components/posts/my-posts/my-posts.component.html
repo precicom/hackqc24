@@ -6,7 +6,7 @@
   @if (posts; as posts) {
     <div @staggeredFadeIn class="flex flex-col gap-y-14 w-full mt-4">
       @for (post of posts; track post.id) {
-        <app-post-card @slideAndFadeIn [post]="post" [showStatistics]="true" [showTagsBellow]="true" [routerLink]="[post.id]"></app-post-card>
+        <app-post-card @slideAndFadeIn [post]="post" [showStatistics]="true" [showTagsBellow]="true" [showImage]="true" [routerLink]="[post.id]"></app-post-card>
       } @empty {
         <div class="text-center">Aucun message n'a encore été écrit!</div>
       }
