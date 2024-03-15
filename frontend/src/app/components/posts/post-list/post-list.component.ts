@@ -80,6 +80,8 @@ export class PostListComponent implements OnInit {
   selectedThemes$ = new BehaviorSubject<Theme[]>([])
   refresh$ = new BehaviorSubject<void>(null)
 
+  lastState: 'opened' | 'closed' = 'opened'
+
   firstRender = true
 
   get selectedThemes() {
@@ -109,12 +111,16 @@ export class PostListComponent implements OnInit {
   }
 
   expandAll() {
+    this.lastState = 'opened'
+
     this.accordions.forEach(accordion => {
       accordion.openAll()
     })
   }
 
   collapseAll() {
+    this.lastState = 'closed'
+
     this.accordions.forEach(accordion => {
       accordion.closeAll()
     })
@@ -157,11 +163,12 @@ export class PostListComponent implements OnInit {
 
         this.vm = this.buildViewModel(filteredPost, filteredPoints, allThemes)
 
-        if (this.firstRender) {
+        if (this.firstRender || this.lastState === 'opened') {
           this.firstRender = false
+         // this.expandAll()
           setTimeout(() => {
             this.expandAll()
-          }, 250)
+          }, 0)
         }
       })
   }

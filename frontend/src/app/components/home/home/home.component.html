@@ -1,4 +1,4 @@
-<div class="flex flex-col">
+<div class="flex flex-col min-h-60">
   <div class="text-xl font-bold px-2 flex justify-center mt-2">
     <span>Dernière séance publique</span>
   </div>
@@ -6,7 +6,7 @@
   @if(discussionPoints$ | async; as points){
     <app-carousel @fadeIn [points]="discussionPoints$ | async"></app-carousel>
   }@else {
-    <div class="flex flex-row items-center justify-center w-full h-full">
+    <div class="flex flex-row items-center justify-center w-full h-full min-h-60">
       <span class="loading loading-dots loading-lg bg-neutral-500"></span>
     </div>
   }
