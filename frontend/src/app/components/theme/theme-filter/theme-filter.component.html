@@ -7,8 +7,8 @@
 
     <div class="drawer-side z-50">
       <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-      <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
-        @for (theme of themes; track theme.id) {
+      <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content pb-24">
+        @for (theme of themes | sortThemes; track theme.id) {
           <li (click)="toggleTheme(theme)" class="rounded-box" [class.bg-gray-400]="selectedThemeIds.includes(theme.id)">
             <a class="hover:bg-primary-100">{{ theme.name }}</a>
           </li>
