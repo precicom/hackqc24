@@ -3,7 +3,7 @@
   <div class="bg-primary">
     <div class="navbar justify-between">
       <div class="flex-1">
-        <a class="btn btn-link w-auto" (click)="home()"><img src="../assets/images/Kizos-logo.svg" alt="" class="w-1/3 max-w-sm "></a>
+        <a class="p-0 btn btn-link block" (click)="home()"><img src="../assets/images/Kizos-logo.svg" alt="" class="h-10 max-w-sm "></a>
       </div>
     <div class="flex-1">
       <h2 class="mx-auto">{{ title }}</h2>
@@ -29,28 +29,29 @@
     <div class="flex h-full max-w-lg justify-between mx-auto text-sm">
       <button
         type="button"
-        class="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
-        [routerLink]="['/posts/my-posts']"
-      >
-        <!--i class="fa-solid fa-message"></i-->
-        <span>Mes propositions</span>
-      </button>
-      <button
-        type="button"
-        class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
-        [routerLink]="['/councils']"
-      >
-        <!--i class="fa-solid fa-message"></i-->
-        <span>Conseils publics</span>
-      </button>
-
-      <button
-        type="button"
         class="inline-flex flex-col items-center justify-center px-2 md:px-5 rounded-r-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
         [routerLink]="['/posts/all-posts']"
       >
         <!--i class="fa-solid fa-messages"></i-->
-        <span>Ma communauté</span>
+        <span>Communauté</span>
+      </button>
+      <button
+        type="button"
+        class="inline-flex  flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+        [routerLink]="['/councils']"
+      >
+        <!--i class="fa-solid fa-message"></i-->
+        <span>Séances</span>
+      </button>
+
+      
+      <button
+        type="button"
+        class="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
+        [routerLink]="['/posts/my-posts']"
+      >
+        <!--i class="fa-solid fa-message"></i-->
+        <span>Moi</span>
       </button>
     </div>
   </div>
