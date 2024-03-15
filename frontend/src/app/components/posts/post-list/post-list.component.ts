@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common'
 import { Component, Input, OnInit, QueryList, ViewChildren, inject, numberAttribute } from '@angular/core'
 import { DataServices } from '../../../repository/dataServices'
-import { BehaviorSubject, Observable, ReplaySubject, Subject, combineLatest, delay } from 'rxjs'
+import { BehaviorSubject, ReplaySubject, combineLatest, delay } from 'rxjs'
 import { Post } from '../../../repository/posts/classes'
 import { PostCardComponent } from '../post-card/post-card.component'
 import { ActivatedRoute, Router, RouterModule } from '@angular/router'
@@ -61,9 +61,11 @@ export class PostListComponent implements OnInit {
   @Input({ transform: numberAttribute }) set themeId(themeId: number) {
     this.activeThemeId$.next(themeId)
   }
-
   
   vm: ViewModel
+
+  showPosts: boolean = true
+  showPoints: boolean = true
 
   activatedRoute = inject(ActivatedRoute)
   router = inject(Router)
@@ -75,6 +77,7 @@ export class PostListComponent implements OnInit {
   posts$ = new ReplaySubject<Post[]>(1)
   themes$ = new ReplaySubject<Theme[]>(1)
   selectedThemes$ = new BehaviorSubject<Theme[]>([])
+  refresh$ = new BehaviorSubject<void>(null)
 
   firstRender = true
 
@@ -85,6 +88,17 @@ export class PostListComponent implements OnInit {
   get selectedThemeIds() {
     return this.selectedThemes.map(theme => theme.id)
   }
+
+  togglePosts(){
+    this.showPosts = !this.showPosts
+    this.refresh$.next()
+  }
+
+  togglePoints(){
+    this.showPoints = !this.showPoints
+    this.refresh$.next()
+  }
+  
 
   setSelectedThemes(themes: Theme[]) {
     this.selectedThemes$.next(themes ?? [])
@@ -129,11 +143,11 @@ export class PostListComponent implements OnInit {
         }
       })
 
-    combineLatest([this.posts$, this.discussionPoints$, this.searchValue$, this.selectedThemes$])
+    combineLatest([this.posts$, this.discussionPoints$, this.searchValue$, this.selectedThemes$, this.refresh$])
       .pipe(untilDestroyed(this))
       .subscribe(([posts, discussionPoints, searchValue, selectedThemes]) => {
-        const filteredPost = this.filterPosts(posts, searchValue, selectedThemes)
-        const filteredPoints = this.filterPoints(discussionPoints, searchValue, selectedThemes)        
+        const filteredPost = this.showPosts ? this.filterPosts(posts, searchValue, selectedThemes) : []
+        const filteredPoints = this.showPoints ? this.filterPoints(discussionPoints, searchValue, selectedThemes) : []     
 
         this.vm = this.buildViewModel(filteredPost, filteredPoints)
 

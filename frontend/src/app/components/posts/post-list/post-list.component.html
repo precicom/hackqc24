@@ -3,9 +3,16 @@
   <app-search-input @fadeIn class="ml-auto" (valueChange)="setSearch($event)"></app-search-input>
 </div>
 
-<div class="flex flex-row flex-wrap items-center gap-2 py-2 pt-4">
-  <button @fadeIn class="btn btn-sm rounded-lg" (click)="expandAll()">Ouvrir</button>
-  <button @fadeIn class="btn btn-sm rounded-lg" (click)="collapseAll()">Fermer</button>
+<div class="flex flex-row items-center">
+  <div class="flex flex-row flex-wrap items-center gap-2 py-2 pt-4">
+    <button @fadeIn class="btn btn-sm rounded-lg" (click)="expandAll()">Ouvrir</button>
+    <button @fadeIn class="btn btn-sm rounded-lg" (click)="collapseAll()">Fermer</button>
+  </div>
+
+  <div class="flex flex-row flex-wrap items-center gap-2 py-2 pt-4 ml-auto">
+    <button @fadeIn class="btn btn-sm rounded-lg" [class.bg-neutral-400]="showPosts" (click)="togglePosts()">Propositions</button>
+    <button @fadeIn class="btn btn-sm rounded-lg" [class.bg-neutral-400]="showPoints" (click)="togglePoints()">Conseils</button>
+  </div>
 </div>
 
 @if (vm; as vm) {
