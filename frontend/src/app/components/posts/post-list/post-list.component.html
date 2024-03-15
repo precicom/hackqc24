@@ -36,7 +36,7 @@
               @if(item.type === 'point'){
                 <app-dicussion-point-card [point]="item.point" [routerLink]="['/councils', item.point.council_id]" [queryParams]="{ themeId: item.point.theme_id }"></app-dicussion-point-card>
               }@else if(item.type === 'post') {
-                <app-post-card [post]="item.post" [showStatistics]="true" [showTags]="false" [routerLink]="[item.post.id]"></app-post-card>
+                <app-post-card [post]="item.post" [showStatistics]="true" [showTags]="false" [showIcon]="true" [routerLink]="[item.post.id]"></app-post-card>
               }              
             }
           </div>
