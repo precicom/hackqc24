@@ -1,7 +1,7 @@
 <ngu-carousel #carousel [inputs]="carouselTile" [dataSource]="points">
   <ngu-tile *nguCarouselDef="let point">
     <div
-      class="card-body items-center text-center text-neutral bg-primary cursor-pointer h-full rounded-xl bg-[url('/assets/images/message-smile-solid.svg')] bg-[length:50dvw_50dvw] md:bg-[length:30dvw_30dvw]"
+      class="card-body items-center text-center text-neutral bg-primary cursor-pointer h-full rounded-xl bg-[url('/assets/images/message-smile-solid.svg')]"
       [routerLink]="['/councils', point.council_id]"
       [queryParams]="{ themeId: point.theme_id }"
     >
@@ -15,7 +15,7 @@
   <ul class="myPoint" NguCarouselPoint>
     <li
       *ngFor="let i of carousel.pointNumbers; let index = index"
-      [class.active]="i == carousel.activePoint"
+      [class.bg-neutral]="i == carousel.activePoint"
       (click)="carousel.moveTo(index)"
     ></li>
   </ul>
