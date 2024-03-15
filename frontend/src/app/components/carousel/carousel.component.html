@@ -1,0 +1,17 @@
+<ngu-carousel #carousel [inputs]="carouselTile" [dataSource]="points">
+  <ngu-tile *nguCarouselDef="let point"> 
+    <div class="card-body items-center text-center bg-secondary-content text-neutral-content cursor-pointer h-full rounded-xl" [routerLink]="['/councils', point.council_id]"  [queryParams]="{ themeId: point.theme_id }">
+      <h2 class="card-title">{{ point.theme.name }}</h2>
+      <div class="line-clamp-4">
+        <p>{{ point.generated_summary }}</p>
+      </div>
+    </div>    
+  </ngu-tile>
+
+  <button NguCarouselPrev class="leftRs">&lt;</button>
+  <button NguCarouselNext class="rightRs">&gt;</button>
+
+  <ul class="myPoint" NguCarouselPoint>
+    <li *ngFor="let i of carousel.pointNumbers; let index = index" [class.active]="i==carousel.activePoint" (click)="carousel.moveTo(index)"></li>
+  </ul>
+</ngu-carousel>

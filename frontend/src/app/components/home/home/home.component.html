@@ -1,6 +1,8 @@
 <div class="flex flex-col space-y-2">
-  <!-- <div class="text-sm font-bold px-2 mb-2">Thèmes du dernier conseil</div> -->
-  <app-council-latest-information></app-council-latest-information>
+  <!-- <div class="text-xs">Thèmes du dernier conseil:</div> -->
+  <!-- <app-council-latest-information></app-council-latest-information> -->
+
+  <app-carousel @fadeIn [points]="discussionPoints$ | async"></app-carousel>
   <div class="ml-auto link" [routerLink]="['/councils']">Tous les conseils</div>
 </div>
 
@@ -9,8 +11,3 @@
   <app-most-popular-themes></app-most-popular-themes>
   <div class="ml-auto link" [routerLink]="['/posts/all-posts']">Tous les thèmes</div>
 </div>
-
-
-
-
-
