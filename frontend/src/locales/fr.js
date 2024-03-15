@@ -44,6 +44,15 @@ export default {
       date_other: '{{time}}, le {{date}}',
     },
   },
+  pages: {
+    home: 'Accueil',
+    councils: 'Conseils publics',
+    council_details: 'Détails du conseil',
+    theme: 'Thème',
+    my_propositions: 'Mes propositions',
+    my_community: 'Ma communauté',
+    proposition_details: 'Détails de la proposition',
+  },
   categories: {
     territoire: 'territoire',
     achats: "achats",
