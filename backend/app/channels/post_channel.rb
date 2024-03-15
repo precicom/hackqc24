@@ -4,6 +4,6 @@ class PostChannel < ApplicationCable::Channel
   end
 
   def self.broadcast_message(post_id, type = '', message = {})
-    ActionCable.server.broadcast("#post:#{post_id}", { data: message, type: type })
+    ActionCable.server.broadcast("#post:#{post_id}", { post_id: post_id, data: message, type: type })
   end
 end

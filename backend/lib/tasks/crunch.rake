@@ -21,22 +21,22 @@ namespace :crunch do
     date = DateTime.parse(date_response.dig("choices", 0, "message", "content")).end_of_day
     existing = Council.find_by(date: date)
     existing.destroy! if existing
-    
+
     transcript = Transcripter::YouTubeTranscripter.fetch_transcript(video_id).map { |e| e[:text]}.join(' ')
     # prompt = "###Instructions###\nIdentifie dans la transcription de la rencontre qui est ci-bas les sections granulaires et donne moi un titre pour chaque section spécifique comme réponse en respectant le format ci-dessous.\n\n###Transcription###\n#{transcript}\n\n###Exemple###\n - Adoption du réglement ABC-2\n - Question sur l'avancement des travaux de la rue Pouliot\n - Adoption du budget de la ville\n\n###Sections###\n"
     # prompt = "###Instructions###\nSépare la transcription de la rencontre qui est ci-bas en sections assez précises et donne moi un titre spécifique suivi d'une phrase résumant le contenu de la section comme réponse dans une liste à point sans numérotation en respectant le format ci-dessous, énumère les différents réglements, lois, contrats dans le titre des sections.\n\n###Transcription###\n#{transcript}\n\n###Format###\n - Section 1: Résumé de la section 1\n - Section 2: Résumé de la section 2\n - Section 3: Résumé de la section 3\n\n###Sections###\n"
     clean_up_transcript_prompt = "###Instructions###
     Votre mission est d'effectuer un nettoyage initial du transcript de la réunion du conseil de ville fourni ci-dessous. Concentrez-vous sur l'élimination des éléments suivants pour clarifier et condenser le texte, le rendant ainsi prêt pour une analyse détaillée des points abordés durant la réunion :
-    
+
     1. **Salutations et formalités d'ouverture/fermeture** : Supprimez les salutations, les introductions des participants et les formules de clôture de la réunion.
     2. **Pauses et hésitations** : Éliminez les marqueurs de pause (par exemple, 'euh', 'hm', etc.) et les répétitions inutiles de mots ou de phrases.
     3. **Digressions** : Retirez les sections qui s'écartent significativement du sujet principal de discussion ou qui ne contribuent pas à l'avancement des points à l'ordre du jour.
     4. **Redondances** : Simplifiez les passages qui répètent la même information en différents termes pour n'en garder qu'une expression claire et concise.
     5. **Informations personnelles et sensibles** : Assurez-vous d'anonymiser ou de supprimer toute information personnelle identifiable ou sensible mentionnée durant la réunion.
-    
+
     ### Transcription originale ###
     #{transcript}
-    
+
     ### Transcription nettoyée ###
     "
 
@@ -55,12 +55,12 @@ namespace :crunch do
 
      discussion_points_prompt = %{
 ### Instructions ###
-L'objectif est de décomposer la transcription de la rencontre du conseil de ville ci-dessous en sections clairement définies. 
-Pour chaque section identifiée, fournissez un titre concis qui résume le sujet ou l'action principale discutée. 
-Assurez-vous de capturer non seulement les décisions prises (comme l'adoption de règlements ou de budgets), 
-mais aussi les discussions importantes, les questions soulevées par les membres du conseil ou le public, 
-ainsi que les annonces ou les mises à jour fournies. Si des numéros de points ou des titres spécifiques sont mentionnés dans la transcription, 
-utilisez-les pour guider votre structuration. L'objectif est d'offrir un aperçu clair et précis de tous les points à l'ordre du jour et de leur traitement durant la réunion. 
+L'objectif est de décomposer la transcription de la rencontre du conseil de ville ci-dessous en sections clairement définies.
+Pour chaque section identifiée, fournissez un titre concis qui résume le sujet ou l'action principale discutée.
+Assurez-vous de capturer non seulement les décisions prises (comme l'adoption de règlements ou de budgets),
+mais aussi les discussions importantes, les questions soulevées par les membres du conseil ou le public,
+ainsi que les annonces ou les mises à jour fournies. Si des numéros de points ou des titres spécifiques sont mentionnés dans la transcription,
+utilisez-les pour guider votre structuration. L'objectif est d'offrir un aperçu clair et précis de tous les points à l'ordre du jour et de leur traitement durant la réunion.
 Ignorer l'ouverture de la Séance, l'adoption de l'ordre du jour. Ignorer l'adoption des procès-verbaux de debut de seance et information de fin de seance periode de question réponse.
 
 ### Transcription ###
@@ -117,7 +117,7 @@ Ignorer l'ouverture de la Séance, l'adoption de l'ordre du jour. Ignorer l'adop
     })
     points = JSON.parse(discussion_points_response.dig("choices", 0, "message", "content").gsub('```json', '').gsub('```',''))
 
-    council = Council.create!(title: title, date: date, youtube_link: youtube_link)
+    council = Council.create!(title: title, date: date, youtube_link: youtube_link, generated_summary: clean_up_transcripte)
     points.each do |point|
       council.discussion_points.create!(title: point['title'], generated_summary: point['description'])
     end

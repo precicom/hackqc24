@@ -11,6 +11,7 @@ import { DiscussionPoint } from '../../../repository/discussion-points/classes'
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy'
 import { DiscussionPointCardComponent } from '../discussion-point-card/discussion-point-card.component'
 import { RouterModule } from '@angular/router'
+import { YoutubeEmbedUrlPipe } from '../../../pipes/youtube-embed-url.pipe'
 
 @UntilDestroy()
 @Component({
@@ -19,7 +20,7 @@ import { RouterModule } from '@angular/router'
   templateUrl: './council-fiche.component.html',
   animations: [slideAndFadeIn, fadeIn, staggeredFadeIn],
   styleUrl: './council-fiche.component.scss',
-  imports: [CommonModule, SearchInputComponent, ThemeFilterComponent, DiscussionPointCardComponent, RouterModule],
+  imports: [CommonModule, SearchInputComponent, ThemeFilterComponent, DiscussionPointCardComponent, RouterModule, YoutubeEmbedUrlPipe],
 })
 export class CouncilFicheComponent implements OnInit {
   @Input({ transform: numberAttribute }) councilId?: number

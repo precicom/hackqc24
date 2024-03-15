@@ -2,6 +2,8 @@ class Theme < ApplicationRecord
   has_many :posts
   has_many :discussion_points
 
+  attr_accessor :score
+
   enum :category, {
     achats: 1,
     legislation: 2,

@@ -1,8 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {  RouterModule } from '@angular/router';
 import { CouncilLatestInformationComponent } from "../council-latest-information/council-latest-information.component";
 import { MostPopularThemesComponent } from "../most-popular-themes/most-popular-themes.component";
 import { fadeIn, slideAndFadeIn } from '../../../animations/animations';
+import { CarousselComponent } from "../../carousel/carousel.component";
+import { DataServices } from '../../../repository/dataServices';
+import { Observable } from 'rxjs';
+import { DiscussionPoint } from '../../../repository/discussion-points/classes';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-home',
@@ -10,8 +15,10 @@ import { fadeIn, slideAndFadeIn } from '../../../animations/animations';
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss',
     animations: [fadeIn, slideAndFadeIn],
-    imports: [RouterModule, CouncilLatestInformationComponent, MostPopularThemesComponent]
+    imports: [CommonModule, RouterModule, CouncilLatestInformationComponent, MostPopularThemesComponent, CarousselComponent]
 })
 export class HomeComponent {
- 
+  dataServices = inject(DataServices)
+
+  discussionPoints$: Observable<DiscussionPoint[]> = this.dataServices.discussionPoints.getLatestDiscussionPoints()
 }

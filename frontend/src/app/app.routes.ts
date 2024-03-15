@@ -10,7 +10,6 @@ import { CouncilListComponent } from './components/council/council-list/council-
 import { PostListComponent } from './components/posts/post-list/post-list.component';
 import { PostsHomeComponent } from './components/posts/posts-home/posts-home.component';
 import { MyPostsComponent } from './components/posts/my-posts/my-posts.component';
-import { CreatePostComponent } from './components/posts/create-post/create-post.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { PostShowComponent } from './components/posts/post-show/post-show.component';
 
@@ -66,12 +65,7 @@ export const routes: Routes = [
                 path: 'all-posts',
                 component: PostListComponent,
                 data: { title: 'Ma communauté' },     
-              },
-              {
-                path:'create',
-                component: CreatePostComponent,
-                data: { title: 'Créer une proposition' },     
-              }
+              },            
             ]
           },
           {

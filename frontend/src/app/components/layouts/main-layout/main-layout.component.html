@@ -1,20 +1,18 @@
 <div class="flex flex-col h-full">
   <!-- top header -->
-  <div class="bg-base-300">
+  <div class="bg-primary">
     <div class="navbar justify-between">
       <div class="flex-1">
-        <a class="btn btn-ghost text-xl" (click)="home()">Kizos </a>
+        <a class="p-0 btn btn-link block" (click)="home()"><img src="../assets/images/Kizos-logo.svg" alt="" class="h-10 max-w-sm "></a>
       </div>
-      <div class="flex-1 -ml-8">
-        {{ title }}
+    <div class="flex-1">
+      <h2 class="mx-auto">{{ title }}</h2>
+    </div>
+    <div class="flex-1">
+      <div class="ml-auto btn btn-ghost text-lg" (click)="logout()">
+        <i class="color-neutral py-0 fas fa-sign-out-alt"></i>
       </div>
-      <div class="flex-none">
-        <ul class="menu menu-horizontal px-1">
-          <li>
-            <a class="btn btn-neutral btn-sm" (click)="logout()">logout</a>
-          </li>
-        </ul>
-      </div>
+    </div>
     </div>
   </div>
 
@@ -28,63 +26,33 @@
   <div
     class="footer-content fixed z-50 w-auto -translate-x-1/2 bg-white border border-gray-200 rounded-full bottom-4 left-1/2 dark:bg-gray-700 dark:border-gray-600 p-2"
   >
-    <div class="flex h-full max-w-lg justify-between mx-auto">
-      <button
-        type="button"
-        class="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
-        [routerLink]="['/posts/my-posts']"
-      >
-        <!--i class="fa-solid fa-message"></i-->
-        <span>Mes propositions</span>
-      </button>
-
-      <!-- <div id="tooltip-self" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-          Mes commentaires et suggestions
-            <div class="tooltip-arrow" data-popper-arrow></div>
-        </div> -->
-
-      <button
-        type="button"
-        class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
-        [routerLink]="['/councils']"
-      >
-        <!--i class="fa-solid fa-message"></i-->
-        <span>Conseils publics</span>
-      </button>
-
-      <!-- <div class="flex items-center justify-center">
-        <button
-          data-tooltip-target="tooltip-new"
-          type="button"
-          class="inline-flex items-center justify-center w-10 h-10 font-medium bg-blue-600 rounded-full hover:bg-blue-700 group focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800"
-          [routerLink]="['/posts']"
-        >
-          <i class="fa-solid fa-message-plus text-white"></i>
-          <span class="sr-only">Ajouter</span>
-        </button>
-      </div>
-      <div
-        id="tooltip-new"
-        role="tooltip"
-        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
-      >
-        Nouveau message
-        <div class="tooltip-arrow" data-popper-arrow></div>
-      </div>
-       -->
+    <div class="flex h-full max-w-lg justify-between mx-auto text-sm">
       <button
         type="button"
         class="inline-flex flex-col items-center justify-center px-2 md:px-5 rounded-r-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
         [routerLink]="['/posts/all-posts']"
       >
         <!--i class="fa-solid fa-messages"></i-->
-        <span>Ma communauté</span>
+        <span>Communauté</span>
+      </button>
+      <button
+        type="button"
+        class="inline-flex  flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+        [routerLink]="['/councils']"
+      >
+        <!--i class="fa-solid fa-message"></i-->
+        <span>Séances</span>
       </button>
 
-      <!-- <div id="tooltip-all" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-        Tous les commentaires et suggestions
-          <div class="tooltip-arrow" data-popper-arrow></div>
-      </div> -->
+      
+      <button
+        type="button"
+        class="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
+        [routerLink]="['/posts/my-posts']"
+      >
+        <!--i class="fa-solid fa-message"></i-->
+        <span>Moi</span>
+      </button>
     </div>
   </div>
 </footer>

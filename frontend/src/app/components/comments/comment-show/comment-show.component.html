@@ -1,8 +1,20 @@
-<div class="inline-flex flex-col">
+<div class="inline-flex flex-col relative">
+  @if (comment.status === 'rejected') {
+    <span class="indicator-item badge badge-warning">Rejeté</span>
+  } @else if (comment.status === 'in_process') {
+    <span class="indicator-item badge badge-warning">En traitement</span>
+  }
   <div class="inline-flex flex-col rounded-2xl bg-slate-200 min-h-12 p-3">
     <div>Anonyme</div>
     <div [class.line-clamp-2]="clampText" (click)="unClampText()">{{ comment.content_text }}</div>
     <img *ngIf="comment.image" #imagePreview [ngSrc]="comment.image" height="300" width="200" />
+    @if (comment.rejection_reason) {
+      <div class="w-full border border-x-transparent border-b-transparent border-t-gray-950 py-1">
+        <p>
+          {{ comment.rejection_reason }}
+        </p>
+      </div>
+    }
   </div>
 
   <div class="inline-flex flex-row items-center pl-3">

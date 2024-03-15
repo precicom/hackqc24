@@ -3,12 +3,12 @@
     @if (post; as post) {
       <div @fadeIn class="flex flex-col gap-y-3">
         <div class="flex flex-col">
-          @if(post.status === 'rejected'){
+          @if (post.status === 'rejected') {
             <span class="indicator-item badge badge-warning">Rejeté</span>
-          }@else if(post.status === 'in_process') {
+          } @else if (post.status === 'in_process') {
             <span class="indicator-item badge badge-warning">En traitement</span>
           }
-       
+
           <p class="text-lg">Anonyme</p>
           <p class="text-xs">{{ post.created_at | timeDiffPro }}</p>
         </div>
@@ -27,34 +27,34 @@
           </div>
         }
 
-        @if(post.status !== 'rejected') {
+        @if (post.status !== 'rejected') {
           <div class="flex flex-row gap-x-2">
-            <div class="badge badge-secondary">{{ 'categories.' +post.theme.category | translate }}</div>
+            <div class="badge badge-secondary">{{ 'categories.' + post.theme.category | translate }}</div>
             <div class="badge badge-primary">{{ post.theme.name }}</div>
           </div>
-        }       
+        }
 
-        @if(post.status !== 'rejected'){
+        @if (post.status !== 'rejected') {
           <div class="flex flex-row">
             <div class="inline-flex flex-row items-center">
               <div class="flex flex-row items-center">
                 <i class="fa-regular fa-thumbs-up cursor-pointer" (click)="upVote()"></i>
                 <p class="ml-1">{{ post | postUpVoteCount }}</p>
               </div>
-  
+
               <div class="flex flex-row items-center ml-6">
                 <i class="fa-regular fa-thumbs-down cursor-pointer" (click)="downVote()"></i>
                 <p class="ml-1">{{ post | postDownVoteCount }}</p>
               </div>
             </div>
-  
+
             <div class="flex flex-row items-center ml-auto cursor-pointer" (click)="toggleComments()">
               <p class="ml-1">{{ comments?.length ?? 0 }} commentaires</p>
             </div>
           </div>
-        }        
+        }
 
-        <div class="w-full border border-transparent border-t-gray-950 py-1"></div>     
+        <div class="w-full border border-transparent border-t-gray-950 py-1"></div>
       </div>
     } @else {
       <div class="flex flex-grow items-center justify-center h-full">
@@ -62,7 +62,7 @@
       </div>
     }
 
-    @if (showComments &&  post && post?.status !== 'rejected') {
+    @if (showComments && post && post?.status !== 'rejected') {
       @if (!commenting) {
         <div @fadeIn class="flex flex-row items-center">
           <button class="btn ml-auto mr-auto" (click)="toggleCommentBox()">Ajouter un commentaire</button>
@@ -76,7 +76,10 @@
       @if (comments; as comments) {
         <div class="flex flex-col gap-y-3 mt-3">
           @for (comment of comments | sortBy: 'created_at' : 'reverse'; track comment.id) {
+            <!-- Decomment pour n'afficher que les commentaire accepté -->
+            <!-- @if (comment.status == 'accepted') { -->
             <app-comment-show [comment]="comment"></app-comment-show>
+            <!-- } -->
           }
         </div>
       } @else {

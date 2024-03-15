@@ -7,4 +7,10 @@ class UserVote < ApplicationRecord
       PostChannel.broadcast_message(reference_id, 'post_changed')
     end
   end
+
+  after_save do
+    if reference_type == 'Comment'
+      CommentChannel.broadcast_message(reference_id, 'comment_changed')
+    end
+  end
 end

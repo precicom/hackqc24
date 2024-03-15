@@ -7,6 +7,8 @@ import { DataServices } from '../../../repository/dataServices'
 import { CommentUpVoteCountPipe } from '../../../pipes/comments-up-vote-count.pipe'
 import { CommentDownVoteCountPipe } from '../../../pipes/comments-down-vote-count.pipe'
 import { filter } from 'rxjs'
+import { ActionCableBroadcaster } from '../../../services/action-cable/action-cable-broadcaster'
+import { ActionCableService } from '../../../services/action-cable/action-cable'
 
 @Component({
   selector: 'app-comment-show',
@@ -18,6 +20,9 @@ import { filter } from 'rxjs'
 export class CommentShowComponent implements OnInit {
   @Input() comment: Comment
 
+  actionCableService = inject(ActionCableService)
+
+  postBroadCaster: ActionCableBroadcaster
   //websocketService = inject(WebsocketService)
 
   clampText: boolean = true
@@ -33,6 +38,13 @@ export class CommentShowComponent implements OnInit {
     //     }),
     //   )
     //   .subscribe(() => this.refrechComment())
+
+    this.postBroadCaster = this.actionCableService.subscribe('CommentChannel', { params: { comment_id: this.comment.id } })
+
+    this.postBroadCaster
+      .on('comment_changed')
+      .pipe(filter(res => +res['comment_id'] == this.comment.id))
+      .subscribe(() => this.refrechComment())
   }
 
   unClampText() {
@@ -64,6 +76,6 @@ export class CommentShowComponent implements OnInit {
   }
 
   websocketRefrechComment() {
-   // this.websocketService.sendRefreshComment(this.comment.id)
+    // this.websocketService.sendRefreshComment(this.comment.id)
   }
 }

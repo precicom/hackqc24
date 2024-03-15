@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Theme } from '../../../repository/themes/classes';
 import { BehaviorSubject } from 'rxjs';
+import { SortThemesPipe } from './sort-themes.pipe';
 
 @Component({
   selector: 'app-theme-filter',
   standalone: true,
-  imports: [],
+  imports: [SortThemesPipe],
   templateUrl: './theme-filter.component.html',
   styleUrl: './theme-filter.component.scss'
 })

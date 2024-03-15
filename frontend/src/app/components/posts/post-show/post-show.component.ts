@@ -12,33 +12,33 @@ import { SortByPipe } from '../../../pipes/sort-by/sort-by.pipe'
 import { CommentShowComponent } from '../../comments/comment-show/comment-show.component'
 import { ImagePreviewDirective } from '../../../directives/image-preview.directive'
 import { delay, filter } from 'rxjs'
-import { MessageFormComponent, MessageSubmitEvent } from "../message-form/message-form.component";
+import { MessageFormComponent, MessageSubmitEvent } from '../message-form/message-form.component'
 import { fadeIn, slideAndFadeIn, staggeredFadeIn } from '../../../animations/animations'
 import { TranslateModule } from '@ngx-translate/core'
 import { ActionCableService } from '../../../services/action-cable/action-cable'
 import { ActionCableBroadcaster } from '../../../services/action-cable/action-cable-broadcaster'
 
 @Component({
-    selector: 'app-post-show',
-    standalone: true,
-    templateUrl: './post-show.component.html',
-    styleUrl: './post-show.component.scss',
-    animations: [slideAndFadeIn, fadeIn, staggeredFadeIn],
-    imports: [
-        TimeDiffProPipe,
-        PostCommentCountPipe,
-        PostUpVoteCountPipe,
-        CommonModule,
-        RouterModule,
-        SortByPipe,
-        CommentShowComponent,
-        PostDownVoteCountPipe,
-        CurrentUserUpVotedPipe,
-        NgOptimizedImage,
-        ImagePreviewDirective,
-        MessageFormComponent,
-        TranslateModule
-    ]
+  selector: 'app-post-show',
+  standalone: true,
+  templateUrl: './post-show.component.html',
+  styleUrl: './post-show.component.scss',
+  animations: [slideAndFadeIn, fadeIn, staggeredFadeIn],
+  imports: [
+    TimeDiffProPipe,
+    PostCommentCountPipe,
+    PostUpVoteCountPipe,
+    CommonModule,
+    RouterModule,
+    SortByPipe,
+    CommentShowComponent,
+    PostDownVoteCountPipe,
+    CurrentUserUpVotedPipe,
+    NgOptimizedImage,
+    ImagePreviewDirective,
+    MessageFormComponent,
+    TranslateModule,
+  ],
 })
 export class PostShowComponent implements OnInit, OnDestroy {
   @ViewChild(MessageFormComponent, { static: false }) messageForm: MessageFormComponent
@@ -46,7 +46,7 @@ export class PostShowComponent implements OnInit, OnDestroy {
   private _postId: number
   @Input({ transform: numberAttribute }) set postId(postId: number) {
     this._postId = postId
-    this.fetchPost()   
+    this.fetchPost()
   }
 
   get postId() {
@@ -68,28 +68,29 @@ export class PostShowComponent implements OnInit, OnDestroy {
   postBroadCaster: ActionCableBroadcaster
 
   ngOnInit(): void {
-    // this.websocketService.getRefreshPost()
-    // this.websocketService.getRefreshAllComments()
-
-    // this.websocketService.refreshPostId$.pipe(filter(id => !!id && +id == this.postId)).subscribe(() => this.refreshPost())
-    // this.websocketService.refreshAllComments$.pipe(filter(id => !!id && +id == this.postId)).subscribe(() => this.refrechComments())
-
     this.postBroadCaster = this.actionCableService.subscribe('PostChannel', { params: { post_id: this.postId } })
 
-    this.postBroadCaster.on('post_changed').subscribe(() => {
-      this.fetchPost()      
-    })
+    this.postBroadCaster
+      .on('post_changed')
+      .pipe(filter(res => +res['post_id'] == this.post.id))
+      .subscribe(res => {
+        if (res) this.fetchPost()
+        this.refrechComments()
+      })
   }
 
   ngOnDestroy(): void {
     this.postBroadCaster.unsubscribe()
   }
 
-  fetchPost(){
-    this.dataServices.posts.getById(this.postId).pipe(delay(500)).subscribe(post => {     
-      this.post = post
-      this.comments = post.comments
-    })
+  fetchPost() {
+    this.dataServices.posts
+      .getById(this.postId)
+      .pipe(delay(500))
+      .subscribe(post => {
+        this.post = post
+        this.comments = post.comments
+      })
   }
 
   unClampText() {
@@ -134,7 +135,7 @@ export class PostShowComponent implements OnInit, OnDestroy {
     this.dataServices.posts.getById(this.post.id).subscribe(post => {
       this.post = post
     })
-  } 
+  }
 
   submit(event: MessageSubmitEvent) {
     const formData = new FormData()
@@ -149,7 +150,6 @@ export class PostShowComponent implements OnInit, OnDestroy {
     this.creatingComment = true
     this.dataServices.comments.create(formData).subscribe(response => {
       this.messageForm.clearCommentBox()
-    //  this.websocketService.sendRefreshAllComments(this.postId)
       this.refrechComments()
     })
   }
