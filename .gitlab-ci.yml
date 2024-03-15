@@ -32,12 +32,12 @@ deploy_frontend:
   script:
     - cd frontend
     - npm install
-    - vercel --token $VERCEL_TOKEN --prod --yes --name hackqc24 > deployment-url.txt
+    - vercel --token $VERCEL_TOKEN --prod --yes --name kizos > deployment-url.txt
     - code=$?
     - |
       if [ $code -eq 0 ]; then
         deploymentUrl=`cat deployment-url.txt`
-        vercel alias $deploymentUrl hackqc24.vercel.app --token $VERCEL_TOKEN
+        vercel alias $deploymentUrl kizos.vercel.app --token $VERCEL_TOKEN
       fi
 
 deploy_backend:
