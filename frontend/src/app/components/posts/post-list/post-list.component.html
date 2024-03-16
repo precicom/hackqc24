@@ -31,15 +31,17 @@
         </button>    
 
         <div class="ml-6 mt-2" [style.display]="accordionItem.expanded ? '' : 'none'">
-          <div @staggeredFadeIn class="flex flex-col gap-y-2 mt-2" [style.display]="accordionItem.expanded ? '' : 'none'">
-            @for (item of category.items; track item.id) {
-              @if(item.type === 'point'){
-                <app-dicussion-point-card [point]="item.point" [routerLink]="['/councils', item.point.council_id]" [queryParams]="{ themeId: item.point.theme_id }"></app-dicussion-point-card>
-              }@else if(item.type === 'post') {
-                <app-post-card [post]="item.post" [showStatistics]="true" [showTags]="false" [showIcon]="true" [routerLink]="[item.post.id]"></app-post-card>
-              }              
-            }
-          </div>
+          @if(accordionItem.expanded){
+            <div @staggeredFadeIn class="flex flex-col gap-y-2 mt-2">
+              @for (item of category.items; track item.id) {
+                @if(item.type === 'point'){
+                  <app-dicussion-point-card [point]="item.point" [routerLink]="['/councils', item.point.council_id]" [queryParams]="{ themeId: item.point.theme_id }"></app-dicussion-point-card>
+                }@else if(item.type === 'post') {
+                  <app-post-card [post]="item.post" [showStatistics]="true" [showTags]="false" [showIcon]="true" [routerLink]="[item.post.id]"></app-post-card>
+                }              
+              }
+            </div>
+          }          
         </div>
       </cdk-accordion-item>
     } @empty {
