@@ -9,7 +9,7 @@
             <span class="indicator-item badge badge-warning">En traitement</span>
           }
 
-          <p class="text-lg">Anonyme</p>
+          <p class="text-lg font-semibold">Anonyme</p>
           <p class="text-xs">{{ post.created_at | timeDiffPro }}</p>
         </div>
 
@@ -55,7 +55,7 @@
             </div>
 
             <div class="flex flex-row items-center ml-auto cursor-pointer" (click)="toggleComments()">
-              <p class="ml-1">{{ post | postCommentCount }} commentaires</p>
+              <p class="ml-1">{{ post | postCommentCount }} commentaire(s)</p>
             </div>
           </div>
         }
