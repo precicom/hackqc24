@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common'
 import { AuthService } from '../../../auth/auth.service';
 import { PageInformation } from '../../../services/page-information';
 
+type TabNames = 'my_propositions' | 'my_community' | 'Séances publiques'
+
 @Component({
   selector: 'app-main-layout',
   standalone: true,
@@ -18,6 +20,8 @@ export class MainLayoutComponent implements OnInit {
   pageInfoService = inject(PageInformation)
 
   title: string = ''
+
+  selectedTab: TabNames
 
   ngOnInit(): void {
     this.pageInfoService.title$.subscribe(title => {

@@ -3,16 +3,16 @@
   <div class="bg-primary">
     <div class="navbar justify-between">
       <div class="flex-1">
-        <a class="p-0 btn btn-link block" (click)="home()"><img src="../assets/images/Kizos-logo.svg" alt="" class="h-10 max-w-sm "></a>
+        <a class="p-0 btn btn-link block" (click)="home()"><img src="../assets/images/Kizos-logo.svg" alt="" class="h-10 max-w-sm" /></a>
       </div>
-    <div class="flex-1">
-      <h2 class="mx-auto text-center">{{ title }}</h2>
-    </div>
-    <div class="flex-1">
-      <div class="ml-auto btn btn-ghost text-lg" (click)="logout()">
-        <i class="color-neutral py-0 fas fa-sign-out-alt"></i>
+      <div class="flex-2 mt-5">
+        <h2 class="mx-auto text-center">{{ title }}</h2>
       </div>
-    </div>
+      <div class="flex-1">
+        <div class="ml-auto btn btn-ghost text-lg" (click)="logout()">
+          <i class="color-neutral py-0 fas fa-sign-out-alt"></i>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -29,26 +29,30 @@
     <div class="flex h-full max-w-lg justify-between mx-auto text-sm">
       <button
         type="button"
-        class="inline-flex flex-col items-center justify-center px-2 md:px-5 rounded-l-full hover:bg-gray-200 dark:hover:bg-gray-800 group py-3"
-        [routerLink]="['/posts/all-posts']"
+        class="px-5 rounded-l-full hover:bg-gray-200 dark:hover:bg-gray-800 group py-3"
+        [ngClass]="{ 'border bg-gray-200': title === 'Mes propositions' }"
+        [routerLink]="['/posts/my-posts']"
       >      
-        <span>Communauté</span>
-      </button>
-      
-      <button
-        type="button"
-        class="inline-flex  flex-col items-center justify-center px-5 hover:bg-gray-200 dark:hover:bg-gray-800 group py-3"
-        [routerLink]="['/councils']"
-      >      
-        <span>Séances</span>
+        <div>Propositions</div>
       </button>
 
       <button
         type="button"
-        class="inline-flex flex-col items-center justify-center px-5 rounded-r-full hover:bg-gray-200 dark:hover:bg-gray-800 group py-3"
-        [routerLink]="['/posts/my-posts']"
+        class="px-5 hover:bg-gray-200 dark:hover:bg-gray-800 group py-3"
+        [ngClass]="{ 'border bg-gray-200': title === 'Séances publiques' }"       
+        [routerLink]="['/councils']"
       >
-        <span>Moi</span>
+       
+        <div>Séances</div>
+      </button>
+
+      <button
+        type="button"
+        class="px-5 md:px-5 rounded-r-full hover:bg-gray-200 dark:hover:bg-gray-800 group py-3"
+        [ngClass]="{ 'border bg-gray-200': title === 'Ma communauté' }"
+        [routerLink]="['/posts/all-posts']"
+      >      
+        <div>Communauté</div>
       </button>
     </div>
   </div>

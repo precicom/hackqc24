@@ -33,12 +33,12 @@ export const routes: Routes = [
           {
             path: 'councils',
             component: CouncilListComponent,       
-            data: { title: 'Conseils publics' },        
+            data: { title: 'Séances publiques' },        
           },
           {
             path: 'councils/:councilId',
             component: CouncilFicheComponent,
-            data: { title: 'Détails du conseil' },     
+            data: { title: 'Détails de la séance' },     
           },
           {
             path: 'themes',
