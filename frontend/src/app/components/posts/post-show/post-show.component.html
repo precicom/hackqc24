@@ -29,8 +29,14 @@
 
         @if (post.status !== 'rejected') {
           <div class="flex flex-row gap-x-2">
-            <div class="badge badge-secondary">{{ 'categories.' + post.theme.category | translate }}</div>
-            <div class="badge badge-primary">{{ post.theme.name }}</div>
+            <div class="badge badge-secondary truncate">
+              <div class="truncate">{{ 'categories.' + post.theme.category | translate }}</div>
+            </div>
+            <div class="badge badge-primary truncate">
+              <div class="truncate">
+                {{ post.theme.name }}
+              </div>
+            </div>
           </div>
         }
 

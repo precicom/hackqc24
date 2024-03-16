@@ -9,9 +9,13 @@
     <div class="line-clamp-2">{{ post.content_text }}</div>
   </div>
 
+  <div class="flex flex-row items-center pr-2">
+    <div class="ml-auto"> {{post.created_at | date}} </div>
+  </div>
+
   <div class="flex flex-col grow"> 
     @if (showStatistics) {
-      <div class="inline-flex flex-row items-center gap-2 ml-auto">
+      <div class="inline-flex flex-row items-center gap-2 ml-auto max-w-full">
         <div class="flex flex-row items-center">
           <i class="fa-regular fa-thumbs-up cursor-pointer"></i>
           <p class="ml-1 w-4">{{ post | postUpVoteCount }}</p>
@@ -30,7 +34,7 @@
     }
   
     @if (showTags) {
-      <div class="inline-flex flex-row items-center ml-auto gap-2 overflow-hidden">
+      <div class="inline-flex flex-row items-center ml-auto gap-2 overflow-hidden max-w-full">
         <div class="badge badge-primary overflow-hidden">
           <div class="truncate">{{ 'categories.' + post.theme.category | translate }}</div>
         </div>
@@ -43,7 +47,7 @@
  
 
   @if (showTagsBellow && post.status == 'accepted') {
-    <div class="absolute flex flex-row-reverse gap-x-2 mt-1 -bottom-6 right-0">
+    <div class="absolute flex flex-row-reverse gap-x-2 mt-1 -bottom-6 right-0 max-w-full">
       <div class="badge badge-primary truncate">
         <div class="truncate">{{ post.theme.name }}</div>
       </div>

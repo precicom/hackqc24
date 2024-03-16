@@ -4,7 +4,10 @@
   </div>
 
   @if(discussionPoints$ | async; as points){
-    <app-carousel @fadeIn [points]="discussionPoints$ | async"></app-carousel>
+    <div class="min-h-60">
+      <app-carousel @fadeInDelay [points]="discussionPoints$ | async"></app-carousel>
+    </div>
+
   }@else {
     <div class="flex flex-row items-center justify-center w-full h-full min-h-60">
       <span class="loading loading-dots loading-lg bg-neutral-500"></span>

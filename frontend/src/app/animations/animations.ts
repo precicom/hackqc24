@@ -1,5 +1,13 @@
 import { animate, keyframes, query, stagger, state, style, transition, trigger } from "@angular/animations"
 
+// create a fadeIn animation that wait for 500ms before starting
+export const fadeInDelay = trigger('fadeInDelay', [
+  transition(':enter', [
+    style({ opacity: 0 }),
+    animate('0.5s 600ms', style({ opacity: 1 })),
+  ]),
+])
+
 export const fadeIn = trigger('fadeIn', [
     transition(':enter', [
     style({ opacity: 0 }),

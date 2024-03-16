@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import {  RouterModule } from '@angular/router';
 import { CouncilLatestInformationComponent } from "../council-latest-information/council-latest-information.component";
 import { MostPopularThemesComponent } from "../most-popular-themes/most-popular-themes.component";
-import { fadeIn, slideAndFadeIn } from '../../../animations/animations';
+import { fadeIn, fadeInDelay, slideAndFadeIn } from '../../../animations/animations';
 import { CarousselComponent } from "../../carousel/carousel.component";
 import { DataServices } from '../../../repository/dataServices';
 import { Observable, delay } from 'rxjs';
@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
     standalone: true,
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss',
-    animations: [fadeIn, slideAndFadeIn],
+    animations: [fadeIn, slideAndFadeIn, fadeInDelay],
     imports: [CommonModule, RouterModule, CouncilLatestInformationComponent, MostPopularThemesComponent, CarousselComponent]
 })
 export class HomeComponent {
