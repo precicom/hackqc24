@@ -19,4 +19,5 @@ export class PostCardComponent {
   @Input() showTagsBellow = false
   @Input() showIcon = false
   @Input() showImage = false
+  @Input() showStatus = false
 }

@@ -1,12 +1,20 @@
 <div class="flex flex-col items-center justify-stretch gap-y-3 w-12/12 sm:w-11/12 md:w-8/12 ml-auto mr-auto px-4 mb-4">
   <div @fadeIn class="p-2 border border-transparent py-3 border-b-gray-950 w-full">
-    <app-message-form (onSubmit)="submit($event)" [loading]="creatingPost" placeholder="Votre proposition..."></app-message-form>   
+    <app-message-form (onSubmit)="submit($event)" [loading]="creatingPost" placeholder="Votre proposition..."></app-message-form>
   </div>
 
   @if (posts; as posts) {
     <div @staggeredFadeIn class="flex flex-col gap-y-14 w-full mt-4">
       @for (post of posts; track post.id) {
-        <app-post-card @slideAndFadeIn [post]="post" [showStatistics]="true" [showTagsBellow]="true" [showImage]="true" [routerLink]="[post.id]"></app-post-card>
+        <app-post-card
+          @slideAndFadeIn
+          [post]="post"
+          [showStatistics]="true"
+          [showTagsBellow]="true"
+          [showImage]="true"
+          [routerLink]="[post.id]"
+          [showStatus]="true"
+        ></app-post-card>
       } @empty {
         <div class="text-center">Aucun message n'a encore été écrit!</div>
       }
