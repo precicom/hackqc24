@@ -17,6 +17,9 @@ class ThemesController < ApplicationController
  
     theme_ids = scores.sort_by{|k,v| v}.reverse.map { |e| e.first.to_i }.slice(0,5) # On garde les 5 thèmes plus importants
 
+    # Remove all zeros from the theme_ids array
+    theme_ids = theme_ids.reject { |id| id == 0 }
+
     themes = Theme.find(theme_ids)
 
     themes.each do |t|
